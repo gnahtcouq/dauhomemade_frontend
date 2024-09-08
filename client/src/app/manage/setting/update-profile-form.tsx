@@ -1,19 +1,25 @@
 'use client'
-import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card'
+import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import {Button} from '@/components/ui/button'
+import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card'
+import {Form, FormField, FormItem, FormMessage} from '@/components/ui/form'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
-import {Upload} from 'lucide-react'
-import {useForm} from 'react-hook-form'
+import {useAccountProfile} from '@/queries/useAccount'
 import {
   UpdateMeBody,
   UpdateMeBodyType
 } from '@/schemaValidations/account.schema'
 import {zodResolver} from '@hookform/resolvers/zod'
-import {Form, FormField, FormItem, FormMessage} from '@/components/ui/form'
-import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
+import {Upload} from 'lucide-react'
+import {useEffect, useMemo, useRef, useState} from 'react'
+import {useForm} from 'react-hook-form'
 
 export default function UpdateProfileForm() {
+  const [file, setFile] = useState<File | null>(null)
+  const avatarInputRef = useRef<HTMLInputElement>(null)
+  const {data} = useAccountProfile()
+
   const form = useForm<UpdateMeBodyType>({
     resolver: zodResolver(UpdateMeBody),
     defaultValues: {
@@ -21,6 +27,26 @@ export default function UpdateProfileForm() {
       avatar: ''
     }
   })
+
+  const avatar = form.watch('avatar')
+  const name = form.watch('name')
+
+  useEffect(() => {
+    if (data) {
+      const {name, avatar} = data.payload.data
+      form.reset({
+        name,
+        avatar: avatar ?? ''
+      })
+    }
+  }, [form, data])
+
+  const previewAvatar = useMemo(() => {
+    if (file) {
+      return URL.createObjectURL(file)
+    }
+    return avatar
+  }, [avatar, file])
 
   return (
     <Form {...form}>
@@ -37,19 +63,31 @@ export default function UpdateProfileForm() {
               <FormField
                 control={form.control}
                 name="avatar"
-                render={({field}) => (
+                render={() => (
                   <FormItem>
                     <div className="flex gap-2 items-start justify-start">
                       <Avatar className="aspect-square w-[100px] h-[100px] rounded-md object-cover">
-                        <AvatarImage src={'gnahtcouq'} />
+                        <AvatarImage src={previewAvatar} />
                         <AvatarFallback className="rounded-none">
-                          {'gnahtcouq'}
+                          {name}
                         </AvatarFallback>
                       </Avatar>
-                      <input type="file" accept="image/*" className="hidden" />
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        ref={avatarInputRef}
+                        onChange={(e) => {
+                          const file = e.target.files?.[0]
+                          if (file) {
+                            setFile(file)
+                          }
+                        }}
+                      />
                       <button
                         className="flex aspect-square w-[100px] items-center justify-center rounded-md border border-dashed"
                         type="button"
+                        onClick={() => avatarInputRef.current?.click()}
                       >
                         <Upload className="h-4 w-4 text-muted-foreground" />
                         <span className="sr-only">Upload</span>
