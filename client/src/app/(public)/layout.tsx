@@ -1,9 +1,9 @@
-import Link from 'next/link'
-import {Menu, Package2} from 'lucide-react'
+import NavItems from '@/app/(public)/nav-items'
+import DarkModeToggle from '@/components/dark-mode-toggle'
 import {Button} from '@/components/ui/button'
 import {Sheet, SheetContent, SheetTrigger} from '@/components/ui/sheet'
-import DarkModeToggle from '@/components/dark-mode-toggle'
-import NavItems from '@/app/(public)/nav-items'
+import {Menu, Package2} from 'lucide-react'
+import Link from 'next/link'
 
 export default function Layout({
   children
