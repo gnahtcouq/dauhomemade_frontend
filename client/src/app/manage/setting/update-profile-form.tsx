@@ -5,7 +5,7 @@ import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card'
 import {Form, FormField, FormItem, FormMessage} from '@/components/ui/form'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
-import {useAccountProfile} from '@/queries/useAccount'
+import {useAccountMe, useUpdateMeMutation} from '@/queries/useAccount'
 import {
   UpdateMeBody,
   UpdateMeBodyType
@@ -14,11 +14,16 @@ import {zodResolver} from '@hookform/resolvers/zod'
 import {Upload} from 'lucide-react'
 import {useEffect, useMemo, useRef, useState} from 'react'
 import {useForm} from 'react-hook-form'
+import {useUploadMediaMutation} from '../../../queries/useMedia'
+import {toast} from '@/hooks/use-toast'
+import {handleErrorApi} from '@/lib/utils'
 
 export default function UpdateProfileForm() {
   const [file, setFile] = useState<File | null>(null)
   const avatarInputRef = useRef<HTMLInputElement>(null)
-  const {data} = useAccountProfile()
+  const {data, refetch} = useAccountMe()
+  const updateMeMutation = useUpdateMeMutation()
+  const uploadMediaMutation = useUploadMediaMutation()
 
   const form = useForm<UpdateMeBodyType>({
     resolver: zodResolver(UpdateMeBody),
@@ -48,11 +53,46 @@ export default function UpdateProfileForm() {
     return avatar
   }, [avatar, file])
 
+  const reset = () => {
+    form.reset()
+    setFile(null)
+  }
+
+  const onSubmit = async (values: UpdateMeBodyType) => {
+    if (updateMeMutation.isPending) return
+    try {
+      let body = values
+      if (file) {
+        const formData = new FormData()
+        formData.append('file', file)
+        const uploadImageResult = await uploadMediaMutation.mutateAsync(
+          formData
+        )
+        const imageUrl = uploadImageResult.payload.data
+        body = {...values, avatar: imageUrl}
+      }
+      const result = await updateMeMutation.mutateAsync(body)
+      toast({
+        description: result.payload.message
+      })
+      refetch()
+    } catch (error) {
+      handleErrorApi({
+        error,
+        setError: form.setError
+      })
+    }
+  }
+
   return (
     <Form {...form}>
       <form
         noValidate
         className="grid auto-rows-max items-start gap-4 md:gap-8"
+        onReset={reset}
+        onSubmit={form.handleSubmit(onSubmit, (e) => {
+          console.log(e)
+        })}
       >
         <Card x-chunk="dashboard-07-chunk-0">
           <CardHeader>
@@ -63,7 +103,7 @@ export default function UpdateProfileForm() {
               <FormField
                 control={form.control}
                 name="avatar"
-                render={() => (
+                render={({field}) => (
                   <FormItem>
                     <div className="flex gap-2 items-start justify-start">
                       <Avatar className="aspect-square w-[100px] h-[100px] rounded-md object-cover">
@@ -81,6 +121,9 @@ export default function UpdateProfileForm() {
                           const file = e.target.files?.[0]
                           if (file) {
                             setFile(file)
+                            field.onChange(
+                              'http://localhost:3000/' + field.name
+                            )
                           }
                         }}
                       />
