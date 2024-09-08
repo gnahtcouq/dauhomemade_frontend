@@ -7,15 +7,16 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card'
+import {Form, FormField, FormItem, FormMessage} from '@/components/ui/form'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
-import {useForm} from 'react-hook-form'
-import {Form, FormField, FormItem, FormMessage} from '@/components/ui/form'
-import {LoginBody, LoginBodyType} from '@/schemaValidations/auth.schema'
-import {zodResolver} from '@hookform/resolvers/zod'
-import {useLoginMutation} from '@/queries/useAuth'
 import {toast} from '@/hooks/use-toast'
 import {handleErrorApi} from '@/lib/utils'
+import {useLoginMutation} from '@/queries/useAuth'
+import {LoginBody, LoginBodyType} from '@/schemaValidations/auth.schema'
+import {zodResolver} from '@hookform/resolvers/zod'
+import {useRouter} from 'next/navigation'
+import {useForm} from 'react-hook-form'
 
 export default function LoginForm() {
   const loginMutation = useLoginMutation()
@@ -27,6 +28,8 @@ export default function LoginForm() {
     }
   })
 
+  const router = useRouter()
+
   const onSubmit = async (data: LoginBodyType) => {
     // Khi nhấn ubmit thì React hook form sẽ validate cái form bằng zod schema ở client trước
     // Nếu không có lỗi thì mới gọi api
@@ -36,6 +39,7 @@ export default function LoginForm() {
       toast({
         description: result.payload.message
       })
+      router.push('/')
     } catch (error: any) {
       handleErrorApi({
         error,
