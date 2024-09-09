@@ -1,4 +1,6 @@
 'use client'
+import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
+import {Button} from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,13 +9,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
-import {Button} from '@/components/ui/button'
-import Link from 'next/link'
-import {useLogoutMutation} from '@/queries/useAuth'
 import {handleErrorApi} from '@/lib/utils'
-import {useRouter} from 'next/navigation'
 import {useAccountMe} from '@/queries/useAccount'
+import {useLogoutMutation} from '@/queries/useAuth'
+import Link from 'next/link'
+import {useRouter} from 'next/navigation'
 
 export default function DropdownAvatar() {
   const logoutMutation = useLogoutMutation()
