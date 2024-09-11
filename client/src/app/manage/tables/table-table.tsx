@@ -1,5 +1,6 @@
 'use client'
 
+import {Button} from '@/components/ui/button'
 import {DotsHorizontalIcon} from '@radix-ui/react-icons'
 import {
   ColumnDef,
@@ -13,8 +14,20 @@ import {
   getSortedRowModel,
   useReactTable
 } from '@tanstack/react-table'
-import {Button} from '@/components/ui/button'
 
+import AddTable from '@/app/manage/tables/add-table'
+import EditTable from '@/app/manage/tables/edit-table'
+import AutoPagination from '@/components/auto-pagination'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle
+} from '@/components/ui/alert-dialog'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,23 +45,17 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
-import {createContext, useContext, useEffect, useState} from 'react'
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle
-} from '@/components/ui/alert-dialog'
-import {getVietnameseTableStatus} from '@/lib/utils'
-import {useSearchParams} from 'next/navigation'
-import AutoPagination from '@/components/auto-pagination'
+  getTableLink,
+  getVietnameseTableStatus,
+  handleErrorApi
+} from '@/lib/utils'
+import {useDeleteTableMutation, useGetTableList} from '@/queries/useTable'
 import {TableListResType} from '@/schemaValidations/table.schema'
-import EditTable from '@/app/manage/tables/edit-table'
-import AddTable from '@/app/manage/tables/add-table'
+import {useSearchParams} from 'next/navigation'
+import {createContext, useContext, useEffect, useState} from 'react'
+import QRCodeTable from '@/components/qrcode.table'
+import {toast} from '@/hooks/use-toast'
 
 type TableItem = TableListResType['data'][0]
 
@@ -68,7 +75,11 @@ export const columns: ColumnDef<TableItem>[] = [
   {
     accessorKey: 'number',
     header: 'Số bàn',
-    cell: ({row}) => <div className="capitalize">{row.getValue('number')}</div>
+    cell: ({row}) => <div className="capitalize">{row.getValue('number')}</div>,
+    filterFn: (rows, columnId, filterValue) => {
+      if (!filterValue) return true
+      return String(filterValue) === String(rows.getValue('number'))
+    }
   },
   {
     accessorKey: 'capacity',
@@ -87,7 +98,14 @@ export const columns: ColumnDef<TableItem>[] = [
   {
     accessorKey: 'token',
     header: 'QR Code',
-    cell: ({row}) => <div>{row.getValue('number')}</div>
+    cell: ({row}) => (
+      <div>
+        <QRCodeTable
+          token={row.getValue('token')}
+          tableNumber={row.getValue('number')}
+        />
+      </div>
+    )
   },
   {
     id: 'actions',
@@ -128,6 +146,21 @@ function AlertDialogDeleteTable({
   tableDelete: TableItem | null
   setTableDelete: (value: TableItem | null) => void
 }) {
+  const {mutateAsync} = useDeleteTableMutation()
+  const deleteTable = async () => {
+    if (tableDelete) {
+      try {
+        const result = await mutateAsync(tableDelete.number)
+        setTableDelete(null)
+        toast({
+          title: result.payload.message
+        })
+      } catch (error) {
+        handleErrorApi({error})
+      }
+    }
+  }
+
   return (
     <AlertDialog
       open={Boolean(tableDelete)}
@@ -149,8 +182,8 @@ function AlertDialogDeleteTable({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <AlertDialogCancel>Huỷ</AlertDialogCancel>
+          <AlertDialogAction onClick={deleteTable}>Xác nhận</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
@@ -165,7 +198,8 @@ export default function TableTable() {
   // const params = Object.fromEntries(searchParam.entries())
   const [tableIdEdit, setTableIdEdit] = useState<number | undefined>()
   const [tableDelete, setTableDelete] = useState<TableItem | null>(null)
-  const data: any[] = []
+  const tableListQuery = useGetTableList()
+  const data = tableListQuery.data?.payload.data ?? []
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
