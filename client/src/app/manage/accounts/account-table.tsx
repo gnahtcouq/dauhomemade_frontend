@@ -53,6 +53,7 @@ import {
 } from '@/schemaValidations/account.schema'
 import {useSearchParams} from 'next/navigation'
 import {createContext, useContext, useEffect, useState} from 'react'
+import {useGetAccountList} from '@/queries/useAccount'
 
 type AccountItem = AccountListResType['data'][0]
 
@@ -104,8 +105,7 @@ export const columns: ColumnDef<AccountType>[] = [
           <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       )
-    },
-    cell: ({row}) => <div className="lowercase">{row.getValue('email')}</div>
+    }
   },
   {
     id: 'actions',
@@ -129,7 +129,7 @@ export const columns: ColumnDef<AccountType>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>Hành động</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={openEditEmployee}>Sửa</DropdownMenuItem>
             <DropdownMenuItem onClick={openDeleteEmployee}>
@@ -170,8 +170,8 @@ function AlertDialogDeleteAccount({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <AlertDialogCancel>Huỷ</AlertDialogCancel>
+          <AlertDialogAction>Xác nhận</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
@@ -186,7 +186,8 @@ export default function AccountTable() {
   // const params = Object.fromEntries(searchParam.entries())
   const [employeeIdEdit, setEmployeeIdEdit] = useState<number | undefined>()
   const [employeeDelete, setEmployeeDelete] = useState<AccountItem | null>(null)
-  const data: any[] = []
+  const accountListQuery = useGetAccountList()
+  const data = accountListQuery.data?.payload.data ?? []
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
@@ -246,7 +247,7 @@ export default function AccountTable() {
         />
         <div className="flex items-center py-4">
           <Input
-            placeholder="Filter emails..."
+            placeholder="Tìm kiếm theo email..."
             value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
             onChange={(event) =>
               table.getColumn('email')?.setFilterValue(event.target.value)
@@ -300,7 +301,7 @@ export default function AccountTable() {
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    No results.
+                    Không có kết quả.
                   </TableCell>
                 </TableRow>
               )}
