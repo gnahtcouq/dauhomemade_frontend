@@ -74,11 +74,21 @@ const AccountTableContext = createContext<{
 export const columns: ColumnDef<AccountType>[] = [
   {
     accessorKey: 'id',
-    header: 'ID'
+    header: ({column}) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          ID
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    }
   },
   {
     accessorKey: 'avatar',
-    header: 'Avatar',
+    header: 'Ảnh đại diện',
     cell: ({row}) => (
       <div>
         <Avatar className="aspect-square w-[100px] h-[100px] rounded-md object-cover">
@@ -264,7 +274,15 @@ export default function AccountTable() {
           employeeDelete={employeeDelete}
           setEmployeeDelete={setEmployeeDelete}
         />
-        <div className="flex items-center py-4">
+        <div className="flex items-center py-4 gap-2">
+          <Input
+            placeholder="Tìm kiếm theo tên..."
+            value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
+            onChange={(event) =>
+              table.getColumn('name')?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
           <Input
             placeholder="Tìm kiếm theo email..."
             value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
