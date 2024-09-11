@@ -148,7 +148,7 @@ export default function EditEmployee({
                       <Avatar className="aspect-square w-[100px] h-[100px] rounded-md object-cover">
                         <AvatarImage src={previewAvatarFromFile} />
                         <AvatarFallback className="rounded-none">
-                          {name || 'Avatar'}
+                          {name || 'Ảnh đại diện'}
                         </AvatarFallback>
                       </Avatar>
                       <input

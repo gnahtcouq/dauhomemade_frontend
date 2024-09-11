@@ -136,7 +136,9 @@ export default function EditDish({
       <DialogContent className="sm:max-w-[600px] max-h-screen overflow-auto">
         <DialogHeader>
           <DialogTitle>Cập nhật món ăn</DialogTitle>
-          <DialogDescription>Các trường tên, ảnh là bắt buộc</DialogDescription>
+          <DialogDescription>
+            Các trường tên, ảnh, giá là bắt buộc
+          </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form

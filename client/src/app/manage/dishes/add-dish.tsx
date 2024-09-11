@@ -4,6 +4,7 @@ import {Button} from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -118,6 +119,9 @@ export default function AddDish() {
       <DialogContent className="sm:max-w-[600px] max-h-screen overflow-auto">
         <DialogHeader>
           <DialogTitle>Thêm món ăn</DialogTitle>
+          <DialogDescription>
+            Các trường tên, ảnh, giá là bắt buộc
+          </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form
