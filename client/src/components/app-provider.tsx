@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
