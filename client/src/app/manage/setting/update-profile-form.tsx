@@ -99,12 +99,13 @@ export default function UpdateProfileForm() {
             <CardTitle>Thông tin cá nhân</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid gap-6">
+            <div className="grid gap-8">
               <FormField
                 control={form.control}
                 name="avatar"
                 render={({field}) => (
                   <FormItem>
+                    <Label htmlFor="avatar">Ảnh đại diện</Label>
                     <div className="flex gap-2 items-start justify-start">
                       <Avatar className="aspect-square w-[100px] h-[100px] rounded-md object-cover">
                         <AvatarImage src={previewAvatar} />
