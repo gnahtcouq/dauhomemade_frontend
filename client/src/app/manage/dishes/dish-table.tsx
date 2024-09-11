@@ -1,7 +1,7 @@
 'use client'
 
 import {Button} from '@/components/ui/button'
-import {DotsHorizontalIcon} from '@radix-ui/react-icons'
+import {CaretSortIcon, DotsHorizontalIcon} from '@radix-ui/react-icons'
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -46,7 +46,13 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
-import {formatCurrency, getVietnameseDishStatus} from '@/lib/utils'
+import {toast} from '@/hooks/use-toast'
+import {
+  formatCurrency,
+  getVietnameseDishStatus,
+  handleErrorApi
+} from '@/lib/utils'
+import {useDeleteDishMutation, useGetDishList} from '@/queries/useDish'
 import {DishListResType} from '@/schemaValidations/dish.schema'
 import {useSearchParams} from 'next/navigation'
 import {createContext, useContext, useEffect, useState} from 'react'
@@ -90,20 +96,32 @@ export const columns: ColumnDef<DishItem>[] = [
     cell: ({row}) => <div className="capitalize">{row.getValue('name')}</div>
   },
   {
-    accessorKey: 'price',
-    header: 'Giá cả',
-    cell: ({row}) => (
-      <div className="capitalize">{formatCurrency(row.getValue('price'))}</div>
-    )
-  },
-  {
     accessorKey: 'description',
     header: 'Mô tả',
+    cell: ({row}) => {
+      const description = row.getValue('description') as string
+      const shortDescription =
+        description.length > 30
+          ? description.substring(0, 30) + '...'
+          : description
+      return <div className="whitespace-pre-line">{shortDescription}</div>
+    }
+  },
+  {
+    accessorKey: 'price',
+    header: ({column}) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Giá cả
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({row}) => (
-      <div
-        dangerouslySetInnerHTML={{__html: row.getValue('description')}}
-        className="whitespace-pre-line"
-      />
+      <div className="capitalize">{formatCurrency(row.getValue('price'))}</div>
     )
   },
   {
@@ -134,7 +152,7 @@ export const columns: ColumnDef<DishItem>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>Hành động</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={openEditDish}>Sửa</DropdownMenuItem>
             <DropdownMenuItem onClick={openDeleteDish}>Xóa</DropdownMenuItem>
@@ -152,6 +170,21 @@ function AlertDialogDeleteDish({
   dishDelete: DishItem | null
   setDishDelete: (value: DishItem | null) => void
 }) {
+  const {mutateAsync} = useDeleteDishMutation()
+  const deleteDish = async () => {
+    if (dishDelete) {
+      try {
+        const result = await mutateAsync(dishDelete.id)
+        setDishDelete(null)
+        toast({
+          title: result.payload.message
+        })
+      } catch (error) {
+        handleErrorApi({error})
+      }
+    }
+  }
+
   return (
     <AlertDialog
       open={Boolean(dishDelete)}
@@ -173,8 +206,8 @@ function AlertDialogDeleteDish({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <AlertDialogCancel>Huỷ</AlertDialogCancel>
+          <AlertDialogAction onClick={deleteDish}>Xác nhận</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
@@ -188,7 +221,8 @@ export default function DishTable() {
   const pageIndex = page - 1
   const [dishIdEdit, setDishIdEdit] = useState<number | undefined>()
   const [dishDelete, setDishDelete] = useState<DishItem | null>(null)
-  const data: any[] = []
+  const dishListQuery = useGetDishList()
+  const data = dishListQuery.data?.payload.data ?? []
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})

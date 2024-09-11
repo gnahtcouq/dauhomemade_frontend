@@ -74,17 +74,7 @@ const AccountTableContext = createContext<{
 export const columns: ColumnDef<AccountType>[] = [
   {
     accessorKey: 'id',
-    header: ({column}) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          ID
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    }
+    header: 'ID'
   },
   {
     accessorKey: 'avatar',
@@ -176,6 +166,7 @@ function AlertDialogDeleteAccount({
       }
     }
   }
+
   return (
     <AlertDialog
       open={Boolean(employeeDelete)}

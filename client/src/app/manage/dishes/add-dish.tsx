@@ -27,7 +27,10 @@ import {
 } from '@/components/ui/select'
 import {Textarea} from '@/components/ui/textarea'
 import {DishStatus, DishStatusValues} from '@/constants/type'
-import {getVietnameseDishStatus} from '@/lib/utils'
+import {toast} from '@/hooks/use-toast'
+import {getVietnameseDishStatus, handleErrorApi} from '@/lib/utils'
+import {useAddDishMutation} from '@/queries/useDish'
+import {useUploadMediaMutation} from '@/queries/useMedia'
 import {
   CreateDishBody,
   CreateDishBodyType
@@ -40,6 +43,8 @@ import {useForm} from 'react-hook-form'
 export default function AddDish() {
   const [file, setFile] = useState<File | null>(null)
   const [open, setOpen] = useState(false)
+  const addDishMutation = useAddDishMutation()
+  const uploadMediaMutation = useUploadMediaMutation()
   const imageInputRef = useRef<HTMLInputElement | null>(null)
   const form = useForm<CreateDishBodyType>({
     resolver: zodResolver(CreateDishBody),
@@ -60,6 +65,38 @@ export default function AddDish() {
     return image
   }, [file, image])
 
+  const reset = () => {
+    form.reset()
+    setFile(null)
+  }
+
+  const onSubmit = async (values: CreateDishBodyType) => {
+    if (addDishMutation.isPending) return
+    try {
+      let body = values
+      if (file) {
+        const formData = new FormData()
+        formData.append('file', file)
+        const uploadImageResult = await uploadMediaMutation.mutateAsync(
+          formData
+        )
+        const imageUrl = uploadImageResult.payload.data
+        body = {...values, image: imageUrl}
+      }
+      const result = await addDishMutation.mutateAsync(body)
+      toast({
+        description: result.payload.message
+      })
+      reset()
+      setOpen(false)
+    } catch (error) {
+      handleErrorApi({
+        error,
+        setError: form.setError
+      })
+    }
+  }
+
   return (
     <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger asChild>
@@ -79,6 +116,9 @@ export default function AddDish() {
             noValidate
             className="grid auto-rows-max items-start gap-4 md:gap-8"
             id="add-dish-form"
+            onSubmit={form.handleSubmit(onSubmit, (e) => {
+              console.log(e)
+            })}
           >
             <div className="grid gap-4 py-4">
               <FormField

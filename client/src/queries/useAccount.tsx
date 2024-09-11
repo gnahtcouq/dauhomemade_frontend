@@ -36,7 +36,7 @@ export const useGetAccount = ({
   enabled: boolean
 }) => {
   return useQuery({
-    queryKey: ['account', id],
+    queryKey: ['accounts', id],
     queryFn: () => accountApiRequest.getEmployee(id),
     enabled
   })
