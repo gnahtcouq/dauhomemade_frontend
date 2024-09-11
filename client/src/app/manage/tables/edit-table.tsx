@@ -132,7 +132,7 @@ export default function EditTable({
             <div className="grid gap-4 py-4">
               <FormItem>
                 <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                  <Label htmlFor="name">Số hiệu bàn</Label>
+                  <Label htmlFor="name">Số bàn</Label>
                   <div className="col-span-3 w-full space-y-2">
                     <Input
                       id="number"
@@ -151,7 +151,7 @@ export default function EditTable({
                 render={({field}) => (
                   <FormItem>
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                      <Label htmlFor="price">Sức chứa (người)</Label>
+                      <Label htmlFor="price">Số người</Label>
                       <div className="col-span-3 w-full space-y-2">
                         <Input
                           id="capacity"
