@@ -16,6 +16,20 @@ import {
 
 import {Button} from '@/components/ui/button'
 
+import AddEmployee from '@/app/manage/accounts/add-employee'
+import EditEmployee from '@/app/manage/accounts/edit-employee'
+import AutoPagination from '@/components/auto-pagination'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle
+} from '@/components/ui/alert-dialog'
+import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -37,22 +51,8 @@ import {
   AccountListResType,
   AccountType
 } from '@/schemaValidations/account.schema'
-import AddEmployee from '@/app/manage/accounts/add-employee'
-import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
-import EditEmployee from '@/app/manage/accounts/edit-employee'
-import {createContext, useContext, useEffect, useState} from 'react'
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle
-} from '@/components/ui/alert-dialog'
 import {useSearchParams} from 'next/navigation'
-import AutoPagination from '@/components/auto-pagination'
+import {createContext, useContext, useEffect, useState} from 'react'
 
 type AccountItem = AccountListResType['data'][0]
 

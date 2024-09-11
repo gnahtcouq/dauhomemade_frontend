@@ -5,6 +5,8 @@ import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card'
 import {Form, FormField, FormItem, FormMessage} from '@/components/ui/form'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
+import {toast} from '@/hooks/use-toast'
+import {handleErrorApi} from '@/lib/utils'
 import {useAccountMe, useUpdateMeMutation} from '@/queries/useAccount'
 import {
   UpdateMeBody,
@@ -15,8 +17,6 @@ import {Upload} from 'lucide-react'
 import {useEffect, useMemo, useRef, useState} from 'react'
 import {useForm} from 'react-hook-form'
 import {useUploadMediaMutation} from '../../../queries/useMedia'
-import {toast} from '@/hooks/use-toast'
-import {handleErrorApi} from '@/lib/utils'
 
 export default function UpdateProfileForm() {
   const [file, setFile] = useState<File | null>(null)
