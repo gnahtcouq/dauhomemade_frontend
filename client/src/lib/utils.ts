@@ -87,10 +87,13 @@ export const checkAndRefreshToken = async (param?: {
 
   // Thời điểm hết hạn của token tính theo epoch time(s)
   // Còn khi dùng cú pháp new Date().getTime() thì sẽ ra epoch time(ms)
-  const now = Math.floor(new Date().getTime() / 1000)
+  const now = Math.floor(new Date().getTime() / 1000) - 1
 
-  // Trường hợp refreshToken hết hạn thì không xử lý
-  if (decodedRefreshToken.exp < now) return
+  // Trường hợp refreshToken hết hạn thì cho logout
+  if (decodedRefreshToken.exp < now) {
+    removeTokensFromLocalStorage()
+    return param?.onError && param.onError()
+  }
 
   // Nếu accessToken có thời gian là 10s
   // Thì kiểm tra nếu còn 1/3 thời gian (3s) thì refresh token
