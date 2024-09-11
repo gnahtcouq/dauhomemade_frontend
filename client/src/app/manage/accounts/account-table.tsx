@@ -47,13 +47,15 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
+import {toast} from '@/hooks/use-toast'
+import {handleErrorApi} from '@/lib/utils'
+import {useDeleteAccountMutation, useGetAccountList} from '@/queries/useAccount'
 import {
   AccountListResType,
   AccountType
 } from '@/schemaValidations/account.schema'
 import {useSearchParams} from 'next/navigation'
 import {createContext, useContext, useEffect, useState} from 'react'
-import {useGetAccountList} from '@/queries/useAccount'
 
 type AccountItem = AccountListResType['data'][0]
 
@@ -120,6 +122,7 @@ export const columns: ColumnDef<AccountType>[] = [
       const openDeleteEmployee = () => {
         setEmployeeDelete(row.original)
       }
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -149,6 +152,20 @@ function AlertDialogDeleteAccount({
   employeeDelete: AccountItem | null
   setEmployeeDelete: (value: AccountItem | null) => void
 }) {
+  const {mutateAsync} = useDeleteAccountMutation()
+  const deleteAccount = async () => {
+    if (employeeDelete) {
+      try {
+        const result = await mutateAsync(employeeDelete.id)
+        setEmployeeDelete(null)
+        toast({
+          title: result.payload.message
+        })
+      } catch (error) {
+        handleErrorApi({error})
+      }
+    }
+  }
   return (
     <AlertDialog
       open={Boolean(employeeDelete)}
@@ -171,7 +188,9 @@ function AlertDialogDeleteAccount({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Huỷ</AlertDialogCancel>
-          <AlertDialogAction>Xác nhận</AlertDialogAction>
+          <AlertDialogAction onClick={deleteAccount}>
+            Xác nhận
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
