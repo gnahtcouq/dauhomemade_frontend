@@ -56,6 +56,7 @@ import {useDeleteDishMutation, useGetDishList} from '@/queries/useDish'
 import {DishListResType} from '@/schemaValidations/dish.schema'
 import {useSearchParams} from 'next/navigation'
 import {createContext, useContext, useEffect, useState} from 'react'
+import DOMPurify from 'dompurify'
 
 type DishItem = DishListResType['data'][0]
 
@@ -99,7 +100,9 @@ export const columns: ColumnDef<DishItem>[] = [
     accessorKey: 'description',
     header: 'Mô tả',
     cell: ({row}) => {
-      const description = row.getValue('description') as string
+      const description = DOMPurify.sanitize(
+        row.getValue('description')
+      ) as string
       const shortDescription =
         description.length > 30
           ? description.substring(0, 30) + '...'
