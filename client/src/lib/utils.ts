@@ -1,6 +1,7 @@
 import authApiRequest from '@/apiRequests/auth'
+import guestApiRequest from '@/apiRequests/guest'
 import envConfig from '@/config'
-import {DishStatus, OrderStatus, TableStatus} from '@/constants/type'
+import {DishStatus, OrderStatus, Role, TableStatus} from '@/constants/type'
 import {toast} from '@/hooks/use-toast'
 import {EntityError} from '@/lib/http'
 import {TokenPayload} from '@/types/jwt.types'
@@ -102,7 +103,11 @@ export const checkAndRefreshToken = async (param?: {
   ) {
     // Gọi API refresh token
     try {
-      const res = await authApiRequest.refreshToken()
+      const role = decodedRefreshToken.role
+      const res =
+        role === Role.Guest
+          ? await guestApiRequest.refreshToken()
+          : await authApiRequest.refreshToken()
       setAccessTokenToLocalStorage(res.payload.data.accessToken)
       setRefreshTokenToLocalStorage(res.payload.data.refreshToken)
       param?.onSuccess && param.onSuccess()
