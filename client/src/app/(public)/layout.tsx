@@ -2,7 +2,8 @@ import NavItems from '@/app/(public)/nav-items'
 import DarkModeToggle from '@/components/dark-mode-toggle'
 import {Button} from '@/components/ui/button'
 import {Sheet, SheetContent, SheetTrigger} from '@/components/ui/sheet'
-import {Menu, Package2} from 'lucide-react'
+import {Menu} from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 
 export default function Layout({
@@ -12,14 +13,21 @@ export default function Layout({
 }>) {
   return (
     <div className="flex min-h-screen w-full flex-col relative">
-      <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
+      <header className="sticky z-20 top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
         <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
           <Link
-            href="#"
+            href="/"
             className="flex items-center gap-2 text-lg font-semibold md:text-base"
           >
-            <Package2 className="h-6 w-6" />
-            <span className="sr-only">Đậu Homemade</span>
+            <Image
+              src="/logo.png"
+              width={50}
+              height={50}
+              quality={100}
+              alt="Banner"
+              className="h-12 w-12"
+            />
+            <span className="sr-only">ĐẬU HOMEMADE</span>
           </Link>
           <NavItems className="text-muted-foreground transition-colors hover:text-foreground flex-shrink-0" />
         </nav>
@@ -40,8 +48,15 @@ export default function Layout({
                 href="#"
                 className="flex items-center gap-2 text-lg font-semibold"
               >
-                <Package2 className="h-6 w-6" />
-                <span className="sr-only">Đậu Homemade</span>
+                <Image
+                  src="/logo.png"
+                  width={50}
+                  height={50}
+                  quality={100}
+                  alt="Banner"
+                  className="h-12 w-12"
+                />
+                <span className="sr-only">ĐẬU HOMEMADE</span>
               </Link>
 
               <NavItems className="text-muted-foreground transition-colors hover:text-foreground" />

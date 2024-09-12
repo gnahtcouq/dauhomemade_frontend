@@ -56,6 +56,11 @@ export default function DropdownAvatar() {
         <DropdownMenuLabel>{account?.name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
+          <Link href={'/'} className="cursor-pointer">
+            Trang chủ
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
           <Link href={'/manage/setting'} className="cursor-pointer">
             Cài đặt
           </Link>

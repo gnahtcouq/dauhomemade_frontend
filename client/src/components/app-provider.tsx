@@ -59,7 +59,6 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
         <RefreshToken />
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
-      s
     </AppContext.Provider>
   )
 }

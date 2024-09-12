@@ -1,51 +1,72 @@
+import dishApiRequest from '@/apiRequests/dish'
+import {DishListResType} from '@/schemaValidations/dish.schema'
 import Image from 'next/image'
+import {formatCurrency} from '../../lib/utils'
 
-export default function Home() {
+export default async function Home() {
+  let dishList: DishListResType['data'] = []
+  try {
+    const result = await dishApiRequest.list()
+    const {
+      payload: {data}
+    } = result
+    dishList = data
+  } catch (error) {
+    return <div>Something went wrong</div>
+  }
+
+  const truncateDescription = (description: string, maxLength: number) => {
+    if (description.length <= maxLength) return description
+    const truncated = description.slice(0, maxLength)
+    const lastSpace = truncated.lastIndexOf(' ')
+    if (lastSpace === -1) {
+      return truncated + '...'
+    }
+    return truncated.slice(0, lastSpace) + '...'
+  }
+
   return (
     <div className="w-full space-y-4">
-      <div className="relative">
+      <section className="relative z-10">
         <span className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-10"></span>
         <Image
-          src="/banner.png"
-          width={400}
-          height={200}
+          src="/banner.jpg"
+          width={1200}
+          height={600}
           quality={100}
           alt="Banner"
           className="absolute top-0 left-0 w-full h-full object-cover"
         />
         <div className="z-20 relative py-10 md:py-20 px-4 sm:px-10 md:px-20">
-          <h1 className="text-center text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold">
-            Đậu Homemade
+          <h1 className="text-center text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold text-white">
+            ĐẬU HOMEMADE
           </h1>
-          <p className="text-center text-sm sm:text-base mt-4">
+          <p className="text-center text-sm sm:text-base mt-4 text-white">
             TÂN THỜI - MÁT MẺ - TIỆN NGHI
           </p>
         </div>
-      </div>
+      </section>
       <section className="space-y-10 py-16">
-        <h2 className="text-center text-2xl font-bold">Đa dạng các món ăn</h2>
+        <h2 className="text-center text-2xl font-bold">Món ngon tại ĐẬU</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
-          {Array(4)
-            .fill(0)
-            .map((_, index) => (
-              <div className="flex gap-4 w" key={index}>
-                <div className="flex-shrink-0">
-                  <img
-                    src="https://ik.imagekit.io/freeflo/production/6b91c700-92c4-4601-8e96-37d84ac3c28c.png?tr=w-2048,q-75&alt=media&pr-true"
-                    className="object-cover w-[150px] h-[150px] rounded-md"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <h3 className="text-xl font-semibold">
-                    Bún đậu Homemade đặc biệt
-                  </h3>
-                  <p className="">
-                    Là phiên bản đầy đủ topping, bao gồm bún lá,...
-                  </p>
-                  <p className="font-semibold">249,000đ</p>
-                </div>
+          {dishList.map((dish) => (
+            <div className="flex gap-4 w" key={dish.id}>
+              <div className="flex-shrink-0">
+                <img
+                  src={dish.image}
+                  width={150}
+                  height={150}
+                  alt={dish.name}
+                  className="object-cover w-[150px] h-[150px] rounded-md"
+                />
               </div>
-            ))}
+              <div className="space-y-1">
+                <h3 className="text-xl font-semibold">{dish.name}</h3>
+                <p className="">{truncateDescription(dish.description, 150)}</p>
+                <p className="font-semibold">{formatCurrency(dish.price)}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
     </div>
