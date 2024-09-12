@@ -1,7 +1,7 @@
 import dishApiRequest from '@/apiRequests/dish'
 import {DishListResType} from '@/schemaValidations/dish.schema'
 import Image from 'next/image'
-import {formatCurrency} from '../../lib/utils'
+import {formatCurrency, truncateDescription} from '../../lib/utils'
 
 export default async function Home() {
   let dishList: DishListResType['data'] = []
@@ -13,16 +13,6 @@ export default async function Home() {
     dishList = data
   } catch (error) {
     return <div>Something went wrong</div>
-  }
-
-  const truncateDescription = (description: string, maxLength: number) => {
-    if (description.length <= maxLength) return description
-    const truncated = description.slice(0, maxLength)
-    const lastSpace = truncated.lastIndexOf(' ')
-    if (lastSpace === -1) {
-      return truncated + '...'
-    }
-    return truncated.slice(0, lastSpace) + '...'
   }
 
   return (

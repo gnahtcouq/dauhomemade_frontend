@@ -1,4 +1,5 @@
 'use client'
+import revalidateApiRequest from '@/apiRequests/revalidate'
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import {Button} from '@/components/ui/button'
 import {
@@ -73,6 +74,7 @@ export default function AddDish() {
 
   const onSubmit = async (values: CreateDishBodyType) => {
     if (addDishMutation.isPending) return
+
     try {
       let body = values
       if (file) {
@@ -85,6 +87,7 @@ export default function AddDish() {
         body = {...values, image: imageUrl}
       }
       const result = await addDishMutation.mutateAsync(body)
+      await revalidateApiRequest('dishes')
       toast({
         description: result.payload.message
       })

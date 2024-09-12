@@ -1,10 +1,17 @@
-import { DishStatusValues } from '@/constants/type'
+import {DishStatusValues} from '@/constants/type'
 import z from 'zod'
 
 export const CreateDishBody = z.object({
-  name: z.string().min(1).max(256),
-  price: z.coerce.number().positive(),
-  description: z.string().max(10000),
+  name: z
+    .string()
+    .min(1, {message: 'Tên món ăn không được để trống'})
+    .max(256, {message: 'Tên món ăn không được vượt quá 256 ký tự'}),
+  price: z.coerce.number().positive({
+    message: 'Giá tiền phải lớn hơn 0'
+  }),
+  description: z.string().max(10000, {
+    message: 'Mô tả không được vượt quá 10000 ký tự'
+  }),
   image: z.string().url(),
   status: z.enum(DishStatusValues).optional()
 })

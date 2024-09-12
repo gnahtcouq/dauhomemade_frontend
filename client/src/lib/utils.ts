@@ -211,3 +211,13 @@ export const OrderStatusIcon = {
   [OrderStatus.Delivered]: Truck,
   [OrderStatus.Paid]: HandCoins
 }
+
+export const truncateDescription = (description: string, maxLength: number) => {
+  if (description.length <= maxLength) return description
+  const truncated = description.slice(0, maxLength)
+  const lastSpace = truncated.lastIndexOf(' ')
+  if (lastSpace === -1) {
+    return truncated + '...'
+  }
+  return truncated.slice(0, lastSpace) + '...'
+}

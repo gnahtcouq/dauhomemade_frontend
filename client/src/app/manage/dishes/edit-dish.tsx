@@ -1,4 +1,5 @@
 'use client'
+import revalidateApiRequest from '@/apiRequests/revalidate'
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import {Button} from '@/components/ui/button'
 import {
@@ -106,6 +107,7 @@ export default function EditDish({
         body = {...body, image: imageUrl}
       }
       const result = await updateDishMutation.mutateAsync(body)
+      await revalidateApiRequest('dishes')
       toast({
         description: result.payload.message
       })

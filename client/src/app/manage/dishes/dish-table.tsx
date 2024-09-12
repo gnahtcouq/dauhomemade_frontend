@@ -50,7 +50,8 @@ import {toast} from '@/hooks/use-toast'
 import {
   formatCurrency,
   getVietnameseDishStatus,
-  handleErrorApi
+  handleErrorApi,
+  truncateDescription
 } from '@/lib/utils'
 import {useDeleteDishMutation, useGetDishList} from '@/queries/useDish'
 import {DishListResType} from '@/schemaValidations/dish.schema'
@@ -103,11 +104,11 @@ export const columns: ColumnDef<DishItem>[] = [
       const description = DOMPurify.sanitize(
         row.getValue('description')
       ) as string
-      const shortDescription =
-        description.length > 30
-          ? description.substring(0, 30) + '...'
-          : description
-      return <div className="whitespace-pre-line">{shortDescription}</div>
+      return (
+        <div className="whitespace-pre-line">
+          {truncateDescription(description, 50)}
+        </div>
+      )
     }
   },
   {
