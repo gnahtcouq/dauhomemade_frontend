@@ -104,7 +104,7 @@ export default function LoginForm() {
                   <FormItem>
                     <div className="grid gap-2">
                       <div className="flex items-center">
-                        <Label htmlFor="password">Password</Label>
+                        <Label htmlFor="password">Mật khẩu</Label>
                       </div>
                       <Input
                         id="password"
