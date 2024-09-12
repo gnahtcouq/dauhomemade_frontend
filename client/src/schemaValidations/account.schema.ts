@@ -32,7 +32,7 @@ export const CreateEmployeeAccountBody = z
       .string()
       .trim()
       .min(2, {message: 'Tên phải có ít nhất 2 ký tự'})
-      .max(256, {message: 'Tên không được vượt quá 256 ký tự'}),
+      .max(50, {message: 'Tên không được vượt quá 50 ký tự'}),
     email: z.string().email({message: 'Địa chỉ email không hợp lệ'}),
     avatar: z.string().url().optional(),
     password: z

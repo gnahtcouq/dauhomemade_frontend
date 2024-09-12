@@ -1,10 +1,17 @@
-import { DishStatusValues, RoleValues } from '@/constants/type'
-import { AccountSchema } from '@/schemaValidations/account.schema'
+import {DishStatusValues, RoleValues} from '@/constants/type'
+import {AccountSchema} from '@/schemaValidations/account.schema'
 import z from 'zod'
 
 export const GuestLoginBody = z
   .object({
-    name: z.string(),
+    name: z
+      .string()
+      .min(2, {
+        message: 'Tên phải có ít nhất 2 ký tự'
+      })
+      .max(50, {
+        message: 'Tên không được vượt quá 50 ký tự'
+      }),
     tableNumber: z.number(),
     token: z.string()
   })

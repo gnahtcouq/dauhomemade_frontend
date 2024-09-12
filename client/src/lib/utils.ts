@@ -3,6 +3,7 @@ import envConfig from '@/config'
 import {DishStatus, OrderStatus, TableStatus} from '@/constants/type'
 import {toast} from '@/hooks/use-toast'
 import {EntityError} from '@/lib/http'
+import {TokenPayload} from '@/types/jwt.types'
 import {clsx, type ClassValue} from 'clsx'
 // import {format} from 'date-fns'
 import jwt from 'jsonwebtoken'
@@ -80,14 +81,8 @@ export const checkAndRefreshToken = async (param?: {
   if (!accessToken || !refreshToken) return
 
   // Check token hết hạn
-  const decodedAccessToken = jwt.decode(accessToken) as {
-    exp: number
-    iat: number
-  }
-  const decodedRefreshToken = jwt.decode(refreshToken) as {
-    exp: number
-    iat: number
-  }
+  const decodedAccessToken = decodeToken(accessToken)
+  const decodedRefreshToken = decodeToken(refreshToken)
 
   // Thời điểm hết hạn của token tính theo epoch time(s)
   // Còn khi dùng cú pháp new Date().getTime() thì sẽ ra epoch time(ms)
@@ -210,6 +205,10 @@ export const OrderStatusIcon = {
   [OrderStatus.Rejected]: BookX,
   [OrderStatus.Delivered]: Truck,
   [OrderStatus.Paid]: HandCoins
+}
+
+export const decodeToken = (token: string) => {
+  return jwt.decode(token) as TokenPayload
 }
 
 export const truncateDescription = (description: string, maxLength: number) => {
