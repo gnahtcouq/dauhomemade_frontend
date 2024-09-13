@@ -5,6 +5,10 @@ const nextConfig = {
             {
                 hostname: 'localhost',
                 pathname: '/**'
+            },
+            {
+                hostname: 'via.placeholder.com',
+                pathname: '/**'
             }
         ]
     }
