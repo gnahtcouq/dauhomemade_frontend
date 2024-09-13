@@ -16,6 +16,7 @@ import {
   removeTokensFromLocalStorage
 } from '@/lib/utils'
 import {RoleType} from '@/types/jwt.types'
+import {Socket} from 'socket.io-client'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,7 +30,9 @@ const queryClient = new QueryClient({
 const AppContext = createContext({
   isAuth: false,
   role: undefined as RoleType | undefined,
-  setRole: (role?: RoleType | undefined) => {}
+  setRole: (role?: RoleType | undefined) => {},
+  socket: undefined as Socket | undefined,
+  setSocket: (socket?: Socket | undefined) => {}
 })
 
 export const useAppContext = () => {
@@ -37,6 +40,7 @@ export const useAppContext = () => {
 }
 
 export default function AppProvider({children}: {children: React.ReactNode}) {
+  const [socket, setSocket] = useState<Socket | undefined>()
   const [role, setRoleState] = useState<RoleType | undefined>()
 
   useEffect(() => {
@@ -55,7 +59,7 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
   const isAuth = Boolean(role)
 
   return (
-    <AppContext.Provider value={{role, setRole, isAuth}}>
+    <AppContext.Provider value={{role, setRole, isAuth, socket, setSocket}}>
       <QueryClientProvider client={queryClient}>
         {children}
         <RefreshToken />
