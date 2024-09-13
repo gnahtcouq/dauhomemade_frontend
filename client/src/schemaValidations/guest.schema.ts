@@ -34,16 +34,23 @@ export const GuestLoginRes = z.object({
 
 export type GuestLoginResType = z.TypeOf<typeof GuestLoginRes>
 
-export const GuestCreateOrdersBody = z
-  .object({
-    orders: z.array(
-      z.object({
-        dishId: z.number(),
-        quantity: z.number()
-      })
-    )
+// export const GuestCreateOrdersBody = z
+//   .object({
+//     orders: z.array(
+//       z.object({
+//         dishId: z.number(),
+//         quantity: z.number()
+//       })
+//     )
+//   })
+//   .strict()
+
+export const GuestCreateOrdersBody = z.array(
+  z.object({
+    dishId: z.number(),
+    quantity: z.number()
   })
-  .strict()
+)
 
 export type GuestCreateOrdersBodyType = z.TypeOf<typeof GuestCreateOrdersBody>
 const DishSnapshotSchema = z.object({
@@ -75,7 +82,8 @@ export const GuestCreateOrdersRes = z.object({
       dishSnapshot: DishSnapshotSchema,
       quantity: z.number(),
       orderHandlerId: z.number().nullable(),
-      orderHandler: AccountSchema.nullable()
+      orderHandler: AccountSchema.nullable(),
+      status: z.enum(['Pending', 'Processing', 'Rejected', 'Delivered'])
     })
   )
 })
