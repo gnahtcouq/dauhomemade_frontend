@@ -6,7 +6,10 @@ import {OrderStatus} from '@/constants/type'
 import {toast} from '@/hooks/use-toast'
 import {formatCurrency, getVietnameseOrderStatus} from '@/lib/utils'
 import {useGuestGetOrderListQuery} from '@/queries/useGuest'
-import {UpdateOrderResType} from '@/schemaValidations/order.schema'
+import {
+  PayGuestOrdersResType,
+  UpdateOrderResType
+} from '@/schemaValidations/order.schema'
 import Image from 'next/image'
 import {useEffect, useMemo} from 'react'
 
@@ -58,10 +61,6 @@ export default function OrderCart() {
     )
   }, [orders])
 
-  const totalItems = useMemo(() => {
-    return orders.reduce((total, order) => total + order.quantity, 0)
-  }, [orders])
-
   useEffect(() => {
     if (socket?.connected) {
       onConnect()
@@ -76,7 +75,6 @@ export default function OrderCart() {
     }
 
     function onUpdateOrder(data: UpdateOrderResType['data']) {
-      console.log(data)
       const {
         dishSnapshot: {name},
         quantity
@@ -89,14 +87,23 @@ export default function OrderCart() {
       refetch()
     }
 
+    function onPayment(data: PayGuestOrdersResType['data']) {
+      toast({
+        description: `Bạn đã thanh toán thành công ${data.length} đơn`
+      })
+      refetch()
+    }
+
     socket?.on('update-order', onUpdateOrder)
     socket?.on('connect', onConnect)
     socket?.on('disconnect', onDisconnect)
+    socket?.on('payment', onPayment)
 
     return () => {
       socket?.off('connect', onConnect)
       socket?.off('disconnect', onDisconnect)
       socket?.off('update-order', onUpdateOrder)
+      socket?.off('payment', onPayment)
     }
   }, [refetch, socket])
 
@@ -138,12 +145,14 @@ export default function OrderCart() {
           </div>
         </div>
       )}
-      <div className="sticky bottom-0">
-        <div className="w-full flex space-x-4 justify-between text-xl font-semibold">
-          <span>Đơn chưa thanh toán · {notYetPaid.quantity} món</span>
-          <span>{formatCurrency(notYetPaid.price)}</span>
+      {notYetPaid.quantity !== 0 && (
+        <div className="sticky bottom-0">
+          <div className="w-full flex space-x-4 justify-between text-xl font-semibold">
+            <span>Đơn chưa thanh toán · {notYetPaid.quantity} món</span>
+            <span>{formatCurrency(notYetPaid.price)}</span>
+          </div>
         </div>
-      </div>
+      )}
     </>
   )
 }
