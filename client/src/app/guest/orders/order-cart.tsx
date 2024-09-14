@@ -3,7 +3,6 @@
 import {useAppContext} from '@/components/app-provider'
 import {Badge} from '@/components/ui/badge'
 import {toast} from '@/hooks/use-toast'
-import socket from '@/lib/socket'
 import {formatCurrency, getVietnameseOrderStatus} from '@/lib/utils'
 import {useGuestGetOrderListQuery} from '@/queries/useGuest'
 import {UpdateOrderResType} from '@/schemaValidations/order.schema'
