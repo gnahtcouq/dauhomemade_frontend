@@ -32,6 +32,7 @@ import {formatDateTimeToLocaleString, simpleMatchText} from '@/lib/utils'
 import {Input} from '@/components/ui/input'
 import {GetListGuestsResType} from '@/schemaValidations/account.schema'
 import {endOfDay, format, startOfDay} from 'date-fns'
+import {useGetGuestListQuery} from '@/queries/useAccount'
 
 type GuestItem = GetListGuestsResType['data'][0]
 
@@ -41,7 +42,7 @@ export const columns: ColumnDef<GuestItem>[] = [
     header: 'Tên',
     cell: ({row}) => (
       <div className="capitalize">
-        {row.getValue('name')} | (#{row.original.id})
+        {row.getValue('name')} (#{row.original.id})
       </div>
     ),
     filterFn: (row, columnId, filterValue: string) => {
@@ -68,7 +69,7 @@ export const columns: ColumnDef<GuestItem>[] = [
   },
   {
     accessorKey: 'createdAt',
-    header: () => <div>Tạo</div>,
+    header: () => <div>Thời gian</div>,
     cell: ({row}) => (
       <div className="flex items-center space-x-4 text-sm">
         {formatDateTimeToLocaleString(row.getValue('createdAt'))}
@@ -89,7 +90,11 @@ export default function GuestsDialog({
   const [open, setOpen] = useState(false)
   const [fromDate, setFromDate] = useState(initFromDate)
   const [toDate, setToDate] = useState(initToDate)
-  const data: GetListGuestsResType['data'] = []
+  const guestListQuery = useGetGuestListQuery({
+    fromDate,
+    toDate
+  })
+  const data = guestListQuery.data?.payload.data ?? []
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})

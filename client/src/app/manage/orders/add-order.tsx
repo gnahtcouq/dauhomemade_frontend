@@ -16,9 +16,12 @@ import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
 import {Switch} from '@/components/ui/switch'
 import {DishStatus} from '@/constants/type'
-import {cn, formatCurrency} from '@/lib/utils'
+import {toast} from '@/hooks/use-toast'
+import {cn, formatCurrency, handleErrorApi} from '@/lib/utils'
+import {useCreateGuestMutation} from '@/queries/useAccount'
+import {useGetDishListQuery} from '@/queries/useDish'
+import {useCreateOrderMutation} from '@/queries/useOrder'
 import {GetListGuestsResType} from '@/schemaValidations/account.schema'
-import {DishListResType} from '@/schemaValidations/dish.schema'
 import {
   GuestLoginBody,
   GuestLoginBodyType
@@ -37,7 +40,8 @@ export default function AddOrder() {
   >(null)
   const [isNewGuest, setIsNewGuest] = useState(true)
   const [orders, setOrders] = useState<CreateOrdersBodyType['orders']>([])
-  const dishes: DishListResType['data'] = []
+  const {data} = useGetDishListQuery()
+  const dishes = useMemo(() => data?.payload.data ?? [], [data])
 
   const totalPrice = useMemo(() => {
     return dishes.reduce((result, dish) => {
@@ -46,6 +50,9 @@ export default function AddOrder() {
       return result + order.quantity * dish.price
     }, 0)
   }, [dishes, orders])
+
+  const createOrderMutation = useCreateOrderMutation()
+  const createGuestMutation = useCreateGuestMutation()
 
   const form = useForm<GuestLoginBodyType>({
     resolver: zodResolver(GuestLoginBody),
@@ -72,10 +79,49 @@ export default function AddOrder() {
     })
   }
 
-  const handleOrder = async () => {}
+  const handleOrder = async () => {
+    try {
+      let guestId = selectedGuest?.id
+      if (isNewGuest) {
+        const guestRes = await createGuestMutation.mutateAsync({
+          name,
+          tableNumber
+        })
+        guestId = guestRes.payload.data.id
+      }
+      if (!guestId) {
+        toast({
+          description: 'Hãy chọn một khách hàng',
+          variant: 'destructive'
+        })
+        return
+      }
+      await createOrderMutation.mutateAsync({
+        guestId,
+        orders
+      })
+      reset()
+    } catch (error) {
+      handleErrorApi({error, setError: form.setError})
+    }
+  }
+
+  const reset = () => {
+    form.reset()
+    setOrders([])
+    setSelectedGuest(null)
+    setIsNewGuest(true)
+    setOpen(false)
+  }
 
   return (
-    <Dialog onOpenChange={setOpen} open={open}>
+    <Dialog
+      onOpenChange={(value) => {
+        if (!value) reset()
+        setOpen(value)
+      }}
+      open={open}
+    >
       <DialogTrigger asChild>
         <Button size="sm" className="h-7 gap-1">
           <PlusCircle className="h-3.5 w-3.5" />
@@ -173,10 +219,10 @@ export default function AddOrder() {
                 'pointer-events-none': dish.status === DishStatus.Unavailable
               })}
             >
-              <div className="flex-shrink-0 relative">
+              <div className="flex-shrink-0">
                 {dish.status === DishStatus.Unavailable && (
-                  <span className="absolute inset-0 flex items-center justify-center text-sm">
-                    Hết hàng
+                  <span className="bg-red-600 text-white text-xs px-1 rounded-md font-bold">
+                    Tạm hết
                   </span>
                 )}
                 <Image
@@ -185,12 +231,16 @@ export default function AddOrder() {
                   height={100}
                   width={100}
                   quality={100}
-                  className="object-cover w-[80px] h-[80px] rounded-md"
+                  className={`object-cover w-[80px] h-[80px] rounded-md ${
+                    dish.status === DishStatus.Unavailable
+                      ? 'filter-blur opacity-50'
+                      : ''
+                  }`}
                 />
               </div>
               <div className="space-y-1">
                 <h3 className="text-sm">{dish.name}</h3>
-                <p className="text-xs">{dish.description}</p>
+                {/* <p className="text-xs">{dish.description}</p> */}
                 <p className="text-xs font-semibold">
                   {formatCurrency(dish.price)}
                 </p>
@@ -213,7 +263,7 @@ export default function AddOrder() {
             disabled={orders.length === 0}
           >
             <span>Đặt hàng · {orders.length} món</span>
-            <span>{formatCurrency(totalPrice)}</span>
+            <span className="text-red-400">{formatCurrency(totalPrice)}</span>
           </Button>
         </DialogFooter>
       </DialogContent>

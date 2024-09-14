@@ -137,22 +137,24 @@ export default function OrderCart() {
           </div>
         </div>
       ))}
-      {paid.quantity !== 0 && (
-        <div className="sticky bottom-0">
-          <div className="w-full flex space-x-4 justify-between text-xl font-semibold">
-            <span>Đơn đã thanh toán · {paid.quantity} món</span>
-            <span>{formatCurrency(paid.price)}</span>
+      <div className="sticky bottom-0 bg-white dark:bg-gray-800 border-t border-gray-300 dark:border-gray-600 z-20 mb-24 pl-4 pr-4">
+        {paid.quantity !== 0 && (
+          <div className="w-full flex space-x-4 justify-between text-md font-semibold">
+            <span>Đã thanh toán · {paid.quantity} món</span>
+            <span className="text-green-600 dark:text-green-400">
+              {formatCurrency(paid.price)}
+            </span>
           </div>
-        </div>
-      )}
-      {notYetPaid.quantity !== 0 && (
-        <div className="sticky bottom-0">
-          <div className="w-full flex space-x-4 justify-between text-xl font-semibold">
-            <span>Đơn chưa thanh toán · {notYetPaid.quantity} món</span>
-            <span>{formatCurrency(notYetPaid.price)}</span>
+        )}
+        {notYetPaid.quantity !== 0 && (
+          <div className="w-full flex space-x-4 justify-between text-md font-semibold">
+            <span>Chưa thanh toán · {notYetPaid.quantity} món</span>
+            <span className="text-red-600 dark:text-red-400">
+              {formatCurrency(notYetPaid.price)}
+            </span>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </>
   )
 }

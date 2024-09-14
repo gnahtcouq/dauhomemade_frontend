@@ -64,7 +64,7 @@ const orderTableColumns: ColumnDef<OrderItem>[] = [
             <Popover>
               <PopoverTrigger>
                 <div>
-                  <span>{guest.name}</span>
+                  <span>{guest.name} </span>
                   <span className="font-semibold">(#{guest.id})</span>
                 </div>
               </PopoverTrigger>
