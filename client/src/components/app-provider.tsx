@@ -12,6 +12,7 @@ import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import RefreshToken from '@/components/refresh-token'
 import {
   decodeToken,
+  generateSocketInstance,
   getAccessTokenFromLocalStorage,
   removeTokensFromLocalStorage
 } from '@/lib/utils'
@@ -48,6 +49,7 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
     if (accessToken) {
       const role = decodeToken(accessToken).role
       setRoleState(role)
+      setSocket(generateSocketInstance(accessToken))
     }
   }, [])
 

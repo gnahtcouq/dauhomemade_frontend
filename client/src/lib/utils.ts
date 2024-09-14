@@ -10,6 +10,7 @@ import {clsx, type ClassValue} from 'clsx'
 import jwt from 'jsonwebtoken'
 import {BookX, CookingPot, HandCoins, Loader, Truck} from 'lucide-react'
 import {UseFormSetError} from 'react-hook-form'
+import {io} from 'socket.io-client'
 import {twMerge} from 'tailwind-merge'
 
 export function cn(...inputs: ClassValue[]) {
@@ -203,6 +204,14 @@ export const simpleMatchText = (fullText: string, matchText: string) => {
 // export const formatDateTimeToTimeString = (date: string | Date) => {
 //   return format(date instanceof Date ? date : new Date(date), 'HH:mm:ss')
 // }
+
+export const generateSocketInstance = (accessToken: string) => {
+  return io(envConfig.NEXT_PUBLIC_API_ENDPOINT, {
+    auth: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  })
+}
 
 export const OrderStatusIcon = {
   [OrderStatus.Pending]: Loader,

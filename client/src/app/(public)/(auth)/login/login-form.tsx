@@ -11,16 +11,14 @@ import {
 import {Form, FormField, FormItem, FormMessage} from '@/components/ui/form'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
-import envConfig from '@/config'
 import {toast} from '@/hooks/use-toast'
-import {getAccessTokenFromLocalStorage, handleErrorApi} from '@/lib/utils'
+import {generateSocketInstance, handleErrorApi} from '@/lib/utils'
 import {useLoginMutation} from '@/queries/useAuth'
 import {LoginBody, LoginBodyType} from '@/schemaValidations/auth.schema'
 import {zodResolver} from '@hookform/resolvers/zod'
 import {useRouter, useSearchParams} from 'next/navigation'
 import {useEffect} from 'react'
 import {useForm} from 'react-hook-form'
-import {io} from 'socket.io-client'
 
 export default function LoginForm() {
   const loginMutation = useLoginMutation()
@@ -53,13 +51,7 @@ export default function LoginForm() {
         description: result.payload.message
       })
       setRole(result.payload.data.account.role)
-      setSocket(
-        io(envConfig.NEXT_PUBLIC_API_ENDPOINT, {
-          auth: {
-            Authorization: `Bearer ${result.payload.data.accessToken}`
-          }
-        })
-      )
+      setSocket(generateSocketInstance(result.payload.data.accessToken))
       router.push('/manage/dashboard')
     } catch (error: any) {
       handleErrorApi({

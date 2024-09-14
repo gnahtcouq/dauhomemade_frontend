@@ -11,7 +11,7 @@ import {
 import {Form, FormField, FormItem, FormMessage} from '@/components/ui/form'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
-import {handleErrorApi} from '@/lib/utils'
+import {generateSocketInstance, handleErrorApi} from '@/lib/utils'
 import {useGuestLoginMutation} from '@/queries/useGuest'
 import {
   GuestLoginBody,
@@ -23,7 +23,7 @@ import {useEffect} from 'react'
 import {useForm} from 'react-hook-form'
 
 export default function GuestLoginForm() {
-  const {setRole} = useAppContext()
+  const {setRole, setSocket} = useAppContext()
   const searchParams = useSearchParams()
   const params = useParams()
   const tableNumber = Number(params.number)
@@ -48,6 +48,7 @@ export default function GuestLoginForm() {
     try {
       const result = await loginMutation.mutateAsync(values)
       setRole(result.payload.data.guest.role)
+      setSocket(generateSocketInstance(result.payload.data.accessToken))
       router.push('/guest/menu')
     } catch (error) {
       handleErrorApi({
