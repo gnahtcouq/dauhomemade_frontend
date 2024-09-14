@@ -86,7 +86,7 @@ export const GuestCreateOrdersRes = z.object({
       quantity: z.number(),
       orderHandlerId: z.number().nullable(),
       orderHandler: AccountSchema.nullable(),
-      status: z.enum(['Pending', 'Processing', 'Rejected', 'Delivered'])
+      status: z.enum(['Pending', 'Processing', 'Rejected', 'Delivered', 'Paid'])
     })
   )
 })

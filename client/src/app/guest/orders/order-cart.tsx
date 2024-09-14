@@ -2,6 +2,7 @@
 
 import {useAppContext} from '@/components/app-provider'
 import {Badge} from '@/components/ui/badge'
+import {OrderStatus} from '@/constants/type'
 import {toast} from '@/hooks/use-toast'
 import {formatCurrency, getVietnameseOrderStatus} from '@/lib/utils'
 import {useGuestGetOrderListQuery} from '@/queries/useGuest'
@@ -14,10 +15,47 @@ export default function OrderCart() {
   const orders = useMemo(() => data?.payload.data ?? [], [data])
   const {socket} = useAppContext()
 
-  const totalPrice = useMemo(() => {
-    return orders.reduce((result, order) => {
-      return result + order.dishSnapshot.price * order.quantity
-    }, 0)
+  const {notYetPaid, paid} = useMemo(() => {
+    return orders.reduce(
+      (result, order) => {
+        if (
+          order.status === OrderStatus.Delivered ||
+          order.status === OrderStatus.Processing ||
+          order.status === OrderStatus.Pending
+        ) {
+          return {
+            ...result,
+            notYetPaid: {
+              price:
+                result.notYetPaid.price +
+                order.dishSnapshot.price * order.quantity,
+              quantity: result.notYetPaid.quantity + order.quantity
+            }
+          }
+        }
+        if (order.status === OrderStatus.Paid) {
+          return {
+            ...result,
+            paid: {
+              price:
+                result.paid.price + order.dishSnapshot.price * order.quantity,
+              quantity: result.paid.quantity + order.quantity
+            }
+          }
+        }
+        return result
+      },
+      {
+        notYetPaid: {
+          price: 0,
+          quantity: 0
+        },
+        paid: {
+          price: 0,
+          quantity: 0
+        }
+      }
+    )
   }, [orders])
 
   const totalItems = useMemo(() => {
@@ -92,10 +130,18 @@ export default function OrderCart() {
           </div>
         </div>
       ))}
+      {paid.quantity !== 0 && (
+        <div className="sticky bottom-0">
+          <div className="w-full flex space-x-4 justify-between text-xl font-semibold">
+            <span>Đơn đã thanh toán · {paid.quantity} món</span>
+            <span>{formatCurrency(paid.price)}</span>
+          </div>
+        </div>
+      )}
       <div className="sticky bottom-0">
         <div className="w-full flex space-x-4 justify-between text-xl font-semibold">
-          <span>Tổng tiền · {totalItems} món</span>
-          <span>{formatCurrency(totalPrice)}</span>
+          <span>Đơn chưa thanh toán · {notYetPaid.quantity} món</span>
+          <span>{formatCurrency(notYetPaid.price)}</span>
         </div>
       </div>
     </>
