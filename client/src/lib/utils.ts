@@ -6,7 +6,7 @@ import {toast} from '@/hooks/use-toast'
 import {EntityError} from '@/lib/http'
 import {TokenPayload} from '@/types/jwt.types'
 import {clsx, type ClassValue} from 'clsx'
-import { format } from 'date-fns'
+import {format} from 'date-fns'
 // import {format} from 'date-fns'
 import jwt from 'jsonwebtoken'
 import {BookX, CookingPot, HandCoins, Loader, Truck} from 'lucide-react'
@@ -73,6 +73,7 @@ export const removeTokensFromLocalStorage = () => {
 export const checkAndRefreshToken = async (param?: {
   onError?: () => void
   onSuccess?: () => void
+  force?: boolean
 }) => {
   // Không nên đưa logic get accessToken và refreshToken ngoài function này
   // Vì để mỗi lần mà checkAndRefreshToken chạy sẽ lấy lại accessToken và refreshToken mới
@@ -100,8 +101,9 @@ export const checkAndRefreshToken = async (param?: {
   // Nếu accessToken có thời gian là 10s
   // Thì kiểm tra nếu còn 1/3 thời gian (3s) thì refresh token
   if (
+    param?.force ||
     decodedAccessToken.exp - now <
-    (decodedAccessToken.exp - decodedAccessToken.iat) / 3
+      (decodedAccessToken.exp - decodedAccessToken.iat) / 3
   ) {
     // Gọi API refresh token
     try {

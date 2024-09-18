@@ -34,9 +34,10 @@ import {
 } from '@tanstack/react-table'
 import {Check, ChevronsUpDown} from 'lucide-react'
 import {useSearchParams} from 'next/navigation'
-import {createContext, useEffect, useMemo, useState} from 'react'
+import {createContext, useEffect, useState} from 'react'
 
 import TableSkeleton from '@/app/manage/orders/table-skeleton'
+import {useAppContext} from '@/components/app-provider'
 import {Button} from '@/components/ui/button'
 import {
   Command,
@@ -45,13 +46,12 @@ import {
   CommandList
 } from '@/components/ui/command'
 import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover'
+import {toast} from '@/hooks/use-toast'
 import {cn} from '@/lib/utils'
 import {useGetOrderListQuery, useUpdateOrderMutation} from '@/queries/useOrder'
 import {useGetTableList} from '@/queries/useTable'
-import {endOfDay, format, startOfDay} from 'date-fns'
-import {useAppContext} from '@/components/app-provider'
 import {GuestCreateOrdersResType} from '@/schemaValidations/guest.schema'
-import {toast} from '@/hooks/use-toast'
+import {endOfDay, format, startOfDay} from 'date-fns'
 
 export const OrderTableContext = createContext({
   setOrderIdEdit: (value: number | undefined) => {},

@@ -1,12 +1,6 @@
 'use client'
 
 import {useAppContext} from '@/components/app-provider'
-import {Role} from '@/constants/type'
-import {cn, handleErrorApi} from '@/lib/utils'
-import {useLogoutMutation} from '@/queries/useAuth'
-import {RoleType} from '@/types/jwt.types'
-import Link from 'next/link'
-import {useRouter} from 'next/navigation'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,7 +12,12 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger
 } from '@/components/ui/alert-dialog'
-import {Button} from '@/components/ui/button'
+import {Role} from '@/constants/type'
+import {cn, handleErrorApi} from '@/lib/utils'
+import {useLogoutMutation} from '@/queries/useAuth'
+import {RoleType} from '@/types/jwt.types'
+import Link from 'next/link'
+import {useRouter} from 'next/navigation'
 
 const menuItems: {
   title: string
@@ -54,14 +53,16 @@ const menuItems: {
 ]
 
 export default function NavItems({className}: {className?: string}) {
-  const {role, setRole} = useAppContext()
+  const {role, setRole, disconnectSocket} = useAppContext()
   const logoutMutation = useLogoutMutation()
   const router = useRouter()
+
   const logout = async () => {
     if (logoutMutation.isPending) return
     try {
       await logoutMutation.mutateAsync()
       setRole()
+      disconnectSocket()
       router.push('/')
     } catch (error: any) {
       handleErrorApi(error)

@@ -20,7 +20,7 @@ export async function POST() {
     const result = await authApiRequest.sLogout({accessToken, refreshToken})
     return Response.json(result.payload)
   } catch (error) {
-    console.log(error)
+    // console.log(error)
     return Response.json({message: 'Có lỗi xảy ra'}, {status: 200})
   }
 }

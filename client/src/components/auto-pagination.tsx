@@ -13,7 +13,7 @@ import {ChevronLeft, ChevronRight} from 'lucide-react'
 interface Props {
   page: number
   pageSize: number
-  pathname?: '/'
+  pathname?: string
   isLink?: boolean
   onClick?: (pageNumber: number) => void
 }

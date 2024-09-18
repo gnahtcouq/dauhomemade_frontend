@@ -1,4 +1,4 @@
-import { RoleValues } from '@/constants/type'
+import {Role} from '@/constants/type'
 import z from 'zod'
 
 export const LoginBody = z
@@ -18,7 +18,7 @@ export const LoginRes = z.object({
       id: z.number(),
       name: z.string(),
       email: z.string(),
-      role: z.enum(RoleValues)
+      role: z.enum([Role.Owner, Role.Employee])
     })
   }),
   message: z.string()
