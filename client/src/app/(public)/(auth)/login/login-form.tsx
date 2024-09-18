@@ -1,5 +1,5 @@
 'use client'
-import {useAppContext} from '@/components/app-provider'
+import {useAppStore} from '@/components/app-provider'
 import {Button} from '@/components/ui/button'
 import {
   Card,
@@ -24,7 +24,9 @@ export default function LoginForm() {
   const loginMutation = useLoginMutation()
   const searchParams = useSearchParams()
   const clearTokens = searchParams.get('clearTokens')
-  const {setRole, setSocket} = useAppContext()
+  const setRole = useAppStore((state) => state.setRole)
+  const setSocket = useAppStore((state) => state.setSocket)
+
   const form = useForm<LoginBodyType>({
     resolver: zodResolver(LoginBody),
     defaultValues: {
@@ -120,9 +122,6 @@ export default function LoginForm() {
               />
               <Button type="submit" className="w-full">
                 Đăng nhập
-              </Button>
-              <Button variant="outline" className="w-full" type="button">
-                Đăng nhập bằng Google
               </Button>
             </div>
           </form>

@@ -37,7 +37,7 @@ import {useSearchParams} from 'next/navigation'
 import {createContext, useEffect, useState} from 'react'
 
 import TableSkeleton from '@/app/manage/orders/table-skeleton'
-import {useAppContext} from '@/components/app-provider'
+import {useAppStore} from '@/components/app-provider'
 import {Button} from '@/components/ui/button'
 import {
   Command,
@@ -80,7 +80,7 @@ const PAGE_SIZE = 10
 const initFromDate = startOfDay(new Date())
 const initToDate = endOfDay(new Date())
 export default function OrderTable() {
-  const {socket} = useAppContext()
+  const socket = useAppStore((state) => state.socket)
   const searchParam = useSearchParams()
   const [openStatusFilter, setOpenStatusFilter] = useState(false)
   const [fromDate, setFromDate] = useState(initFromDate)
@@ -185,7 +185,7 @@ export default function OrderTable() {
         quantity
       } = data
       toast({
-        description: `Món ${name} (x${quantity}) của bạn đã được cập nhật trạng thái "${getVietnameseOrderStatus(
+        description: `Món ${name} (x${quantity}) đã được cập nhật trạng thái "${getVietnameseOrderStatus(
           data.status
         )}"`
       })

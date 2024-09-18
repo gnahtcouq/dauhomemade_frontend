@@ -1,5 +1,5 @@
 'use client'
-import {useAppContext} from '@/components/app-provider'
+import {useAppStore} from '@/components/app-provider'
 import {Button} from '@/components/ui/button'
 import {
   Card,
@@ -23,7 +23,8 @@ import {useEffect} from 'react'
 import {useForm} from 'react-hook-form'
 
 export default function GuestLoginForm() {
-  const {setRole, setSocket} = useAppContext()
+  const setRole = useAppStore((state) => state.setRole)
+  const setSocket = useAppStore((state) => state.setSocket)
   const searchParams = useSearchParams()
   const params = useParams()
   const tableNumber = Number(params.number)
