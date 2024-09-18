@@ -16,7 +16,7 @@ export default function Modal({children}: {children: React.ReactNode}) {
         if (!open) router.back()
       }}
     >
-      <DialogContent className="max-w-2xl h-120  overflow-auto bg-white rounded-lg shadow-lg p-12">
+      <DialogContent className="max-w-2xl h-120 overflow-auto bg-white dark:bg-black rounded-lg shadow-lg p-12">
         {children}
       </DialogContent>
     </Dialog>

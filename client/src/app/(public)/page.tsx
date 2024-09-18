@@ -58,7 +58,9 @@ export default async function Home() {
               <div className="space-y-1">
                 <h3 className="text-xl font-semibold">{dish.name}</h3>
                 <p className="">{truncateDescription(dish.description, 150)}</p>
-                <p className="font-semibold">{formatCurrency(dish.price)}</p>
+                <p className="font-semibold text-red-600 dark:text-red-400">
+                  {formatCurrency(dish.price)}
+                </p>
               </div>
             </Link>
           ))}
