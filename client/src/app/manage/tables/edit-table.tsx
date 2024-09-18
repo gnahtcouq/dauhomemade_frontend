@@ -140,6 +140,7 @@ export default function EditTable({
                       className="w-full"
                       value={data?.payload.data.number ?? 0}
                       readOnly
+                      disabled
                     />
                     <FormMessage />
                   </div>

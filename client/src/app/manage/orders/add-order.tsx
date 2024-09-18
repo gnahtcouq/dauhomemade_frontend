@@ -211,7 +211,7 @@ export default function AddOrder() {
           </div>
         )}
         {dishes
-          .filter((dish) => dish.status !== DishStatus.Hidden)
+          .filter((dish: {status: any}) => dish.status !== DishStatus.Hidden)
           .map((dish) => (
             <div
               key={dish.id}
@@ -241,7 +241,7 @@ export default function AddOrder() {
               <div className="space-y-1">
                 <h3 className="text-sm">{dish.name}</h3>
                 {/* <p className="text-xs">{dish.description}</p> */}
-                <p className="text-xs font-semibold">
+                <p className="font-semibold text-red-600 dark:text-red-400">
                   {formatCurrency(dish.price)}
                 </p>
               </div>

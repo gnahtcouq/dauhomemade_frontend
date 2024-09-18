@@ -131,7 +131,7 @@ const orderTableColumns: ColumnDef<OrderItem>[] = [
               x{row.original.quantity}
             </Badge>
           </div>
-          <span className="italic">
+          <span className="italic text-red-600 dark:text-red-400">
             {formatCurrency(
               row.original.dishSnapshot.price * row.original.quantity
             )}

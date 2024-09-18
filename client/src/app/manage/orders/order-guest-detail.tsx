@@ -111,14 +111,14 @@ export default function OrderGuestDetail({
               <span className="font-semibold" title={`Tổng: ${order.quantity}`}>
                 x{order.quantity}
               </span>
-              <span className="italic">
+              <span className="italic text-red-600 dark:text-red-400">
                 {formatCurrency(order.quantity * order.dishSnapshot.price)}
               </span>
               <span
                 className="hidden sm:inline"
                 title={`Tạo: ${formatDateTimeToLocaleString(
                   order.createdAt
-                )} | Cập nhật: ${formatDateTimeToLocaleString(order.updatedAt)}
+                )} / Cập nhật: ${formatDateTimeToLocaleString(order.updatedAt)}
           `}
               >
                 {formatDateTimeToLocaleString(order.createdAt)}
@@ -127,7 +127,7 @@ export default function OrderGuestDetail({
                 className="sm:hidden"
                 title={`Tạo: ${formatDateTimeToLocaleString(
                   order.createdAt
-                )} | Cập nhật: ${formatDateTimeToLocaleString(order.updatedAt)}
+                )} / Cập nhật: ${formatDateTimeToLocaleString(order.updatedAt)}
           `}
               >
                 {formatDateTimeToTimeString(order.createdAt)}
@@ -138,11 +138,13 @@ export default function OrderGuestDetail({
       </div>
 
       <div className="space-x-1">
-        <span className="font-semibold">Chưa thanh toán:</span>
-        <Badge>
+        <span className="font-semibold text-green-600 dark:text-green-400">
+          Đã thanh toán:
+        </span>
+        <Badge variant={'outline'}>
           <span>
             {formatCurrency(
-              ordersFilterToPurchase.reduce((acc, order) => {
+              purchasedOrderFilter.reduce((acc, order) => {
                 return acc + order.quantity * order.dishSnapshot.price
               }, 0)
             )}
@@ -150,11 +152,13 @@ export default function OrderGuestDetail({
         </Badge>
       </div>
       <div className="space-x-1">
-        <span className="font-semibold">Đã thanh toán:</span>
-        <Badge variant={'outline'}>
+        <span className="font-semibold text-red-600 dark:text-red-400">
+          Chưa thanh toán:
+        </span>
+        <Badge>
           <span>
             {formatCurrency(
-              purchasedOrderFilter.reduce((acc, order) => {
+              ordersFilterToPurchase.reduce((acc, order) => {
                 return acc + order.quantity * order.dishSnapshot.price
               }, 0)
             )}

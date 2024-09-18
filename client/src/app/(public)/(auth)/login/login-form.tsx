@@ -78,6 +78,7 @@ export default function LoginForm() {
             onSubmit={form.handleSubmit(onSubmit, (err) => {
               console.warn(err)
             })}
+            method="post"
           >
             <div className="grid gap-4">
               <FormField

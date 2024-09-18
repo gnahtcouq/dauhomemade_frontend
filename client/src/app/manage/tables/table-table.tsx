@@ -174,7 +174,7 @@ function AlertDialogDeleteTable({
         <AlertDialogHeader>
           <AlertDialogTitle>Xóa bàn ăn?</AlertDialogTitle>
           <AlertDialogDescription>
-            Bàn{' '}
+            Bàn số {' '}
             <span className="bg-foreground text-primary-foreground rounded px-1">
               {tableDelete?.number}
             </span>{' '}
