@@ -237,3 +237,15 @@ export const truncateDescription = (description: string, maxLength: number) => {
   }
   return truncated.slice(0, lastSpace) + '...'
 }
+
+export const wrapServerApi = async <T>(fn: () => Promise<T>) => {
+  let result = null
+  try {
+    result = await fn()
+  } catch (error: any) {
+    if (error.digest?.includes('NEXT_REDIRECT')) {
+      throw error
+    }
+  }
+  return result
+}

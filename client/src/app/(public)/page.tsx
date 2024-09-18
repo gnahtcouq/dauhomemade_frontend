@@ -42,7 +42,7 @@ export default async function Home() {
           {dishList.map((dish) => (
             <div className="flex gap-4 w" key={dish.id}>
               <div className="flex-shrink-0">
-                <img
+                <Image
                   src={dish.image}
                   width={150}
                   height={150}

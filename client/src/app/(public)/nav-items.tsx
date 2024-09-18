@@ -97,9 +97,12 @@ export default function NavItems({className}: {className?: string}) {
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>Bạn có muốn đăng xuất không?</AlertDialogTitle>
-              <AlertDialogDescription>
-                Việc đăng xuất có thể làm mất đi hoá đơn hiện tại của bạn
-              </AlertDialogDescription>
+              {role === Role.Guest && (
+                <AlertDialogDescription>
+                  Việc đăng xuất có thể làm mất đi lịch sử hoá đơn hiện tại của
+                  bạn
+                </AlertDialogDescription>
+              )}
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Huỷ</AlertDialogCancel>
