@@ -13,8 +13,11 @@ export default async function Home() {
     } = result
     dishList = data
   } catch (error) {
-    return <div>Something went wrong</div>
+    return <div>Đã có lỗi xảy ra</div>
   }
+
+  // Chỉ lấy ra 6 món ăn đầu tiên
+  const displayedDishes = dishList.slice(0, 6)
 
   return (
     <div className="w-full space-y-4">
@@ -40,7 +43,7 @@ export default async function Home() {
       <section className="space-y-10 py-16">
         <h2 className="text-center text-2xl font-bold">Món ngon tại ĐẬU</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
-          {dishList.map((dish) => (
+          {displayedDishes.map((dish) => (
             <Link
               href={`/dishes/${dish.id}`}
               className="flex gap-4 w"

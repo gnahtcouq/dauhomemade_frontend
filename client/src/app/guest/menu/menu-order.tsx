@@ -91,9 +91,9 @@ export default function MenuOrder() {
               />
             </div>
             <div className="space-y-1">
-              <h3 className="text-sm">{dish.name}</h3>
+              <h3 className="text-sm font-semibold">{dish.name}</h3>
               <p className="text-xs text-justify">{dish.description}</p>
-              <p className="text-xs font-semibold">
+              <p className="text-xs font-semibold text-red-600 dark:text-red-400">
                 {formatCurrency(dish.price)}
               </p>
             </div>
