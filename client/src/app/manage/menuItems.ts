@@ -1,10 +1,10 @@
 import {Role} from '@/constants/type'
-import {Home, Salad, ShoppingCart, Table, Users2} from 'lucide-react'
+import {ChartPie, Salad, ShoppingCart, Table, Users2} from 'lucide-react'
 
 const menuItems = [
   {
-    title: 'Dashboard',
-    Icon: Home,
+    title: 'Thống kê',
+    Icon: ChartPie,
     href: '/manage/dashboard',
     roles: [Role.Owner]
   },

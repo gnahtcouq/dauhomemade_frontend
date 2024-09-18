@@ -10,7 +10,12 @@ const decodeToken = (token: string) => {
 
 const managePaths = ['/manage']
 const guestPaths = ['/guest']
-const onlyOwnerPaths = ['/manage/accounts', '/manage/dishes', '/manage/tables']
+const onlyOwnerPaths = [
+  '/manage/dashboard',
+  '/manage/accounts',
+  '/manage/dishes',
+  '/manage/tables'
+]
 const privatePaths = [...managePaths, ...guestPaths]
 const unAuthPaths = ['/login']
 

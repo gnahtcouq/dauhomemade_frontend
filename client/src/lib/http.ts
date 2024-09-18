@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import envConfig from '@/config'
 import {
   getAccessTokenFromLocalStorage,
@@ -112,7 +111,7 @@ const request = async <Response>(
     status: res.status,
     payload
   }
-  // Interceptor là nời chúng ta xử lý request và response trước khi trả về cho phía component
+  // Interceptor là nơi chúng ta xử lý request và response trước khi trả về cho phía component
   if (!res.ok) {
     if (res.status === ENTITY_ERROR_STATUS) {
       throw new EntityError(
@@ -141,6 +140,8 @@ const request = async <Response>(
             // Nếu không không được xử lý đúng cách
             // Vì nếu rơi vào trường hợp tại trang Login, chúng ta có gọi các API cần access token
             // Mà access token đã bị xóa thì nó lại nhảy vào đây, và cứ thế nó sẽ bị lặp
+          }
+          if (window.location.pathname !== '/login') {
             location.href = '/login'
           }
         }

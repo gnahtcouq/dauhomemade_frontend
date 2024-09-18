@@ -1,7 +1,6 @@
 import dishApiRequest from '@/apiRequests/dish'
 import DishDetail from '@/app/(public)/dishes/dish-detail'
-import {formatCurrency, wrapServerApi} from '@/lib/utils'
-import Image from 'next/image'
+import {wrapServerApi} from '@/lib/utils'
 
 export default async function DishPage({
   params: {id}

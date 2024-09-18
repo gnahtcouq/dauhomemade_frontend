@@ -48,7 +48,12 @@ const menuItems: {
   {
     title: 'Quản lý',
     href: '/manage/dashboard',
-    role: [Role.Owner, Role.Employee]
+    role: [Role.Owner]
+  },
+  {
+    title: 'Đơn hàng',
+    href: '/manage/orders',
+    role: [Role.Employee]
   }
 ]
 

@@ -111,7 +111,6 @@ export default function AutoPagination({
                   }
                 }}
                 onClick={(e) => {
-                  e.preventDefault()
                   onClick(pageNumber)
                 }}
                 isActive={pageNumber === page}
