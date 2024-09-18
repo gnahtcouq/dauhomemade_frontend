@@ -54,7 +54,9 @@ export default function LoginForm() {
       })
       setRole(result.payload.data.account.role)
       setSocket(generateSocketInstance(result.payload.data.accessToken))
-      router.push('/manage/dashboard')
+      if (result.payload.data.account.role === 'Owner')
+        router.push('/manage/dashboard')
+      else router.push('/manage/orders')
     } catch (error: any) {
       handleErrorApi({
         error,

@@ -1,5 +1,6 @@
 'use client'
 import {DishesDialog} from '@/app/manage/orders/dishes-dialog'
+import {useAppStore} from '@/components/app-provider'
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import {Button} from '@/components/ui/button'
 import {
@@ -26,7 +27,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
-import {OrderStatus, OrderStatusValues} from '@/constants/type'
+import {OrderStatus, OrderStatusValues, Role} from '@/constants/type'
 import {toast} from '@/hooks/use-toast'
 import {getVietnameseOrderStatus, handleErrorApi} from '@/lib/utils'
 import {
@@ -55,6 +56,7 @@ export default function EditOrder({
     DishListResType['data'][0] | null
   >(null)
   const updateOrderMutation = useUpdateOrderMutation()
+  const role = useAppStore((state) => state.role)
   const {data} = useGetOrderDetailQuery({id: id!, enabled: Boolean(id)})
   const form = useForm<UpdateOrderBodyType>({
     resolver: zodResolver(UpdateOrderBody),
@@ -132,12 +134,12 @@ export default function EditOrder({
                   <FormItem className="grid grid-cols-4 items-center justify-items-start gap-4">
                     <FormLabel>Món ăn</FormLabel>
                     <div className="flex items-center col-span-2 space-x-4">
-                      <Avatar className="aspect-square w-[50px] h-[50px] rounded-md object-cover">
+                      {/* <Avatar className="aspect-square w-[50px] h-[50px] rounded-md object-cover">
                         <AvatarImage src={selectedDish?.image} />
                         <AvatarFallback className="rounded-none">
                           {selectedDish?.name}
                         </AvatarFallback>
-                      </Avatar>
+                      </Avatar> */}
                       <div>{selectedDish?.name}</div>
                     </div>
 
@@ -191,6 +193,7 @@ export default function EditOrder({
                       <Select
                         onValueChange={field.onChange}
                         value={field.value}
+                        disabled={role !== Role.Owner}
                       >
                         <FormControl className="col-span-3">
                           <SelectTrigger className="w-[200px]">

@@ -108,14 +108,16 @@ export default function MenuOrder() {
             </div>
           </div>
         ))}
-      <div className="sticky bottom-0">
+      <div className="sticky bottom-0 bg-white dark:bg-gray-800">
         <Button
           className="w-full justify-between"
           onClick={handleOrder}
           disabled={totalItems === 0}
         >
           <span>Đặt hàng · {totalItems} món</span>
-          <span>{formatCurrency(totalPrice)}</span>
+          <span className="text-red-600 dark:text-red-400">
+            {formatCurrency(totalPrice)}
+          </span>
         </Button>
       </div>
     </>

@@ -14,7 +14,7 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
-import {OrderStatusValues} from '@/constants/type'
+import {OrderStatusValues, Role} from '@/constants/type'
 import {getVietnameseOrderStatus, handleErrorApi} from '@/lib/utils'
 import {
   GetOrdersResType,
@@ -62,7 +62,8 @@ export const OrderTableContext = createContext({
     status: (typeof OrderStatusValues)[number]
     quantity: number
   }) => {},
-  orderObjectByGuestId: {} as OrderObjectByGuestID
+  orderObjectByGuestId: {} as OrderObjectByGuestID,
+  role: ''
 })
 
 export type StatusCountObject = Record<
@@ -80,6 +81,7 @@ const PAGE_SIZE = 10
 const initFromDate = startOfDay(new Date())
 const initToDate = endOfDay(new Date())
 export default function OrderTable() {
+  const role = useAppStore((state) => state.role) ?? ''
   const socket = useAppStore((state) => state.socket)
   const searchParam = useSearchParams()
   const [openStatusFilter, setOpenStatusFilter] = useState(false)
@@ -229,7 +231,8 @@ export default function OrderTable() {
         orderIdEdit,
         setOrderIdEdit,
         changeStatus,
-        orderObjectByGuestId
+        orderObjectByGuestId,
+        role
       }}
     >
       <div className="w-full">

@@ -137,7 +137,7 @@ export default function OrderCart() {
           </div>
         </div>
       ))}
-      <div className="sticky bottom-0 bg-white dark:bg-gray-800 border-t border-gray-300 dark:border-gray-600 z-20 mb-24 pl-4 pr-4">
+      <div className="sticky bottom-0 bg-white dark:bg-gray-800 z-20 mb-24 pl-4 pr-4">
         {paid.quantity !== 0 && (
           <div className="w-full flex space-x-4 justify-between text-md font-semibold">
             <span>Đã thanh toán · {paid.quantity} món</span>

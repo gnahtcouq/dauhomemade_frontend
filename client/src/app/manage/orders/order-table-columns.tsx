@@ -20,7 +20,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
-import {OrderStatus, OrderStatusValues} from '@/constants/type'
+import {OrderStatus, OrderStatusValues, Role} from '@/constants/type'
 import {
   formatCurrency,
   formatDateTimeToLocaleString,
@@ -144,7 +144,7 @@ const orderTableColumns: ColumnDef<OrderItem>[] = [
     accessorKey: 'status',
     header: 'Trạng thái',
     cell: function Cell({row}) {
-      const {changeStatus} = useContext(OrderTableContext)
+      const {changeStatus, role} = useContext(OrderTableContext)
       const changeOrderStatus = async (
         status: (typeof OrderStatusValues)[number]
       ) => {
@@ -162,6 +162,7 @@ const orderTableColumns: ColumnDef<OrderItem>[] = [
           }}
           defaultValue={OrderStatus.Pending}
           value={row.getValue('status')}
+          disabled={role !== Role.Owner}
         >
           <SelectTrigger className="w-[140px]">
             <SelectValue placeholder="Theme" />
