@@ -64,12 +64,9 @@ export default function LoginForm() {
   }
 
   return (
-    <Card className="mx-auto max-w-sm">
+    <Card className="mx-auto max-w-sm w-full">
       <CardHeader>
-        <CardTitle className="text-2xl">Đăng nhập</CardTitle>
-        <CardDescription>
-          Nhập email và mật khẩu của bạn để đăng nhập vào hệ thống
-        </CardDescription>
+        <CardTitle className="text-2xl text-center">Đăng nhập</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -88,13 +85,7 @@ export default function LoginForm() {
                   <FormItem>
                     <div className="grid gap-2">
                       <Label htmlFor="email">Email</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder="m@example.com"
-                        required
-                        {...field}
-                      />
+                      <Input id="email" type="email" required {...field} />
                       <FormMessage />
                     </div>
                   </FormItem>
@@ -126,6 +117,11 @@ export default function LoginForm() {
             </div>
           </form>
         </Form>
+        <div className="text-center mt-4">
+          <a href="/forgot-password" className="text-blue-600">
+            Quên mật khẩu?
+          </a>
+        </div>
       </CardContent>
     </Card>
   )
