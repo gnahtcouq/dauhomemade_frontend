@@ -3,8 +3,11 @@ import {DishListResType} from '@/schemaValidations/dish.schema'
 import Image from 'next/image'
 import {formatCurrency, truncateDescription} from '../../lib/utils'
 import Link from 'next/link'
+import {getTranslations} from 'next-intl/server'
 
 export default async function Home() {
+  const t = await getTranslations('HomePage')
+
   let dishList: DishListResType['data'] = []
   try {
     const result = await dishApiRequest.list()
@@ -36,7 +39,7 @@ export default async function Home() {
             ĐẬU HOMEMADE
           </h1>
           <p className="text-center text-sm sm:text-base mt-4 text-white">
-            TÂN THỜI - MÁT MẺ - TIỆN NGHI
+            {t('description')}
           </p>
         </div>
       </section>

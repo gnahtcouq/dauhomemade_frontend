@@ -73,6 +73,18 @@ export default function Layout({
         {children}
         {modal}
       </main>
+      <footer className="flex items-center justify-center h-16 border-t bg-background">
+        <p className="text-center text-sm text-muted-foreground">
+          Made by{' '}
+          <Link
+            href="https://github.com/gnahtcouq"
+            target="_blank"
+            className="text-foreground"
+          >
+            @gnahtcouq
+          </Link>
+        </p>
+      </footer>
     </div>
   )
 }

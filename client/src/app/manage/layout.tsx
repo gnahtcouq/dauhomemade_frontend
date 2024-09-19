@@ -2,6 +2,7 @@ import DarkModeToggle from '@/components/dark-mode-toggle'
 import DropdownAvatar from '@/app/manage/dropdown-avatar'
 import NavLinks from '@/app/manage/nav-links'
 import MobileNavLinks from '@/app/manage/mobile-nav-links'
+import Link from 'next/link'
 
 export default function Layout({
   children
@@ -23,6 +24,18 @@ export default function Layout({
         </header>
         {children}
       </div>
+      <footer className="flex items-center justify-center h-16 border-t bg-background">
+        <p className="text-center text-sm text-muted-foreground">
+          Made by{' '}
+          <Link
+            href="https://github.com/gnahtcouq"
+            target="_blank"
+            className="text-foreground"
+          >
+            @gnahtcouq
+          </Link>
+        </p>
+      </footer>
     </div>
   )
 }
