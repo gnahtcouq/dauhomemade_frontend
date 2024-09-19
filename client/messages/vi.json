@@ -1,5 +1,17 @@
 {
     "HomePage": {
         "description": "TÂN THỜI - MÁT MẺ - TIỆN NGHI"
+    },
+    "Login": {
+        "title": "Đăng nhập vào Đậu",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "login": "Đăng nhập",
+        "forgotPassword": "Quên mật khẩu?"
+    },
+    "SwitchLanguage": {
+        "title": "Chuyển ngôn ngữ",
+        "vi": "Tiếng Việt",
+        "en": "Tiếng Anh"
     }
 }

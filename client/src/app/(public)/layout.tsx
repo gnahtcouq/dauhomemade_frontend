@@ -1,5 +1,6 @@
 import NavItems from '@/app/(public)/nav-items'
 import DarkModeToggle from '@/components/dark-mode-toggle'
+import {SwitchLanguage} from '@/components/switch-language'
 import {Button} from '@/components/ui/button'
 import {Sheet, SheetContent, SheetTrigger} from '@/components/ui/sheet'
 import {Menu} from 'lucide-react'
@@ -65,7 +66,8 @@ export default function Layout({
             </nav>
           </SheetContent>
         </Sheet>
-        <div className="ml-auto">
+        <div className="ml-auto flex items-center gap-4">
+          <SwitchLanguage />
           <DarkModeToggle />
         </div>
       </header>

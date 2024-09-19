@@ -1,5 +1,17 @@
 {
     "HomePage": {
         "description": "MODERN - REFRESHING - CONVENIENT"
+    },
+    "Login": {
+        "title": "Login to Đậu",
+        "email": "Email",
+        "password": "Password",
+        "login": "Login",
+        "forgotPassword": "Forgot password?"
+    },
+    "SwitchLanguage": {
+        "title": "Switch language",
+        "vi": "Vietnamese",
+        "en": "English"
     }
 }
