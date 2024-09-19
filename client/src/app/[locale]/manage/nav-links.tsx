@@ -10,8 +10,8 @@ import {
 import {cn} from '@/lib/utils'
 import {Settings} from 'lucide-react'
 import Image from 'next/image'
-import Link from 'next/link'
-import {usePathname} from 'next/navigation'
+import {Link} from '@/navigation'
+import {usePathname} from '@/navigation'
 
 export default function NavLinks() {
   const pathname = usePathname()

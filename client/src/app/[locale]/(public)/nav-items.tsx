@@ -14,10 +14,9 @@ import {
 } from '@/components/ui/alert-dialog'
 import {Role} from '@/constants/type'
 import {cn, handleErrorApi} from '@/lib/utils'
+import {Link, useRouter} from '@/navigation'
 import {useLogoutMutation} from '@/queries/useAuth'
 import {RoleType} from '@/types/jwt.types'
-import Link from 'next/link'
-import {useRouter} from 'next/navigation'
 
 const menuItems: {
   title: string

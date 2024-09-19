@@ -13,8 +13,7 @@ import {
 import {handleErrorApi} from '@/lib/utils'
 import {useAccountMe} from '@/queries/useAccount'
 import {useLogoutMutation} from '@/queries/useAuth'
-import Link from 'next/link'
-import {useRouter} from 'next/navigation'
+import {Link, useRouter} from '@/navigation'
 
 export default function DropdownAvatar() {
   const logoutMutation = useLogoutMutation()

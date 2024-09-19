@@ -3,9 +3,9 @@ import DarkModeToggle from '@/components/dark-mode-toggle'
 import {SwitchLanguage} from '@/components/switch-language'
 import {Button} from '@/components/ui/button'
 import {Sheet, SheetContent, SheetTrigger} from '@/components/ui/sheet'
+import {Link} from '@/navigation'
 import {Menu} from 'lucide-react'
 import Image from 'next/image'
-import Link from 'next/link'
 
 export default function Layout({
   children,

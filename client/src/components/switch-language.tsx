@@ -8,13 +8,9 @@ import {
   SelectValue
 } from '@/components/ui/select'
 import {Locale, locales} from '@/config'
+import {usePathname, useRouter} from '@/navigation'
 import {useLocale, useTranslations} from 'next-intl'
-import {
-  usePathname,
-  useRouter,
-  useSearchParams,
-  useParams
-} from 'next/navigation'
+import {useParams, useSearchParams} from 'next/navigation'
 
 export function SwitchLanguage() {
   const t = useTranslations('SwitchLanguage')
@@ -28,7 +24,7 @@ export function SwitchLanguage() {
       value={locale}
       onValueChange={(value) => {
         const locale = params.locale as Locale
-        const newPathname = pathname.replace(`/${locale}/`, `/${value}/`)
+        const newPathname = pathname.replace(`/${locale}/`, `/${value}`)
         const fullUrl = `${newPathname}?${searchParams.toString()}`
         router.replace(fullUrl)
         router.refresh()

@@ -7,7 +7,7 @@ import {
   setRefreshTokenToLocalStorage
 } from '@/lib/utils'
 import {LoginResType} from '@/schemaValidations/auth.schema'
-import {redirect} from 'next/navigation'
+import {redirect} from '@/navigation'
 
 type CustomOptions = Omit<RequestInit, 'method'> & {
   baseUrl?: string | undefined

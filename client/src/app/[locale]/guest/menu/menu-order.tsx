@@ -8,7 +8,7 @@ import {useGetDishListQuery} from '@/queries/useDish'
 import {useGuestOrderMutation} from '@/queries/useGuest'
 import {GuestCreateOrdersBodyType} from '@/schemaValidations/guest.schema'
 import Image from 'next/image'
-import {useRouter} from 'next/navigation'
+import {useRouter} from '@/navigation'
 import {useMemo, useState} from 'react'
 
 export default function MenuOrder() {

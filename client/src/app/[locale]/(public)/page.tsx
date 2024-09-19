@@ -1,7 +1,7 @@
 import dishApiRequest from '@/apiRequests/dish'
 import {DishListResType} from '@/schemaValidations/dish.schema'
 import Image from 'next/image'
-import Link from 'next/link'
+import {Link} from '@/navigation'
 import {getTranslations} from 'next-intl/server'
 import {formatCurrency, truncateDescription} from '@/lib/utils'
 

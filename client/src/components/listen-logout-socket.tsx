@@ -1,7 +1,7 @@
 import {useAppStore} from '@/components/app-provider'
 import {handleErrorApi} from '@/lib/utils'
 import {useLogoutMutation} from '@/queries/useAuth'
-import {usePathname, useRouter} from 'next/navigation'
+import {usePathname, useRouter} from '@/navigation'
 import {useEffect} from 'react'
 
 const UNAUTHENTICATED_PATH = ['/login', 'logout', '/refresh-token']

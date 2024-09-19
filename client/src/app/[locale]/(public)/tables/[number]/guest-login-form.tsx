@@ -18,7 +18,8 @@ import {
   GuestLoginBodyType
 } from '@/schemaValidations/guest.schema'
 import {zodResolver} from '@hookform/resolvers/zod'
-import {useParams, useRouter, useSearchParams} from 'next/navigation'
+import {useRouter} from '@/navigation'
+import {useParams, useSearchParams} from 'next/navigation'
 import {useEffect} from 'react'
 import {useForm} from 'react-hook-form'
 

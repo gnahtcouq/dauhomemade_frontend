@@ -2,7 +2,7 @@
 
 import {useAppStore} from '@/components/app-provider'
 import {checkAndRefreshToken} from '@/lib/utils'
-import {usePathname, useRouter} from 'next/navigation'
+import {usePathname, useRouter} from '@/navigation'
 import {useEffect} from 'react'
 
 // Những path không cần check refresh token
@@ -60,6 +60,6 @@ export default function RefreshToken() {
       socket?.off('disconnect', onDisconnect)
       socket?.off('refreshToken', onRefreshTokenSocket)
     }
-  }, [pathname, router, disconnectSocket])
+  }, [pathname, router, disconnectSocket, socket])
   return null
 }

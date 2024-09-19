@@ -6,8 +6,8 @@ import {Sheet, SheetContent, SheetTrigger} from '@/components/ui/sheet'
 import {cn} from '@/lib/utils'
 import {PanelLeft} from 'lucide-react'
 import Image from 'next/image'
-import Link from 'next/link'
-import {usePathname} from 'next/navigation'
+import {Link} from '@/navigation'
+import {usePathname} from '@/navigation'
 
 export default function MobileNavLinks() {
   const pathname = usePathname()

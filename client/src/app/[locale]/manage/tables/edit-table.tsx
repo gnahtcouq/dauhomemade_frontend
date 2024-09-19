@@ -38,7 +38,7 @@ import {
   UpdateTableBodyType
 } from '@/schemaValidations/table.schema'
 import {zodResolver} from '@hookform/resolvers/zod'
-import Link from 'next/link'
+import {Link} from '@/navigation'
 import {useEffect} from 'react'
 import {useForm} from 'react-hook-form'
 
