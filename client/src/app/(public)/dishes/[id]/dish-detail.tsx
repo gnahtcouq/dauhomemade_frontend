@@ -1,5 +1,4 @@
-import dishApiRequest from '@/apiRequests/dish'
-import {formatCurrency, wrapServerApi} from '@/lib/utils'
+import {formatCurrency} from '@/lib/utils'
 import {DishResType} from '@/schemaValidations/dish.schema'
 import Image from 'next/image'
 

@@ -1,4 +1,4 @@
-import {DishStatusValues, Role, RoleValues} from '@/constants/type'
+import {DishStatusValues, Role} from '@/constants/type'
 import {AccountSchema} from '@/schemaValidations/account.schema'
 import z from 'zod'
 

@@ -18,6 +18,7 @@ import {
 import AddTable from '@/app/manage/tables/add-table'
 import EditTable from '@/app/manage/tables/edit-table'
 import AutoPagination from '@/components/auto-pagination'
+import QRCodeTable from '@/components/qrcode.table'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -45,17 +46,12 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
-import {
-  getTableLink,
-  getVietnameseTableStatus,
-  handleErrorApi
-} from '@/lib/utils'
+import {toast} from '@/hooks/use-toast'
+import {getVietnameseTableStatus, handleErrorApi} from '@/lib/utils'
 import {useDeleteTableMutation, useGetTableList} from '@/queries/useTable'
 import {TableListResType} from '@/schemaValidations/table.schema'
 import {useSearchParams} from 'next/navigation'
 import {createContext, useContext, useEffect, useState} from 'react'
-import QRCodeTable from '@/components/qrcode.table'
-import {toast} from '@/hooks/use-toast'
 
 type TableItem = TableListResType['data'][0]
 
@@ -174,7 +170,7 @@ function AlertDialogDeleteTable({
         <AlertDialogHeader>
           <AlertDialogTitle>Xóa bàn ăn?</AlertDialogTitle>
           <AlertDialogDescription>
-            Bàn số {' '}
+            Bàn số{' '}
             <span className="bg-foreground text-primary-foreground rounded px-1">
               {tableDelete?.number}
             </span>{' '}
