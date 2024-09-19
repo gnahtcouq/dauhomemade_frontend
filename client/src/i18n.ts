@@ -1,13 +1,11 @@
-import {getUserLocale} from '@/services/locale'
+import {locales} from '@/config'
 import {getRequestConfig} from 'next-intl/server'
+import {notFound} from 'next/navigation'
 
-export default getRequestConfig(async () => {
-  // Ngôn ngữ website
-  // Các giá trị locale có thể lấy từ cookie của người dùng
-  const locale = await getUserLocale()
+export default getRequestConfig(async ({locale}) => {
+  if (!locales.includes(locale as any)) notFound()
 
   return {
-    locale,
     messages: (await import(`../messages/${locale}.json`)).default
   }
 })
