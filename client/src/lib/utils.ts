@@ -13,12 +13,12 @@ import {EntityError} from '@/lib/http'
 import {TokenPayload} from '@/types/jwt.types'
 import {clsx, type ClassValue} from 'clsx'
 import {format} from 'date-fns'
-// import {format} from 'date-fns'
 import jwt from 'jsonwebtoken'
 import {BookX, CookingPot, HandCoins, Loader, Truck} from 'lucide-react'
 import {UseFormSetError} from 'react-hook-form'
 import {io} from 'socket.io-client'
 import {twMerge} from 'tailwind-merge'
+import slugify from 'slugify'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -267,4 +267,12 @@ export const wrapServerApi = async <T>(fn: () => Promise<T>) => {
     }
   }
   return result
+}
+
+export const generateSlugUrl = ({name, id}: {name: string; id: number}) => {
+  return `${slugify(name)}-i.${id}`
+}
+
+export const getIdFromSlugUrl = (slug: string) => {
+  return Number(slug.split('-i.')[1])
 }

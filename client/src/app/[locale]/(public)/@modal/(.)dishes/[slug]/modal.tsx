@@ -1,7 +1,7 @@
 'use client'
 
 import {Dialog, DialogContent} from '@/components/ui/dialog'
-import { useRouter } from '@/navigation'
+import {useRouter} from '@/navigation'
 import React, {useState} from 'react'
 
 export default function Modal({children}: {children: React.ReactNode}) {
