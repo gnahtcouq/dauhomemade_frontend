@@ -1,7 +1,15 @@
 import ChangePasswordForm from '@/app/[locale]/manage/setting/change-password-form'
 import UpdateProfileForm from '@/app/[locale]/manage/setting/update-profile-form'
+import {unstable_setRequestLocale} from 'next-intl/server'
 
-export default function Setting() {
+export default function Setting({
+  params: {locale}
+}: {
+  params: {
+    locale: string
+  }
+}) {
+  unstable_setRequestLocale(locale)
   return (
     <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
       <div className="mx-auto grid w-full flex-1 auto-rows-max gap-4">

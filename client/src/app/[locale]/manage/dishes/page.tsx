@@ -7,8 +7,16 @@ import {
   CardTitle
 } from '@/components/ui/card'
 import {Suspense} from 'react'
+import {unstable_setRequestLocale} from 'next-intl/server'
 
-export default function DishesPage() {
+export default function DishesPage({
+  params: {locale}
+}: {
+  params: {
+    locale: string
+  }
+}) {
+  unstable_setRequestLocale(locale)
   return (
     <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
       <div className="space-y-2">

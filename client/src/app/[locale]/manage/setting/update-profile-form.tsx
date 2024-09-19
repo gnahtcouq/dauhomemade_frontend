@@ -1,4 +1,5 @@
 'use client'
+
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import {Button} from '@/components/ui/button'
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card'
@@ -16,7 +17,7 @@ import {zodResolver} from '@hookform/resolvers/zod'
 import {Upload} from 'lucide-react'
 import {useEffect, useMemo, useRef, useState} from 'react'
 import {useForm} from 'react-hook-form'
-import {useUploadMediaMutation} from '../../../../queries/useMedia'
+import {useUploadMediaMutation} from '@/queries/useMedia'
 
 export default function UpdateProfileForm() {
   const [file, setFile] = useState<File | null>(null)

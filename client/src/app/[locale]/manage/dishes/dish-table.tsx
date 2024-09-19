@@ -14,7 +14,6 @@ import {
   getSortedRowModel,
   useReactTable
 } from '@tanstack/react-table'
-
 import AddDish from '@/app/[locale]/manage/dishes/add-dish'
 import EditDish from '@/app/[locale]/manage/dishes/edit-dish'
 import AutoPagination from '@/components/auto-pagination'

@@ -1,4 +1,5 @@
 'use client'
+
 import {useAppStore} from '@/components/app-provider'
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import {Button} from '@/components/ui/button'

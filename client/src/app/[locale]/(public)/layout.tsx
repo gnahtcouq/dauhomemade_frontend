@@ -1,19 +1,25 @@
 import NavItems from '@/app/[locale]/(public)/nav-items'
 import DarkModeToggle from '@/components/dark-mode-toggle'
-import {SwitchLanguage} from '@/components/switch-language'
+import SwitchLanguage from '@/components/switch-language'
 import {Button} from '@/components/ui/button'
 import {Sheet, SheetContent, SheetTrigger} from '@/components/ui/sheet'
 import {Link} from '@/navigation'
 import {Menu} from 'lucide-react'
+import {unstable_setRequestLocale} from 'next-intl/server'
 import Image from 'next/image'
 
 export default function Layout({
   children,
-  modal
+  modal,
+  params: {locale}
 }: Readonly<{
   children: React.ReactNode
   modal: React.ReactNode
+  params: {
+    locale: string
+  }
 }>) {
+  unstable_setRequestLocale(locale)
   return (
     <div className="flex min-h-screen w-full flex-col relative">
       <header className="sticky z-20 top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">

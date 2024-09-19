@@ -56,7 +56,7 @@ import {
 } from '@/schemaValidations/account.schema'
 import {useSearchParams} from 'next/navigation'
 import {createContext, useContext, useEffect, useState} from 'react'
-import {getVietnameseRole} from '../../../../lib/utils'
+import {getVietnameseRole} from '@/lib/utils'
 
 type AccountItem = AccountListResType['data'][0]
 
