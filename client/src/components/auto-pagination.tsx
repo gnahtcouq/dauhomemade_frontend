@@ -165,7 +165,6 @@ export default function AutoPagination({
               }}
             >
               <ChevronLeft className="w-4 h-4 " />
-              Trước
             </Button>
           )}
         </PaginationItem>
@@ -201,7 +200,6 @@ export default function AutoPagination({
                 onClick(page + 1)
               }}
             >
-              Sau
               <ChevronRight className="w-4 h-4 " />
             </Button>
           )}

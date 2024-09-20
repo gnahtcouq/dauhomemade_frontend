@@ -81,13 +81,13 @@ export const UpdateEmployeeAccountBody = z
       if (!password || !confirmPassword) {
         ctx.addIssue({
           code: 'custom',
-          message: 'required',
+          message: 'password.description',
           path: ['changePassword']
         })
       } else if (confirmPassword !== password) {
         ctx.addIssue({
           code: 'custom',
-          message: 'confirm',
+          message: 'password.notMatch',
           path: ['confirmPassword']
         })
       }

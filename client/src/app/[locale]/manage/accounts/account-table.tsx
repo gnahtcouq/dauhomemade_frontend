@@ -57,6 +57,7 @@ import {
 import {useSearchParams} from 'next/navigation'
 import {createContext, useContext, useEffect, useState} from 'react'
 import {getVietnameseRole} from '@/lib/utils'
+import {useTranslations} from 'next-intl'
 
 type AccountItem = AccountListResType['data'][0]
 
@@ -129,6 +130,8 @@ export const columns: ColumnDef<AccountType>[] = [
         setEmployeeDelete(row.original)
       }
 
+      const t = useTranslations('ManageAccounts.table')
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -138,11 +141,13 @@ export const columns: ColumnDef<AccountType>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Hành động</DropdownMenuLabel>
+            <DropdownMenuLabel>{t('actions')}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={openEditEmployee}>Sửa</DropdownMenuItem>
+            <DropdownMenuItem onClick={openEditEmployee}>
+              {t('edit')}
+            </DropdownMenuItem>
             <DropdownMenuItem onClick={openDeleteEmployee}>
-              Xóa
+              {t('delete')}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -158,6 +163,7 @@ function AlertDialogDeleteAccount({
   employeeDelete: AccountItem | null
   setEmployeeDelete: (value: AccountItem | null) => void
 }) {
+  const t = useTranslations('ManageAccounts.confirmDelete')
   const {mutateAsync} = useDeleteAccountMutation()
   const deleteAccount = async () => {
     if (employeeDelete) {
@@ -184,19 +190,18 @@ function AlertDialogDeleteAccount({
     >
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Xóa nhân viên?</AlertDialogTitle>
-          <AlertDialogDescription>
-            Tài khoản{' '}
+          <AlertDialogTitle>
+            {t('title')}{' '}
             <span className="bg-foreground text-primary-foreground rounded px-1">
               {employeeDelete?.name}
-            </span>{' '}
-            sẽ bị xóa vĩnh viễn
-          </AlertDialogDescription>
+            </span>
+          </AlertDialogTitle>
+          <AlertDialogDescription>{t('message')}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Huỷ</AlertDialogCancel>
+          <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
           <AlertDialogAction onClick={deleteAccount}>
-            Xác nhận
+            {t('confirm')}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -206,6 +211,7 @@ function AlertDialogDeleteAccount({
 // Số lượng item trên 1 trang
 const PAGE_SIZE = 10
 export default function AccountTable() {
+  const t = useTranslations('ManageAccounts.table')
   const searchParam = useSearchParams()
   const page = searchParam.get('page') ? Number(searchParam.get('page')) : 1
   const pageIndex = page - 1
@@ -273,7 +279,7 @@ export default function AccountTable() {
         />
         <div className="flex items-center py-4 gap-2">
           <Input
-            placeholder="Tìm kiếm theo tên..."
+            placeholder={t('searchByName')}
             value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
             onChange={(event) =>
               table.getColumn('name')?.setFilterValue(event.target.value)
@@ -281,7 +287,7 @@ export default function AccountTable() {
             className="max-w-sm"
           />
           <Input
-            placeholder="Tìm kiếm theo email..."
+            placeholder={t('searchByEmail')}
             value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
             onChange={(event) =>
               table.getColumn('email')?.setFilterValue(event.target.value)
@@ -335,7 +341,7 @@ export default function AccountTable() {
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    Không có kết quả.
+                    {t('noResults')}
                   </TableCell>
                 </TableRow>
               )}
@@ -344,9 +350,9 @@ export default function AccountTable() {
         </div>
         <div className="flex items-center justify-end space-x-2 py-4">
           <div className="text-xs text-muted-foreground py-4 flex-1 ">
-            Hiển thị{' '}
-            <strong>{table.getPaginationRowModel().rows.length}</strong> trong{' '}
-            <strong>{data.length}</strong> kết quả
+            {t('show')}{' '}
+            <strong>{table.getPaginationRowModel().rows.length}</strong>{' '}
+            {t('outOf')} <strong>{data.length}</strong> {t('results')}
           </div>
           <div>
             <AutoPagination

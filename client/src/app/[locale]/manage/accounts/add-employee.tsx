@@ -23,10 +23,13 @@ import {
 } from '@/schemaValidations/account.schema'
 import {zodResolver} from '@hookform/resolvers/zod'
 import {PlusCircle, Upload} from 'lucide-react'
+import {useTranslations} from 'next-intl'
 import {useMemo, useRef, useState} from 'react'
 import {useForm} from 'react-hook-form'
 
 export default function AddEmployee() {
+  const t = useTranslations('ManageAccounts.dialogAdd')
+  const errorMessageT = useTranslations('ErrorMessage')
   const [file, setFile] = useState<File | null>(null)
   const [open, setOpen] = useState(false)
   const addAccountMutation = useAddAccountMutation()
@@ -97,16 +100,14 @@ export default function AddEmployee() {
         <Button size="sm" className="h-7 gap-1">
           <PlusCircle className="h-3.5 w-3.5" />
           <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-            Tạo tài khoản
+            {t('title')}
           </span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px] max-h-screen overflow-auto">
         <DialogHeader>
-          <DialogTitle>Tạo tài khoản</DialogTitle>
-          <DialogDescription>
-            Các trường tên, email, mật khẩu là bắt buộc
-          </DialogDescription>
+          <DialogTitle>{t('title')}</DialogTitle>
+          <DialogDescription>{t('description')}</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -122,13 +123,13 @@ export default function AddEmployee() {
               <FormField
                 control={form.control}
                 name="avatar"
-                render={({field}) => (
+                render={({field, formState: {errors}}) => (
                   <FormItem>
                     <div className="flex gap-2 items-start justify-start">
                       <Avatar className="aspect-square w-[100px] h-[100px] rounded-md object-cover">
                         <AvatarImage src={previewAvatarFromFile} />
                         <AvatarFallback className="rounded-none">
-                          {name || 'Ảnh đại diện'}
+                          {name || t('avatar')}
                         </AvatarFallback>
                       </Avatar>
                       <input
@@ -160,13 +161,16 @@ export default function AddEmployee() {
               <FormField
                 control={form.control}
                 name="name"
-                render={({field}) => (
+                render={({field, formState: {errors}}) => (
                   <FormItem>
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                      <Label htmlFor="name">Tên</Label>
+                      <Label htmlFor="name">{t('name')}</Label>
                       <div className="col-span-3 w-full space-y-2">
                         <Input id="name" className="w-full" {...field} />
-                        <FormMessage />
+                        <FormMessage>
+                          {Boolean(errors.name?.message) &&
+                            errorMessageT(errors.name?.message as any)}
+                        </FormMessage>
                       </div>
                     </div>
                   </FormItem>
@@ -175,13 +179,16 @@ export default function AddEmployee() {
               <FormField
                 control={form.control}
                 name="email"
-                render={({field}) => (
+                render={({field, formState: {errors}}) => (
                   <FormItem>
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                      <Label htmlFor="email">Email</Label>
+                      <Label htmlFor="email">{t('email')}</Label>
                       <div className="col-span-3 w-full space-y-2">
                         <Input id="email" className="w-full" {...field} />
-                        <FormMessage />
+                        <FormMessage>
+                          {Boolean(errors.email?.message) &&
+                            errorMessageT(errors.email?.message as any)}
+                        </FormMessage>
                       </div>
                     </div>
                   </FormItem>
@@ -190,10 +197,10 @@ export default function AddEmployee() {
               <FormField
                 control={form.control}
                 name="password"
-                render={({field}) => (
+                render={({field, formState: {errors}}) => (
                   <FormItem>
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                      <Label htmlFor="password">Mật khẩu</Label>
+                      <Label htmlFor="password">{t('password')}</Label>
                       <div className="col-span-3 w-full space-y-2">
                         <Input
                           id="password"
@@ -201,7 +208,10 @@ export default function AddEmployee() {
                           type="password"
                           {...field}
                         />
-                        <FormMessage />
+                        <FormMessage>
+                          {Boolean(errors.password?.message) &&
+                            errorMessageT(errors.password?.message as any)}
+                        </FormMessage>
                       </div>
                     </div>
                   </FormItem>
@@ -210,10 +220,12 @@ export default function AddEmployee() {
               <FormField
                 control={form.control}
                 name="confirmPassword"
-                render={({field}) => (
+                render={({field, formState: {errors}}) => (
                   <FormItem>
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                      <Label htmlFor="confirmPassword">Xác nhận mật khẩu</Label>
+                      <Label htmlFor="confirmPassword">
+                        {t('confirmPassword')}
+                      </Label>
                       <div className="col-span-3 w-full space-y-2">
                         <Input
                           id="confirmPassword"
@@ -221,7 +233,12 @@ export default function AddEmployee() {
                           type="password"
                           {...field}
                         />
-                        <FormMessage />
+                        <FormMessage>
+                          {Boolean(errors.confirmPassword?.message) &&
+                            errorMessageT(
+                              errors.confirmPassword?.message as any
+                            )}
+                        </FormMessage>
                       </div>
                     </div>
                   </FormItem>
@@ -232,7 +249,7 @@ export default function AddEmployee() {
         </Form>
         <DialogFooter>
           <Button type="submit" form="add-employee-form">
-            Thêm
+            {t('add')}
           </Button>
         </DialogFooter>
       </DialogContent>

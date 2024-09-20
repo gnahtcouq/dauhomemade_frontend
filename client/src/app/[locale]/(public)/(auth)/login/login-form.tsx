@@ -20,7 +20,7 @@ import {useForm} from 'react-hook-form'
 
 export default function LoginForm() {
   const t = useTranslations('Login')
-  const errorMessageT = useTranslations('ErrorMessage.dish')
+  const errorMessageT = useTranslations('ErrorMessage')
   const {searchParams, setSearchParams} = useSearchParamsLoader()
   const loginMutation = useLoginMutation()
   const clearTokens = searchParams?.get('clearTokens')

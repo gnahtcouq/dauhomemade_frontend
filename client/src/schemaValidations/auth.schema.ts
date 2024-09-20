@@ -3,7 +3,7 @@ import z from 'zod'
 
 export const LoginBody = z
   .object({
-    email: z.string().min(1, {message: 'required'}).email({
+    email: z.string().email({
       message: 'invalidEmail'
     }),
     password: z

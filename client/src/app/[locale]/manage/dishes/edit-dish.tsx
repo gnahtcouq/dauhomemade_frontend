@@ -1,4 +1,5 @@
 'use client'
+
 import revalidateApiRequest from '@/apiRequests/revalidate'
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import {Button} from '@/components/ui/button'
@@ -38,6 +39,7 @@ import {
 } from '@/schemaValidations/dish.schema'
 import {zodResolver} from '@hookform/resolvers/zod'
 import {Upload} from 'lucide-react'
+import {useTranslations} from 'next-intl'
 import {useEffect, useMemo, useRef, useState} from 'react'
 import {useForm} from 'react-hook-form'
 
@@ -50,6 +52,8 @@ export default function EditDish({
   setId: (value: number | undefined) => void
   onSubmitSuccess?: () => void
 }) {
+  const t = useTranslations('ManageDishes.dialogEdit')
+  const errorMessageT = useTranslations('ErrorMessage.dish')
   const [file, setFile] = useState<File | null>(null)
   const imageInputRef = useRef<HTMLInputElement | null>(null)
   const updateDishMutation = useUpdateDishMutation()
@@ -137,10 +141,8 @@ export default function EditDish({
     >
       <DialogContent className="sm:max-w-[600px] max-h-screen overflow-auto">
         <DialogHeader>
-          <DialogTitle>Cập nhật món ăn</DialogTitle>
-          <DialogDescription>
-            Các trường tên, ảnh, giá là bắt buộc
-          </DialogDescription>
+          <DialogTitle>{t('title')}</DialogTitle>
+          <DialogDescription>{t('desc')}</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -161,7 +163,7 @@ export default function EditDish({
                       <Avatar className="aspect-square w-[100px] h-[100px] rounded-md object-cover">
                         <AvatarImage src={previewAvatarFromFile} />
                         <AvatarFallback className="rounded-none">
-                          {name || 'Avatar'}
+                          {name || t('image')}
                         </AvatarFallback>
                       </Avatar>
                       <input
@@ -193,13 +195,16 @@ export default function EditDish({
               <FormField
                 control={form.control}
                 name="name"
-                render={({field}) => (
+                render={({field, formState: {errors}}) => (
                   <FormItem>
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                      <Label htmlFor="name">Tên món ăn</Label>
+                      <Label htmlFor="name">{t('name')}</Label>
                       <div className="col-span-3 w-full space-y-2">
                         <Input id="name" className="w-full" {...field} />
-                        <FormMessage />
+                        <FormMessage>
+                          {Boolean(errors.name?.message) &&
+                            errorMessageT(errors.name?.message as any)}
+                        </FormMessage>
                       </div>
                     </div>
                   </FormItem>
@@ -208,10 +213,10 @@ export default function EditDish({
               <FormField
                 control={form.control}
                 name="price"
-                render={({field}) => (
+                render={({field, formState: {errors}}) => (
                   <FormItem>
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                      <Label htmlFor="price">Giá</Label>
+                      <Label htmlFor="price">{t('price')}</Label>
                       <div className="col-span-3 w-full space-y-2">
                         <Input
                           id="price"
@@ -219,7 +224,10 @@ export default function EditDish({
                           {...field}
                           type="number"
                         />
-                        <FormMessage />
+                        <FormMessage>
+                          {Boolean(errors.price?.message) &&
+                            errorMessageT(errors.price?.message as any)}
+                        </FormMessage>
                       </div>
                     </div>
                   </FormItem>
@@ -228,17 +236,20 @@ export default function EditDish({
               <FormField
                 control={form.control}
                 name="description"
-                render={({field}) => (
+                render={({field, formState: {errors}}) => (
                   <FormItem>
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                      <Label htmlFor="description">Mô tả</Label>
+                      <Label htmlFor="description">{t('description')}</Label>
                       <div className="col-span-3 w-full space-y-2">
                         <Textarea
                           id="description"
                           className="w-full"
                           {...field}
                         />
-                        <FormMessage />
+                        <FormMessage>
+                          {Boolean(errors.description?.message) &&
+                            errorMessageT(errors.description?.message as any)}
+                        </FormMessage>
                       </div>
                     </div>
                   </FormItem>
@@ -250,7 +261,7 @@ export default function EditDish({
                 render={({field}) => (
                   <FormItem>
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                      <Label htmlFor="description">Trạng thái</Label>
+                      <Label htmlFor="status">{t('status')}</Label>
                       <div className="col-span-3 w-full space-y-2">
                         <Select
                           onValueChange={field.onChange}
@@ -282,7 +293,7 @@ export default function EditDish({
         </Form>
         <DialogFooter>
           <Button type="submit" form="edit-dish-form">
-            Lưu
+            {t('save')}
           </Button>
         </DialogFooter>
       </DialogContent>

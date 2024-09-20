@@ -57,6 +57,7 @@ import {DishListResType} from '@/schemaValidations/dish.schema'
 import {useSearchParams} from 'next/navigation'
 import {createContext, useContext, useEffect, useState} from 'react'
 import DOMPurify from 'dompurify'
+import {useTranslations} from 'next-intl'
 
 type DishItem = DishListResType['data'][0]
 
@@ -146,6 +147,9 @@ export const columns: ColumnDef<DishItem>[] = [
       const openDeleteDish = () => {
         setDishDelete(row.original)
       }
+
+      const t = useTranslations('ManageDishes.table')
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -155,10 +159,14 @@ export const columns: ColumnDef<DishItem>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Hành động</DropdownMenuLabel>
+            <DropdownMenuLabel>{t('actions')}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={openEditDish}>Sửa</DropdownMenuItem>
-            <DropdownMenuItem onClick={openDeleteDish}>Xóa</DropdownMenuItem>
+            <DropdownMenuItem onClick={openEditDish}>
+              {t('edit')}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={openDeleteDish}>
+              {t('delete')}
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )
@@ -173,6 +181,7 @@ function AlertDialogDeleteDish({
   dishDelete: DishItem | null
   setDishDelete: (value: DishItem | null) => void
 }) {
+  const t = useTranslations('ManageDishes.confirmDelete')
   const {mutateAsync} = useDeleteDishMutation()
   const deleteDish = async () => {
     if (dishDelete) {
@@ -199,18 +208,19 @@ function AlertDialogDeleteDish({
     >
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Xóa món ăn?</AlertDialogTitle>
-          <AlertDialogDescription>
-            Món{' '}
+          <AlertDialogTitle>
+            {t('title')}{' '}
             <span className="bg-foreground text-primary-foreground rounded px-1">
               {dishDelete?.name}
-            </span>{' '}
-            sẽ bị xóa vĩnh viễn
-          </AlertDialogDescription>
+            </span>
+          </AlertDialogTitle>
+          <AlertDialogDescription>{t('message')}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Huỷ</AlertDialogCancel>
-          <AlertDialogAction onClick={deleteDish}>Xác nhận</AlertDialogAction>
+          <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
+          <AlertDialogAction onClick={deleteDish}>
+            {t('confirm')}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
@@ -219,6 +229,7 @@ function AlertDialogDeleteDish({
 // Số lượng item trên 1 trang
 const PAGE_SIZE = 10
 export default function DishTable() {
+  const t = useTranslations('ManageDishes.table')
   const searchParam = useSearchParams()
   const page = searchParam.get('page') ? Number(searchParam.get('page')) : 1
   const pageIndex = page - 1
@@ -276,7 +287,7 @@ export default function DishTable() {
         />
         <div className="flex items-center py-4">
           <Input
-            placeholder="Tìm kiếm theo tên..."
+            placeholder={t('searchByName')}
             value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
             onChange={(event) =>
               table.getColumn('name')?.setFilterValue(event.target.value)
@@ -330,7 +341,7 @@ export default function DishTable() {
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    Không có kết quả.
+                    {t('noResults')}
                   </TableCell>
                 </TableRow>
               )}
@@ -339,9 +350,9 @@ export default function DishTable() {
         </div>
         <div className="flex items-center justify-end space-x-2 py-4">
           <div className="text-xs text-muted-foreground py-4 flex-1 ">
-            Hiển thị{' '}
-            <strong>{table.getPaginationRowModel().rows.length}</strong> trong{' '}
-            <strong>{data.length}</strong> kết quả
+            {t('show')}{' '}
+            <strong>{table.getPaginationRowModel().rows.length}</strong>{' '}
+            {t('outOf')} <strong>{data.length}</strong> {t('results')}
           </div>
           <div>
             <AutoPagination

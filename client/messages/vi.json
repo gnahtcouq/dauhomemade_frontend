@@ -21,13 +21,99 @@
     },
     "ManageAccounts": {
         "title": "Quản lý tài khoản",
-        "description": "Quản lý tài khoản nhân viên"
+        "description": "Quản lý tài khoản nhân viên và chủ cửa hàng",
+        "add": "Thêm tài khoản",
+        "edit": "Sửa tài khoản",
+        "delete": "Xóa tài khoản",
+        "confirmDelete": {
+            "title": "Xóa tài khoản",
+            "message": "Bạn có chắc chắn muốn xóa tài khoản này không? Hành động này không thể hoàn tác",
+            "confirm": "Xác nhận",
+            "cancel": "Hủy"
+        },
+        "table": {
+            "actions": "Hành động",
+            "edit": "Sửa",
+            "delete": "Xóa",
+            "searchByName": "Tìm kiếm theo tên",
+            "searchByEmail": "Tìm kiếm theo email",
+            "show": "Hiển thị",
+            "outOf": "trong",
+            "results": "kết quả",
+            "noResults": "Không tìm thấy kết quả"
+        },
+        "dialogAdd": {
+            "title": "Thêm tài khoản",
+            "description": "Các trường tên, email, mật khẩu là bắt buộc",
+            "avatar": "Ảnh đại diện",
+            "name": "Tên",
+            "email": "Email",
+            "password": "Mật khẩu",
+            "confirmPassword": "Xác nhận mật khẩu",
+            "add": "Thêm"
+        },
+        "dialogEdit": {
+            "title": "Sửa tài khoản",
+            "description": "Các trường tên, email, mật khẩu là bắt buộc",
+            "avatar": "Ảnh đại diện",
+            "name": "Tên",
+            "email": "Email",
+            "role": "Vai trò",
+            "changePassword": "Đổi mật khẩu",
+            "newPassword": "Mật khẩu mới",
+            "confirmPassword": "Xác nhận mật khẩu",
+            "save": "Lưu"
+        }
+    },
+    "ManageDishes": {
+        "title": "Quản lý món ăn",
+        "description": "Quản lý món ăn trong menu",
+        "add": "Thêm món ăn",
+        "edit": "Sửa món ăn",
+        "delete": "Xóa món ăn",
+        "confirmDelete": {
+            "title": "Xóa món ăn",
+            "message": "Bạn có chắc chắn muốn xóa món ăn này không? Hành động này không thể hoàn tác",
+            "confirm": "Xác nhận",
+            "cancel": "Hủy"
+        },
+        "table": {
+            "actions": "Hành động",
+            "edit": "Sửa",
+            "delete": "Xóa",
+            "searchByName": "Tìm kiếm theo tên",
+            "show": "Hiển thị",
+            "outOf": "trong",
+            "results": "kết quả",
+            "noResults": "Không tìm thấy kết quả"
+        },
+        "dialogAdd": {
+            "title": "Thêm món ăn",
+            "desc": "Các trường hình ảnh, tên, giá, mô tả là bắt buộc",
+            "image": "Hình ảnh",
+            "name": "Tên",
+            "price": "Giá",
+            "description": "Mô tả",
+            "status": "Trạng thái",
+            "add": "Thêm"
+        },
+        "dialogEdit": {
+            "title": "Sửa món ăn",
+            "desc": "Các trường hình ảnh, tên, giá, mô tả là bắt buộc",
+            "image": "Hình ảnh",
+            "name": "Tên",
+            "price": "Giá",
+            "description": "Mô tả",
+            "status": "Trạng thái",
+            "save": "Lưu"
+        }
     },
     "ErrorMessage": {
         "required": "Trường này không được để trống",
         "invalidEmail": "Email không hợp lệ",
         "password": {
             "required": "Mật khẩu không được để trống",
+            "description": "Hãy nhập mật khẩu mới và xác nhận mật khẩu mới",
             "minLength": "Mật khẩu phải có ít nhất 6 ký tự",
             "maxLength": "Mật khẩu phải có tối đa 100 ký tự",
             "notMatch": "Mật khẩu không khớp"
@@ -46,10 +132,7 @@
                 "minLength": "Mô tả món ăn phải có ít nhất 10 ký tự",
                 "maxLength": "Mô tả món ăn phải có tối đa 10000 ký tự"
             },
-            "price": {
-                "required": "Giá món ăn không được để trống",
-                "min": "Giá món ăn phải lớn hơn 0"
-            }
+            "price": "Giá tiền món ăn không hợp lệ"
         },
         "table": {
             "required": "Số bàn không được để trống",
@@ -81,7 +164,7 @@
     },
     "Dashboard": {
         "title": "Thống kê",
-        "description": "Tổng quan về nhà hàng",
+        "description": "Tổng quan về cửa hàng",
         "fromDate": "Từ",
         "toDate": "Đến",
         "totalRevenue": "Tổng doanh thu",

@@ -7,7 +7,7 @@ export const CreateDishBody = z.object({
     .min(1, {message: 'required'})
     .max(256, {message: 'maxLength'}),
   price: z.coerce.number().positive({
-    message: 'price.required'
+    message: 'price'
   }),
   description: z
     .string()

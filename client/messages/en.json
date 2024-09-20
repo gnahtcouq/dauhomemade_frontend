@@ -21,13 +21,99 @@
     },
     "ManageAccounts": {
         "title": "Manage accounts",
-        "description": "Manage employee accounts"
+        "description": "Manage employee and owner accounts",
+        "add": "Add account",
+        "edit": "Edit account",
+        "delete": "Delete account",
+        "confirmDelete": {
+            "title": "Delete account",
+            "message": "Are you sure you want to delete this account? This action cannot be undone",
+            "confirm": "Confirm",
+            "cancel": "Cancel"
+        },
+        "table": {
+            "actions": "Actions",
+            "edit": "Edit",
+            "delete": "Delete",
+            "searchByName": "Search by name",
+            "searchByEmail": "Search by email",
+            "show": "Showing",
+            "outOf": "out of",
+            "results": "results",
+            "noResults": "No results found"
+        },
+        "dialogAdd": {
+            "title": "Add account",
+            "description": "Name, email, password fields are required",
+            "avatar": "Avatar",
+            "name": "Name",
+            "email": "Email",
+            "password": "Password",
+            "confirmPassword": "Confirm password",
+            "add": "Add"
+        },
+        "dialogEdit": {
+            "title": "Edit account",
+            "description": "Name, email, password fields are required",
+            "avatar": "Avatar",
+            "name": "Name",
+            "email": "Email",
+            "role": "Role",
+            "changePassword": "Change password",
+            "newPassword": "New password",
+            "confirmPassword": "Confirm password",
+            "save": "Save"
+        }
+    },
+    "ManageDishes": {
+        "title": "Manage dishes",
+        "description": "Manage dishes in the menu",
+        "add": "Add dish",
+        "edit": "Edit dish",
+        "delete": "Delete dish",
+        "confirmDelete": {
+            "title": "Delete dish",
+            "message": "Are you sure you want to delete this dish? This action cannot be undone",
+            "confirm": "Confirm",
+            "cancel": "Cancel"
+        },
+        "table": {
+            "actions": "Actions",
+            "edit": "Edit",
+            "delete": "Delete",
+            "searchByName": "Search by name",
+            "show": "Showing",
+            "outOf": "out of",
+            "results": "results",
+            "noResults": "No results found"
+        },
+        "dialogAdd": {
+            "title": "Add dish",
+            "desc": "Image, name, price, description fields are required",
+            "image": "Dish image",
+            "name": "Name",
+            "price": "Price",
+            "description": "Description",
+            "status": "Status",
+            "add": "Add"
+        },
+        "dialogEdit": {
+            "title": "Edit dish",
+            "desc": "Image, name, price, description fields are required",
+            "image": "Dish image",
+            "name": "Name",
+            "price": "Price",
+            "description": "Description",
+            "status": "Status",
+            "save": "Save"
+        }
     },
     "ErrorMessage": {
         "required": "This field is required",
         "invalidEmail": "Email is invalid",
         "password": {
             "required": "Password is required",
+            "description": "Please enter new password and confirm new password",
             "minLength": "Password must be at least 6 characters",
             "maxLength": "Password must be at most 100 characters",
             "notMatch": "Password does not match"
@@ -46,10 +132,7 @@
                 "minLength": "Dish description must be at least 10 characters",
                 "maxLength": "Dish description must be at most 10000 characters"
             },
-            "price": {
-                "required": "Dish price is required",
-                "min": "Dish price must be greater than 0"
-            }
+            "price": "Dish price is invalid"
         },
         "table": {
             "required": "Table number is required",
@@ -81,7 +164,7 @@
     },
     "Dashboard": {
         "title": "Dashboard",
-        "description": "Overview of the restaurant",
+        "description": "Overview of the store",
         "fromDate": "From",
         "toDate": "To",
         "totalRevenue": "Total revenue",

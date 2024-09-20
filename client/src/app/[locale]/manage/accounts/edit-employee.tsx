@@ -37,6 +37,7 @@ import {
 } from '@/schemaValidations/account.schema'
 import {zodResolver} from '@hookform/resolvers/zod'
 import {Upload} from 'lucide-react'
+import {useTranslations} from 'next-intl'
 import {useEffect, useMemo, useRef, useState} from 'react'
 import {useForm} from 'react-hook-form'
 
@@ -49,6 +50,8 @@ export default function EditEmployee({
   setId: (value: number | undefined) => void
   onSubmitSuccess?: () => void
 }) {
+  const t = useTranslations('ManageAccounts.dialogEdit')
+  const errorMessageT = useTranslations('ErrorMessage')
   const [file, setFile] = useState<File | null>(null)
   const avatarInputRef = useRef<HTMLInputElement | null>(null)
   const updateAccountMutation = useUpdateAccountMutation()
@@ -140,10 +143,8 @@ export default function EditEmployee({
     >
       <DialogContent className="sm:max-w-[600px] max-h-screen overflow-auto">
         <DialogHeader>
-          <DialogTitle>Cập nhật tài khoản</DialogTitle>
-          <DialogDescription>
-            Các trường tên, email, mật khẩu là bắt buộc
-          </DialogDescription>
+          <DialogTitle>{t('title')}</DialogTitle>
+          <DialogDescription>{t('description')}</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -164,7 +165,7 @@ export default function EditEmployee({
                       <Avatar className="aspect-square w-[100px] h-[100px] rounded-md object-cover">
                         <AvatarImage src={previewAvatarFromFile} />
                         <AvatarFallback className="rounded-none">
-                          {name || 'Ảnh đại diện'}
+                          {name || t('avatar')}
                         </AvatarFallback>
                       </Avatar>
                       <input
@@ -196,13 +197,16 @@ export default function EditEmployee({
               <FormField
                 control={form.control}
                 name="name"
-                render={({field}) => (
+                render={({field, formState: {errors}}) => (
                   <FormItem>
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                      <Label htmlFor="name">Tên</Label>
+                      <Label htmlFor="name">{t('name')}</Label>
                       <div className="col-span-3 w-full space-y-2">
                         <Input id="name" className="w-full" {...field} />
-                        <FormMessage />
+                        <FormMessage>
+                          {Boolean(errors.name?.message) &&
+                            errorMessageT(errors.name?.message as any)}
+                        </FormMessage>
                       </div>
                     </div>
                   </FormItem>
@@ -211,13 +215,16 @@ export default function EditEmployee({
               <FormField
                 control={form.control}
                 name="email"
-                render={({field}) => (
+                render={({field, formState: {errors}}) => (
                   <FormItem>
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                      <Label htmlFor="email">Email</Label>
+                      <Label htmlFor="email">{t('email')}</Label>
                       <div className="col-span-3 w-full space-y-2">
                         <Input id="email" className="w-full" {...field} />
-                        <FormMessage />
+                        <FormMessage>
+                          {Boolean(errors.email?.message) &&
+                            errorMessageT(errors.email?.message as any)}
+                        </FormMessage>
                       </div>
                     </div>
                   </FormItem>
@@ -229,7 +236,7 @@ export default function EditEmployee({
                 render={({field}) => (
                   <FormItem>
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                      <Label htmlFor="role">Vai trò</Label>
+                      <Label htmlFor="role">Role</Label>
                       <div className="col-span-3 w-full space-y-2">
                         <Select
                           onValueChange={field.onChange}
@@ -237,7 +244,7 @@ export default function EditEmployee({
                         >
                           <FormControl>
                             <SelectTrigger>
-                              <SelectValue placeholder="Chọn vai trò" />
+                              <SelectValue placeholder={t('role')} />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
@@ -260,16 +267,21 @@ export default function EditEmployee({
               <FormField
                 control={form.control}
                 name="changePassword"
-                render={({field}) => (
+                render={({field, formState: {errors}}) => (
                   <FormItem>
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                      <Label htmlFor="email">Đổi mật khẩu</Label>
+                      <Label>{t('changePassword')}</Label>
                       <div className="col-span-3 w-full space-y-2">
                         <Switch
                           checked={field.value}
                           onCheckedChange={field.onChange}
                         />
-                        <FormMessage />
+                        <FormMessage>
+                          {Boolean(errors.changePassword?.message) &&
+                            errorMessageT(
+                              errors.changePassword?.message as any
+                            )}
+                        </FormMessage>
                       </div>
                     </div>
                   </FormItem>
@@ -279,10 +291,10 @@ export default function EditEmployee({
                 <FormField
                   control={form.control}
                   name="password"
-                  render={({field}) => (
+                  render={({field, formState: {errors}}) => (
                     <FormItem>
                       <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                        <Label htmlFor="password">Mật khẩu mới</Label>
+                        <Label htmlFor="password">{t('newPassword')}</Label>
                         <div className="col-span-3 w-full space-y-2">
                           <Input
                             id="password"
@@ -290,7 +302,10 @@ export default function EditEmployee({
                             type="password"
                             {...field}
                           />
-                          <FormMessage />
+                          <FormMessage>
+                            {Boolean(errors.password?.message) &&
+                              errorMessageT(errors.password?.message as any)}
+                          </FormMessage>
                         </div>
                       </div>
                     </FormItem>
@@ -301,11 +316,11 @@ export default function EditEmployee({
                 <FormField
                   control={form.control}
                   name="confirmPassword"
-                  render={({field}) => (
+                  render={({field, formState: {errors}}) => (
                     <FormItem>
                       <div className="grid grid-cols-4 items-center justify-items-start gap-4">
                         <Label htmlFor="confirmPassword">
-                          Xác nhận mật khẩu mới
+                          {t('confirmPassword')}
                         </Label>
                         <div className="col-span-3 w-full space-y-2">
                           <Input
@@ -314,7 +329,12 @@ export default function EditEmployee({
                             type="password"
                             {...field}
                           />
-                          <FormMessage />
+                          <FormMessage>
+                            {Boolean(errors.confirmPassword?.message) &&
+                              errorMessageT(
+                                errors.confirmPassword?.message as any
+                              )}
+                          </FormMessage>
                         </div>
                       </div>
                     </FormItem>
