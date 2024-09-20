@@ -16,6 +16,9 @@
         "vi": "Vietnamese",
         "en": "English"
     },
+    "DishDetail": {
+        "notFound": "Dish not found"
+    },
     "ErrorMessage": {
         "required": "This field is required",
         "invalidEmail": "Email is invalid",

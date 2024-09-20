@@ -16,6 +16,9 @@
         "vi": "Tiếng Việt",
         "en": "Tiếng Anh"
     },
+    "DishDetail": {
+        "notFound": "Không tìm thấy món ăn"
+    },
     "ErrorMessage": {
         "required": "Trường này không được để trống",
         "invalidEmail": "Email không hợp lệ",
