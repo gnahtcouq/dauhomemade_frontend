@@ -153,7 +153,7 @@ export default function EditTable({
                 render={({field}) => (
                   <FormItem>
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                      <Label htmlFor="price">Số người</Label>
+                      <Label htmlFor="price">Số ghế</Label>
                       <div className="col-span-3 w-full space-y-2">
                         <Input
                           id="capacity"

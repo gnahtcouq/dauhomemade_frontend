@@ -20,6 +20,7 @@ import {useForm} from 'react-hook-form'
 
 export default function LoginForm() {
   const t = useTranslations('Login')
+  const errorMessageT = useTranslations('ErrorMessage.dish')
   const {searchParams, setSearchParams} = useSearchParamsLoader()
   const loginMutation = useLoginMutation()
   const clearTokens = searchParams?.get('clearTokens')
@@ -84,12 +85,15 @@ export default function LoginForm() {
               <FormField
                 control={form.control}
                 name="email"
-                render={({field}) => (
+                render={({field, formState: {errors}}) => (
                   <FormItem>
                     <div className="grid gap-2">
                       <Label htmlFor="email">{t('email')}</Label>
                       <Input id="email" type="email" required {...field} />
-                      <FormMessage />
+                      <FormMessage>
+                        {Boolean(errors.email?.message) &&
+                          errorMessageT(errors.email?.message as any)}
+                      </FormMessage>
                     </div>
                   </FormItem>
                 )}
@@ -97,7 +101,7 @@ export default function LoginForm() {
               <FormField
                 control={form.control}
                 name="password"
-                render={({field}) => (
+                render={({field, formState: {errors}}) => (
                   <FormItem>
                     <div className="grid gap-2">
                       <div className="flex items-center">
@@ -109,7 +113,10 @@ export default function LoginForm() {
                         required
                         {...field}
                       />
-                      <FormMessage />
+                      <FormMessage>
+                        {Boolean(errors.password?.message) &&
+                          errorMessageT(errors.password?.message as any)}
+                      </FormMessage>
                     </div>
                   </FormItem>
                 )}

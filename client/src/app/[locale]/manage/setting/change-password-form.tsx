@@ -14,8 +14,11 @@ import {Form, FormField, FormItem, FormMessage} from '@/components/ui/form'
 import {toast} from '@/hooks/use-toast'
 import {handleErrorApi} from '@/lib/utils'
 import {useChangePasswordMutation} from '@/queries/useAccount'
+import {useTranslations} from 'next-intl'
 
 export default function ChangePasswordForm() {
+  const t = useTranslations('UpdateProfile')
+  const errorMessageT = useTranslations('ErrorMessage')
   const changePasswordMutation = useChangePasswordMutation()
   const form = useForm<ChangePasswordBodyType>({
     resolver: zodResolver(ChangePasswordBody),
@@ -55,17 +58,17 @@ export default function ChangePasswordForm() {
       >
         <Card className="overflow-hidden" x-chunk="dashboard-07-chunk-4">
           <CardHeader>
-            <CardTitle>Đổi mật khẩu</CardTitle>
+            <CardTitle>{t('changePassword')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid gap-6">
               <FormField
                 control={form.control}
                 name="oldPassword"
-                render={({field}) => (
+                render={({field, formState: {errors}}) => (
                   <FormItem>
                     <div className="grid gap-3">
-                      <Label htmlFor="oldPassword">Mật khẩu cũ</Label>
+                      <Label htmlFor="oldPassword">{t('oldPassword')}</Label>
                       <Input
                         id="oldPassword"
                         type="password"
@@ -73,7 +76,10 @@ export default function ChangePasswordForm() {
                         className="w-full"
                         {...field}
                       />
-                      <FormMessage />
+                      <FormMessage>
+                        {Boolean(errors.oldPassword?.message) &&
+                          errorMessageT(errors.oldPassword?.message as any)}
+                      </FormMessage>
                     </div>
                   </FormItem>
                 )}
@@ -81,10 +87,10 @@ export default function ChangePasswordForm() {
               <FormField
                 control={form.control}
                 name="password"
-                render={({field}) => (
+                render={({field, formState: {errors}}) => (
                   <FormItem>
                     <div className="grid gap-3">
-                      <Label htmlFor="password">Mật khẩu mới</Label>
+                      <Label htmlFor="password">{t('newPassword')}</Label>
                       <Input
                         id="password"
                         type="password"
@@ -92,7 +98,10 @@ export default function ChangePasswordForm() {
                         className="w-full"
                         {...field}
                       />
-                      <FormMessage />
+                      <FormMessage>
+                        {Boolean(errors.password?.message) &&
+                          errorMessageT(errors.password?.message as any)}
+                      </FormMessage>
                     </div>
                   </FormItem>
                 )}
@@ -100,11 +109,11 @@ export default function ChangePasswordForm() {
               <FormField
                 control={form.control}
                 name="confirmPassword"
-                render={({field}) => (
+                render={({field, formState: {errors}}) => (
                   <FormItem>
                     <div className="grid gap-3">
                       <Label htmlFor="confirmPassword">
-                        Nhập lại mật khẩu mới
+                        {t('confirmPassword')}
                       </Label>
                       <Input
                         id="confirmPassword"
@@ -113,17 +122,20 @@ export default function ChangePasswordForm() {
                         className="w-full"
                         {...field}
                       />
-                      <FormMessage />
+                      <FormMessage>
+                        {Boolean(errors.confirmPassword?.message) &&
+                          errorMessageT(errors.confirmPassword?.message as any)}
+                      </FormMessage>
                     </div>
                   </FormItem>
                 )}
               />
               <div className=" items-center gap-2 md:ml-auto flex">
                 <Button variant="outline" size="sm" type="reset">
-                  Hủy
+                  {t('cancel')}
                 </Button>
                 <Button size="sm" type="submit">
-                  Lưu thông tin
+                  {t('save')}
                 </Button>
               </div>
             </div>

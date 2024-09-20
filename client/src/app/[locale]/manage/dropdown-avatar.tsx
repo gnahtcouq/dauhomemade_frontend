@@ -15,8 +15,10 @@ import {handleErrorApi} from '@/lib/utils'
 import {useAccountMe} from '@/queries/useAccount'
 import {useLogoutMutation} from '@/queries/useAuth'
 import {Link, useRouter} from '@/navigation'
+import {useTranslations} from 'next-intl'
 
 export default function DropdownAvatar() {
+  const t = useTranslations('DropdownAvatar')
   const logoutMutation = useLogoutMutation()
   const router = useRouter()
   const {data} = useAccountMe()
@@ -60,18 +62,20 @@ export default function DropdownAvatar() {
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <Link href={'/'} className="cursor-pointer">
-            Trang chủ
+            {t('home')}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href={'/manage/setting'} className="cursor-pointer">
-            Cài đặt
+            {t('settings')}
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer">Hỗ trợ</DropdownMenuItem>
+        <DropdownMenuItem className="cursor-pointer">
+          {t('support')}
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={logout} className="cursor-pointer">
-          Đăng xuất
+          {t('logout')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -22,8 +22,10 @@ import {useRouter} from '@/navigation'
 import {useParams, useSearchParams} from 'next/navigation'
 import {useEffect} from 'react'
 import {useForm} from 'react-hook-form'
+import {useTranslations} from 'next-intl'
 
 export default function GuestLoginForm() {
+  const errorMessageT = useTranslations('ErrorMessage')
   const setRole = useAppStore((state) => state.setRole)
   const setSocket = useAppStore((state) => state.setSocket)
   const searchParams = useSearchParams()
@@ -64,7 +66,7 @@ export default function GuestLoginForm() {
     <Card className="mx-auto max-w-sm">
       <CardHeader>
         <CardTitle className="text-2xl">Đăng nhập gọi món</CardTitle>
-        <CardDescription>Cho ĐẬU xin tên của bạn nhé ^^</CardDescription>
+        <CardDescription>Cho Đậu xin tên của bạn nhé ^^</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -79,12 +81,15 @@ export default function GuestLoginForm() {
               <FormField
                 control={form.control}
                 name="name"
-                render={({field}) => (
+                render={({field, formState: {errors}}) => (
                   <FormItem>
                     <div className="grid gap-2">
                       <Label htmlFor="name">Tên của bạn</Label>
                       <Input id="name" type="text" required {...field} />
-                      <FormMessage />
+                      <FormMessage>
+                        {Boolean(errors.name?.message) &&
+                          errorMessageT(errors.name?.message as any)}
+                      </FormMessage>
                     </div>
                   </FormItem>
                 )}

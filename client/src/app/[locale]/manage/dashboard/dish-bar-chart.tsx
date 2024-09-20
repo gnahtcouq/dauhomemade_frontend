@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/chart'
 import {DashboardIndicatorResType} from '@/schemaValidations/indicator.schema'
 import {useMemo} from 'react'
+import {useTranslations} from 'next-intl'
 
 const colors = [
   'var(--color-chrome)',
@@ -81,12 +82,13 @@ export function DishBarChart({
       }),
     [chartData]
   )
+  const t = useTranslations('Dashboard')
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Xếp hạng món ăn</CardTitle>
-        <CardDescription>Được gọi nhiều nhất</CardDescription>
+        <CardTitle>{t('dishesChart.title')}</CardTitle>
+        <CardDescription>{t('dishesChart.description')}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>

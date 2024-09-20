@@ -17,46 +17,49 @@ import {cn, handleErrorApi} from '@/lib/utils'
 import {Link, useRouter} from '@/navigation'
 import {useLogoutMutation} from '@/queries/useAuth'
 import {RoleType} from '@/types/jwt.types'
-
-const menuItems: {
-  title: string
-  href: string
-  role?: RoleType[]
-  hiddenWhenLogin?: boolean
-  // authRequired?: boolean
-}[] = [
-  {
-    title: 'Trang chủ',
-    href: '/'
-  },
-  {
-    title: 'Menu',
-    href: '/guest/menu',
-    role: [Role.Guest]
-  },
-  {
-    title: 'Đơn hàng',
-    href: '/guest/orders',
-    role: [Role.Guest]
-  },
-  {
-    title: 'Đăng nhập',
-    href: '/login',
-    hiddenWhenLogin: true
-  },
-  {
-    title: 'Quản lý',
-    href: '/manage/dashboard',
-    role: [Role.Owner]
-  },
-  {
-    title: 'Đơn hàng',
-    href: '/manage/orders',
-    role: [Role.Employee]
-  }
-]
+import {useTranslations} from 'next-intl'
 
 export default function NavItems({className}: {className?: string}) {
+  const t = useTranslations('NavItems')
+
+  const menuItems: {
+    title: string
+    href: string
+    role?: RoleType[]
+    hiddenWhenLogin?: boolean
+    // authRequired?: boolean
+  }[] = [
+    {
+      title: t('home'),
+      href: '/'
+    },
+    {
+      title: t('menu'),
+      href: '/guest/menu',
+      role: [Role.Guest]
+    },
+    {
+      title: t('orders'),
+      href: '/guest/orders',
+      role: [Role.Guest]
+    },
+    {
+      title: t('login'),
+      href: '/login',
+      hiddenWhenLogin: true
+    },
+    {
+      title: t('manage'),
+      href: '/manage/dashboard',
+      role: [Role.Owner]
+    },
+    {
+      title: t('orders'),
+      href: '/manage/orders',
+      role: [Role.Employee]
+    }
+  ]
+
   const role = useAppStore((state) => state.role)
   const setRole = useAppStore((state) => state.setRole)
   const disconnectSocket = useAppStore((state) => state.disconnectSocket)
@@ -96,21 +99,24 @@ export default function NavItems({className}: {className?: string}) {
       {role && (
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <div className={cn(className, 'cursor-pointer')}>Đăng xuất</div>
+            <div className={cn(className, 'cursor-pointer')}>
+              {t('logout.title')}
+            </div>
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Bạn có muốn đăng xuất không?</AlertDialogTitle>
+              <AlertDialogTitle>{t('logout.message')}</AlertDialogTitle>
               {role === Role.Guest && (
                 <AlertDialogDescription>
-                  Việc đăng xuất có thể làm mất đi lịch sử hoá đơn hiện tại của
-                  bạn
+                  {t('logout.description')}
                 </AlertDialogDescription>
               )}
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Huỷ</AlertDialogCancel>
-              <AlertDialogAction onClick={logout}>Xác nhận</AlertDialogAction>
+              <AlertDialogCancel>{t('logout.cancel')}</AlertDialogCancel>
+              <AlertDialogAction onClick={logout}>
+                {t('logout.confirm')}
+              </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>

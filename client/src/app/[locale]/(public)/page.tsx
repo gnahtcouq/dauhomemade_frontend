@@ -51,7 +51,7 @@ export default async function Home({
         </div>
       </section>
       <section className="space-y-10 py-16">
-        <h2 className="text-center text-2xl font-bold">Món ngon tại ĐẬU</h2>
+        <h2 className="text-center text-2xl font-bold">{t('menu')}</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
           {displayedDishes.map((dish) => (
             <Link

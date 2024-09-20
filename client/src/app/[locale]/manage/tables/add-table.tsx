@@ -35,10 +35,12 @@ import {
 } from '@/schemaValidations/table.schema'
 import {zodResolver} from '@hookform/resolvers/zod'
 import {PlusCircle} from 'lucide-react'
+import {useTranslations} from 'next-intl'
 import {useState} from 'react'
 import {useForm} from 'react-hook-form'
 
 export default function AddTable() {
+  const errorMessageT = useTranslations('ErrorMessage.table')
   const [open, setOpen] = useState(false)
   const addTableMutation = useAddTableMutation()
   const form = useForm<CreateTableBodyType>({
@@ -107,7 +109,7 @@ export default function AddTable() {
               <FormField
                 control={form.control}
                 name="number"
-                render={({field}) => (
+                render={({field, formState: {errors}}) => (
                   <FormItem>
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
                       <Label htmlFor="name">Số bàn</Label>
@@ -118,7 +120,10 @@ export default function AddTable() {
                           className="w-full"
                           {...field}
                         />
-                        <FormMessage />
+                        <FormMessage>
+                          {Boolean(errors.number?.message) &&
+                            errorMessageT(errors.number?.message as any)}
+                        </FormMessage>
                       </div>
                     </div>
                   </FormItem>
@@ -127,10 +132,10 @@ export default function AddTable() {
               <FormField
                 control={form.control}
                 name="capacity"
-                render={({field}) => (
+                render={({field, formState: {errors}}) => (
                   <FormItem>
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                      <Label htmlFor="price">Số người</Label>
+                      <Label htmlFor="price">Số ghế</Label>
                       <div className="col-span-3 w-full space-y-2">
                         <Input
                           id="capacity"
@@ -138,7 +143,10 @@ export default function AddTable() {
                           {...field}
                           type="number"
                         />
-                        <FormMessage />
+                        <FormMessage>
+                          {Boolean(errors.capacity?.message) &&
+                            errorMessageT(errors.capacity?.message as any)}
+                        </FormMessage>
                       </div>
                     </div>
                   </FormItem>

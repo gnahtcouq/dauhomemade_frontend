@@ -32,25 +32,22 @@ export const CreateEmployeeAccountBody = z
     name: z
       .string()
       .trim()
-      .min(2, {message: 'Tên phải có ít nhất 2 ký tự'})
-      .max(50, {message: 'Tên không được vượt quá 50 ký tự'}),
-    email: z.string().email({message: 'Địa chỉ email không hợp lệ'}),
+      .min(2, {message: 'name.minLength'})
+      .max(50, {message: 'name.maxLength'}),
+    email: z.string().email({message: 'invalidEmail'}),
     avatar: z.string().url().optional(),
     password: z
       .string()
-      .min(6, {message: 'Mật khẩu phải có ít nhất 6 ký tự'})
-      .max(100, {message: 'Mật khẩu không được vượt quá 100 ký tự'}),
-    confirmPassword: z
-      .string()
-      .min(6, {message: 'Mật khẩu xác nhận phải có ít nhất 6 ký tự'})
-      .max(100, {message: 'Mật khẩu xác nhận không được vượt quá 100 ký tự'})
+      .min(6, {message: 'password.minLength'})
+      .max(100, {message: 'password.maxLength'}),
+    confirmPassword: z.string()
   })
   .strict()
   .superRefine(({confirmPassword, password}, ctx) => {
     if (confirmPassword !== password) {
       ctx.addIssue({
         code: 'custom',
-        message: 'Mật khẩu không khớp',
+        message: 'password.notMatch',
         path: ['confirmPassword']
       })
     }
@@ -65,21 +62,17 @@ export const UpdateEmployeeAccountBody = z
     name: z
       .string()
       .trim()
-      .min(2, {message: 'Tên phải có ít nhất 2 ký tự'})
-      .max(256, {message: 'Tên không được vượt quá 256 ký tự'}),
-    email: z.string().email({message: 'Địa chỉ email không hợp lệ'}),
+      .min(2, {message: 'name.minLength'})
+      .max(50, {message: 'name.maxLength'}),
+    email: z.string().email({message: 'invalidEmail'}),
     avatar: z.string().url().optional(),
     changePassword: z.boolean().optional(),
     password: z
       .string()
-      .min(6, {message: 'Mật khẩu xác nhận phải có ít nhất 6 ký tự'})
-      .max(100, {message: 'Mật khẩu xác nhận không được vượt quá 100 ký tự'})
+      .min(6, {message: 'password.minLength'})
+      .max(100, {message: 'password.maxLength'})
       .optional(),
-    confirmPassword: z
-      .string()
-      .min(6, {message: 'Mật khẩu xác nhận phải có ít nhất 6 ký tự'})
-      .max(100, {message: 'Mật khẩu xác nhận không được vượt quá 100 ký tự'})
-      .optional(),
+    confirmPassword: z.string().optional(),
     role: z.enum([Role.Owner, Role.Employee]).optional().default(Role.Employee)
   })
   .strict()
@@ -88,13 +81,13 @@ export const UpdateEmployeeAccountBody = z
       if (!password || !confirmPassword) {
         ctx.addIssue({
           code: 'custom',
-          message: 'Hãy nhập mật khẩu mới và xác nhận mật khẩu mới',
+          message: 'required',
           path: ['changePassword']
         })
       } else if (confirmPassword !== password) {
         ctx.addIssue({
           code: 'custom',
-          message: 'Mật khẩu không khớp',
+          message: 'confirm',
           path: ['confirmPassword']
         })
       }
@@ -110,8 +103,8 @@ export const UpdateMeBody = z
     name: z
       .string()
       .trim()
-      .min(2, {message: 'Tên phải có ít nhất 2 ký tự'})
-      .max(256, {message: 'Tên không được vượt quá 256 ký tự'}),
+      .min(2, {message: 'name.minLength'})
+      .max(50, {message: 'name.maxLength'}),
     avatar: z.string().url().optional()
   })
   .strict()
@@ -120,25 +113,19 @@ export type UpdateMeBodyType = z.TypeOf<typeof UpdateMeBody>
 
 export const ChangePasswordBody = z
   .object({
-    oldPassword: z
-      .string()
-      .min(6, {message: 'Mật khẩu phải có ít nhất 6 ký tự'})
-      .max(100, {message: 'Mật khẩu không được vượt quá 100 ký tự'}),
+    oldPassword: z.string().min(1, {message: 'required'}),
     password: z
       .string()
-      .min(6, {message: 'Mật khẩu mới phải có ít nhất 6 ký tự'})
-      .max(100, {message: 'Mật khẩu mới không được vượt quá 100 ký tự'}),
-    confirmPassword: z
-      .string()
-      .min(6, {message: 'Mật khẩu xác nhận phải có ít nhất 6 ký tự'})
-      .max(100, {message: 'Mật khẩu xác nhận không được vượt quá 100 ký tự'})
+      .min(6, {message: 'password.minLength'})
+      .max(100, {message: 'password.maxLength'}),
+    confirmPassword: z.string().min(1, {message: 'required'})
   })
   .strict()
   .superRefine(({confirmPassword, password}, ctx) => {
     if (confirmPassword !== password) {
       ctx.addIssue({
         code: 'custom',
-        message: 'Mật khẩu mới không khớp',
+        message: 'password.notMatch',
         path: ['confirmPassword']
       })
     }
@@ -178,7 +165,7 @@ export type GetGuestListQueryParamsType = z.TypeOf<
 
 export const CreateGuestBody = z
   .object({
-    name: z.string().trim().min(2).max(256),
+    name: z.string().trim().min(2).max(50),
     tableNumber: z.number()
   })
   .strict()

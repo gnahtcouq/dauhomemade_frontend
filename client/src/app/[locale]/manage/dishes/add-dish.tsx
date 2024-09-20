@@ -40,10 +40,12 @@ import {
 } from '@/schemaValidations/dish.schema'
 import {zodResolver} from '@hookform/resolvers/zod'
 import {PlusCircle, Upload} from 'lucide-react'
+import {useTranslations} from 'next-intl'
 import {useMemo, useRef, useState} from 'react'
 import {useForm} from 'react-hook-form'
 
 export default function AddDish() {
+  const errorMessageT = useTranslations('ErrorMessage.dish')
   const [file, setFile] = useState<File | null>(null)
   const [open, setOpen] = useState(false)
   const addDishMutation = useAddDishMutation()
@@ -179,13 +181,16 @@ export default function AddDish() {
               <FormField
                 control={form.control}
                 name="name"
-                render={({field}) => (
+                render={({field, formState: {errors}}) => (
                   <FormItem>
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
                       <Label htmlFor="name">Tên món ăn</Label>
                       <div className="col-span-3 w-full space-y-2">
                         <Input id="name" className="w-full" {...field} />
-                        <FormMessage />
+                        <FormMessage>
+                          {Boolean(errors.name?.message) &&
+                            errorMessageT(errors.name?.message as any)}
+                        </FormMessage>
                       </div>
                     </div>
                   </FormItem>
@@ -194,7 +199,7 @@ export default function AddDish() {
               <FormField
                 control={form.control}
                 name="price"
-                render={({field}) => (
+                render={({field, formState: {errors}}) => (
                   <FormItem>
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
                       <Label htmlFor="price">Giá</Label>
@@ -205,7 +210,10 @@ export default function AddDish() {
                           {...field}
                           type="number"
                         />
-                        <FormMessage />
+                        <FormMessage>
+                          {Boolean(errors.price?.message) &&
+                            errorMessageT(errors.price?.message as any)}
+                        </FormMessage>
                       </div>
                     </div>
                   </FormItem>
@@ -214,7 +222,7 @@ export default function AddDish() {
               <FormField
                 control={form.control}
                 name="description"
-                render={({field}) => (
+                render={({field, formState: {errors}}) => (
                   <FormItem>
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
                       <Label htmlFor="description">Mô tả sản phẩm</Label>
@@ -224,7 +232,10 @@ export default function AddDish() {
                           className="w-full"
                           {...field}
                         />
-                        <FormMessage />
+                        <FormMessage>
+                          {Boolean(errors.description?.message) &&
+                            errorMessageT(errors.description?.message as any)}
+                        </FormMessage>
                       </div>
                     </div>
                   </FormItem>

@@ -1,22 +1,43 @@
 import AppProvider from '@/components/app-provider'
 import {ThemeProvider} from '@/components/theme-provider'
 import {Toaster} from '@/components/ui/toaster'
+import {Locale, locales} from '@/config'
 import {cn} from '@/lib/utils'
-import type {Metadata} from 'next'
+import {NextIntlClientProvider} from 'next-intl'
+import {
+  getMessages,
+  getTranslations,
+  unstable_setRequestLocale
+} from 'next-intl/server'
 import {Inter as FontSans} from 'next/font/google'
 import './globals.css'
-import {NextIntlClientProvider} from 'next-intl'
-import {getMessages} from 'next-intl/server'
-import {locales} from '@/config'
-import {unstable_setRequestLocale} from 'next-intl/server'
 
 const fontSans = FontSans({
   subsets: ['latin'],
   variable: '--font-sans'
 })
-export const metadata: Metadata = {
-  title: 'Đậu Homemade',
-  description: 'ĐẬU HOMEMADE BÚN ĐẬU MẮM TÔM & MORE'
+
+// export const metadata: Metadata = {
+//   title: 'Đậu Homemade',
+//   description: 'ĐẬU HOMEMADE BÚN ĐẬU MẮM TÔM & MORE'
+// }
+
+export async function generateMetadata({
+  params: {locale}
+}: {
+  params: {
+    locale: Locale
+  }
+}) {
+  const t = await getTranslations({
+    locale,
+    namespace: 'HomePage'
+  })
+
+  return {
+    title: t('title'),
+    description: t('description')
+  }
 }
 
 export function generateStaticParams() {

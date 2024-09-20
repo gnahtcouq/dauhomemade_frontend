@@ -1,6 +1,8 @@
 {
     "HomePage": {
-        "description": "TÂN THỜI - MÁT MẺ - TIỆN NGHI"
+        "title": "Đậu Homemade",
+        "description": "TÂN THỜI - MÁT MẺ - TIỆN NGHI",
+        "menu": "Món ngon tại Đậu"
     },
     "Login": {
         "title": "Đăng nhập vào Đậu",
@@ -13,5 +15,97 @@
         "title": "Chuyển ngôn ngữ",
         "vi": "Tiếng Việt",
         "en": "Tiếng Anh"
+    },
+    "ErrorMessage": {
+        "required": "Trường này không được để trống",
+        "invalidEmail": "Email không hợp lệ",
+        "password": {
+            "required": "Mật khẩu không được để trống",
+            "minLength": "Mật khẩu phải có ít nhất 6 ký tự",
+            "maxLength": "Mật khẩu phải có tối đa 100 ký tự",
+            "notMatch": "Mật khẩu không khớp"
+        },
+        "name": {
+            "required": "Tên không được để trống",
+            "minLength": "Tên phải có ít nhất 2 ký tự",
+            "maxLength": "Tên phải có tối đa 50 ký tự"
+        },
+        "dish": {
+            "required": "Tên món ăn không được để trống",
+            "minLength": "Tên món ăn phải có ít nhất 2 ký tự",
+            "maxLength": "Tên món ăn phải có tối đa 256 ký tự",
+            "description": {
+                "required": "Mô tả món ăn không được để trống",
+                "minLength": "Mô tả món ăn phải có ít nhất 10 ký tự",
+                "maxLength": "Mô tả món ăn phải có tối đa 10000 ký tự"
+            },
+            "price": {
+                "required": "Giá món ăn không được để trống",
+                "min": "Giá món ăn phải lớn hơn 0"
+            }
+        },
+        "table": {
+            "required": "Số bàn không được để trống",
+            "min": "Số bàn phải lớn hơn 0",
+            "seats": {
+                "min": "Số ghế phải lớn hơn 0"
+            }
+        }
+    },
+    "NavItems": {
+        "home": "Trang chủ",
+        "login": "Đăng nhập",
+        "logout": {
+            "title": "Đăng xuất",
+            "message": "Bạn có chắc chắn muốn đăng xuất không?",
+            "description": "Việc đăng xuất có thể làm mất đi lịch sử hoá đơn hiện tại của bạn",
+            "confirm": "Đồng ý",
+            "cancel": "Hủy"
+        },
+        "manage": "Quản lý",
+        "orders": "Đơn hàng",
+        "menu": "Menu"
+    },
+    "DropdownAvatar": {
+        "home": "Trang chủ",
+        "settings": "Cài đặt",
+        "support": "Hỗ trợ",
+        "logout": "Đăng xuất"
+    },
+    "Dashboard": {
+        "title": "Thống kê",
+        "description": "Tổng quan về nhà hàng",
+        "fromDate": "Từ",
+        "toDate": "Đến",
+        "totalRevenue": "Tổng doanh thu",
+        "totalCustomers": {
+            "title": "Tổng khách hàng",
+            "description": "Khách hàng đã gọi món"
+        },
+        "totalOrders": {
+            "title": "Tổng đơn hàng",
+            "description": "Đơn hàng đã thanh toán"
+        },
+        "totalTables": "Bàn phục vụ",
+        "revenueChart": {
+            "title": "Biểu đồ doanh thu",
+            "description": "Thống kê doanh thu theo ngày"
+        },
+        "dishesChart": {
+            "title": "Biểu đồ món ăn",
+            "description": "Món ăn được đặt nhiều nhất"
+        }
+    },
+    "UpdateProfile": {
+        "settings": "Cài đặt",
+        "title": "Thông tin cá nhân",
+        "avatar": "Ảnh đại diện",
+        "name": "Tên",
+        "changePassword": "Đổi mật khẩu",
+        "oldPassword": "Mật khẩu cũ",
+        "newPassword": "Mật khẩu mới",
+        "confirmPassword": "Xác nhận mật khẩu",
+        "save": "Lưu",
+        "cancel": "Hủy"
     }
 }

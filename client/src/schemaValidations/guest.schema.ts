@@ -6,12 +6,8 @@ export const GuestLoginBody = z
   .object({
     name: z
       .string()
-      .min(2, {
-        message: 'Tên phải có ít nhất 2 ký tự'
-      })
-      .max(50, {
-        message: 'Tên không được vượt quá 50 ký tự'
-      }),
+      .min(2, {message: 'name.minLength'})
+      .max(50, {message: 'name.maxLength'}),
     tableNumber: z.number(),
     token: z.string()
   })

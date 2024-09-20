@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/chart'
 import {DashboardIndicatorResType} from '@/schemaValidations/indicator.schema'
 import {format, parse} from 'date-fns'
+import {useTranslations} from 'next-intl'
 import {CartesianGrid, Line, LineChart, XAxis} from 'recharts'
 
 const chartConfig = {
@@ -30,11 +31,12 @@ export function RevenueLineChart({
 }: {
   chartData: DashboardIndicatorResType['data']['revenueByDate']
 }) {
+  const t = useTranslations('Dashboard')
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Doanh thu</CardTitle>
-        <CardDescription>Thống kê doanh thu</CardDescription>
+        <CardTitle>{t('revenueChart.title')}</CardTitle>
+        <CardDescription>{t('revenueChart.description')}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>

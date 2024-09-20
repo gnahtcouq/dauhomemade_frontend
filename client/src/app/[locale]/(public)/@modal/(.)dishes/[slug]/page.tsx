@@ -1,3 +1,5 @@
+'use server'
+
 import dishApiRequest from '@/apiRequests/dish'
 import Modal from '@/app/[locale]/(public)/@modal/(.)dishes/[slug]/modal'
 import DishDetail from '@/app/[locale]/(public)/dishes/[slug]/dish-detail'

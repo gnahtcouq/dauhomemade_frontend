@@ -48,7 +48,7 @@ export const columns: ColumnDef<TableItem>[] = [
   },
   {
     accessorKey: 'capacity',
-    header: 'Số người',
+    header: 'Số ghế',
     cell: ({row}) => (
       <div className="capitalize">{row.getValue('capacity')}</div>
     )

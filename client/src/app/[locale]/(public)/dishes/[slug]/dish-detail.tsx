@@ -11,7 +11,7 @@ export default async function DishDetail({
     return (
       <div className="flex items-center justify-center">
         <h1 className="text-2xl lg:text-3xl font-semibold">
-          Xin lỗi, nhà ĐẬU chưa có món này rồi!
+          Xin lỗi, nhà Đậu chưa có món này rồi!
         </h1>
       </div>
     )

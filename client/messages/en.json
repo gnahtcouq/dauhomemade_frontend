@@ -1,6 +1,8 @@
 {
     "HomePage": {
-        "description": "MODERN - REFRESHING - CONVENIENT"
+        "title": "Đậu Homemade",
+        "description": "MODERN - REFRESHING - CONVENIENT",
+        "menu": "Delicious dishes at Đậu"
     },
     "Login": {
         "title": "Login to Đậu",
@@ -13,5 +15,97 @@
         "title": "Switch language",
         "vi": "Vietnamese",
         "en": "English"
+    },
+    "ErrorMessage": {
+        "required": "This field is required",
+        "invalidEmail": "Email is invalid",
+        "password": {
+            "required": "Password is required",
+            "minLength": "Password must be at least 6 characters",
+            "maxLength": "Password must be at most 100 characters",
+            "notMatch": "Password does not match"
+        },
+        "name": {
+            "required": "Name is required",
+            "minLength": "Name must be at least 2 characters",
+            "maxLength": "Name must be at most 50 characters"
+        },
+        "dish": {
+            "required": "Dish name is required",
+            "minLength": "Dish name must be at least 2 characters",
+            "maxLength": "Dish name must be at most 256 characters",
+            "description": {
+                "required": "Dish description is required",
+                "minLength": "Dish description must be at least 10 characters",
+                "maxLength": "Dish description must be at most 10000 characters"
+            },
+            "price": {
+                "required": "Dish price is required",
+                "min": "Dish price must be greater than 0"
+            }
+        },
+        "table": {
+            "required": "Table number is required",
+            "min": "Table number must be greater than 0",
+            "seats": {
+                "min": "Seats must be greater than 0"
+            }
+        }
+    },
+    "NavItems": {
+        "home": "Home",
+        "login": "Login",
+        "logout": {
+            "title": "Logout",
+            "message": "Are you sure you want to logout?",
+            "description": "Logging out may lose your current order history",
+            "confirm": "Confirm",
+            "cancel": "Cancel"
+        },
+        "manage": "Manage",
+        "orders": "Orders",
+        "menu": "Menu"
+    },
+    "DropdownAvatar": {
+        "home": "Home",
+        "settings": "Settings",
+        "support": "Support",
+        "logout": "Logout"
+    },
+    "Dashboard": {
+        "title": "Dashboard",
+        "description": "Overview of the restaurant",
+        "fromDate": "From",
+        "toDate": "To",
+        "totalRevenue": "Total revenue",
+        "totalCustomers": {
+            "title": "Total customers",
+            "description": "Customers have ordered dishes"
+        },
+        "totalOrders": {
+            "title": "Total orders",
+            "description": "Orders have been paid"
+        },
+        "totalTables": "Total tables",
+        "revenueChart": {
+            "title":"Revenue chart",
+            "description": "Statistics of revenue by day"
+        },
+        "dishesChart" : {
+            "title": "Dishes chart",
+            "description": "Statistics of the number of dishes ordered"
+        }
+    },
+    "UpdateProfile": {
+        "settings": "Settings",
+        "title": "Profile information",
+        "avatar": "Avatar",
+        "name": "Name",
+        "changePassword": "Change password",
+        "oldPassword": "Old password",
+        "newPassword": "New password",
+        "confirmPassword": "Confirm password",
+        "save": "Save",
+        "cancel": "Cancel"
     }
 }

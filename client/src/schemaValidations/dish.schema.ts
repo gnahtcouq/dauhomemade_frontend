@@ -4,14 +4,17 @@ import z from 'zod'
 export const CreateDishBody = z.object({
   name: z
     .string()
-    .min(1, {message: 'Tên món ăn không được để trống'})
-    .max(256, {message: 'Tên món ăn không được vượt quá 256 ký tự'}),
+    .min(1, {message: 'required'})
+    .max(256, {message: 'maxLength'}),
   price: z.coerce.number().positive({
-    message: 'Giá tiền phải lớn hơn 0'
+    message: 'price.required'
   }),
-  description: z.string().max(10000, {
-    message: 'Mô tả không được vượt quá 10000 ký tự'
-  }),
+  description: z
+    .string()
+    .min(1, {message: 'description.minLength'})
+    .max(10000, {
+      message: 'description.maxLength'
+    }),
   image: z.string().url(),
   status: z.enum(DishStatusValues).optional()
 })

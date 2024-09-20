@@ -18,8 +18,10 @@ import {Upload} from 'lucide-react'
 import {useEffect, useMemo, useRef, useState} from 'react'
 import {useForm} from 'react-hook-form'
 import {useUploadMediaMutation} from '@/queries/useMedia'
+import {useTranslations} from 'next-intl'
 
 export default function UpdateProfileForm() {
+  const t = useTranslations('UpdateProfile')
   const [file, setFile] = useState<File | null>(null)
   const avatarInputRef = useRef<HTMLInputElement>(null)
   const {data, refetch} = useAccountMe()
@@ -97,7 +99,7 @@ export default function UpdateProfileForm() {
       >
         <Card x-chunk="dashboard-07-chunk-0">
           <CardHeader>
-            <CardTitle>Thông tin cá nhân</CardTitle>
+            <CardTitle>{t('title')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid gap-8">
@@ -106,7 +108,7 @@ export default function UpdateProfileForm() {
                 name="avatar"
                 render={({field}) => (
                   <FormItem>
-                    <Label htmlFor="avatar">Ảnh đại diện</Label>
+                    <Label htmlFor="avatar">{t('avatar')}</Label>
                     <div className="flex gap-2 items-start justify-start">
                       <Avatar className="aspect-square w-[100px] h-[100px] rounded-md object-cover">
                         <AvatarImage src={previewAvatar} />
@@ -148,7 +150,7 @@ export default function UpdateProfileForm() {
                 render={({field}) => (
                   <FormItem>
                     <div className="grid gap-3">
-                      <Label htmlFor="name">Tên</Label>
+                      <Label htmlFor="name">{t('name')}</Label>
                       <Input
                         id="name"
                         type="text"
@@ -163,10 +165,10 @@ export default function UpdateProfileForm() {
 
               <div className=" items-center gap-2 md:ml-auto flex">
                 <Button variant="outline" size="sm" type="reset">
-                  Hủy
+                  {t('cancel')}
                 </Button>
                 <Button size="sm" type="submit">
-                  Lưu thông tin
+                  {t('save')}
                 </Button>
               </div>
             </div>
