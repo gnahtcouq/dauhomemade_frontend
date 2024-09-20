@@ -1,5 +1,3 @@
-'use client'
-
 import Logout from '@/app/[locale]/(public)/(auth)/logout/logout'
 import {Metadata} from 'next'
 import {Suspense} from 'react'

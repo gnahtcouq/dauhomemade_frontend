@@ -19,6 +19,10 @@
     "DishDetail": {
         "notFound": "Không tìm thấy món ăn"
     },
+    "ManageAccounts": {
+        "title": "Quản lý tài khoản",
+        "description": "Quản lý tài khoản nhân viên"
+    },
     "ErrorMessage": {
         "required": "Trường này không được để trống",
         "invalidEmail": "Email không hợp lệ",

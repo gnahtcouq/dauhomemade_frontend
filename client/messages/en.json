@@ -19,6 +19,10 @@
     "DishDetail": {
         "notFound": "Dish not found"
     },
+    "ManageAccounts": {
+        "title": "Manage accounts",
+        "description": "Manage employee accounts"
+    },
     "ErrorMessage": {
         "required": "This field is required",
         "invalidEmail": "Email is invalid",

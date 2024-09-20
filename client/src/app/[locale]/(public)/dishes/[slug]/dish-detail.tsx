@@ -27,6 +27,7 @@ export default async function DishDetail({
           quality={100}
           alt={dish.name}
           className="object-cover w-full h-full rounded-md transition-transform duration-300 transform group-hover:scale-110"
+          title={dish.name}
         />
       </div>
       <div className="flex-1 space-y-2">
