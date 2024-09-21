@@ -1,201 +1,238 @@
 {
-    "HomePage": {
-        "title": "Đậu Homemade",
-        "description": "MODERN - REFRESHING - CONVENIENT",
-        "menu": "Delicious dishes at Đậu"
+  "HomePage": {
+    "title": "Đậu Homemade",
+    "description": "MODERN - REFRESHING - CONVENIENT",
+    "menu": "Delicious dishes at Đậu"
+  },
+  "Login": {
+    "title": "Login to Đậu",
+    "email": "Email",
+    "password": "Password",
+    "login": "Login",
+    "forgotPassword": "Forgot password?"
+  },
+  "SwitchLanguage": {
+    "title": "Switch language",
+    "vi": "Vietnamese",
+    "en": "English"
+  },
+  "DishDetail": {
+    "notFound": "Dish not found"
+  },
+  "ManageAccounts": {
+    "title": "Manage accounts",
+    "description": "Manage employee and owner accounts",
+    "add": "Add account",
+    "edit": "Edit account",
+    "delete": "Delete account",
+    "confirmDelete": {
+      "title": "Delete account",
+      "message": "Are you sure you want to delete this account? This action cannot be undone",
+      "confirm": "Confirm",
+      "cancel": "Cancel"
     },
-    "Login": {
-        "title": "Login to Đậu",
-        "email": "Email",
-        "password": "Password",
-        "login": "Login",
-        "forgotPassword": "Forgot password?"
+    "table": {
+      "actions": "Actions",
+      "edit": "Edit",
+      "delete": "Delete",
+      "searchByName": "Search by name",
+      "searchByEmail": "Search by email",
+      "show": "Showing",
+      "outOf": "out of",
+      "results": "results",
+      "noResults": "No results found"
     },
-    "SwitchLanguage": {
-        "title": "Switch language",
-        "vi": "Vietnamese",
-        "en": "English"
+    "dialogAdd": {
+      "title": "Add account",
+      "description": "Name, email, password fields are required",
+      "avatar": "Avatar",
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "add": "Add"
     },
-    "DishDetail": {
-        "notFound": "Dish not found"
-    },
-    "ManageAccounts": {
-        "title": "Manage accounts",
-        "description": "Manage employee and owner accounts",
-        "add": "Add account",
-        "edit": "Edit account",
-        "delete": "Delete account",
-        "confirmDelete": {
-            "title": "Delete account",
-            "message": "Are you sure you want to delete this account? This action cannot be undone",
-            "confirm": "Confirm",
-            "cancel": "Cancel"
-        },
-        "table": {
-            "actions": "Actions",
-            "edit": "Edit",
-            "delete": "Delete",
-            "searchByName": "Search by name",
-            "searchByEmail": "Search by email",
-            "show": "Showing",
-            "outOf": "out of",
-            "results": "results",
-            "noResults": "No results found"
-        },
-        "dialogAdd": {
-            "title": "Add account",
-            "description": "Name, email, password fields are required",
-            "avatar": "Avatar",
-            "name": "Name",
-            "email": "Email",
-            "password": "Password",
-            "confirmPassword": "Confirm password",
-            "add": "Add"
-        },
-        "dialogEdit": {
-            "title": "Edit account",
-            "description": "Name, email, password fields are required",
-            "avatar": "Avatar",
-            "name": "Name",
-            "email": "Email",
-            "role": "Role",
-            "changePassword": "Change password",
-            "newPassword": "New password",
-            "confirmPassword": "Confirm password",
-            "save": "Save"
-        }
-    },
-    "ManageDishes": {
-        "title": "Manage dishes",
-        "description": "Manage dishes in the menu",
-        "add": "Add dish",
-        "edit": "Edit dish",
-        "delete": "Delete dish",
-        "confirmDelete": {
-            "title": "Delete dish",
-            "message": "Are you sure you want to delete this dish? This action cannot be undone",
-            "confirm": "Confirm",
-            "cancel": "Cancel"
-        },
-        "table": {
-            "actions": "Actions",
-            "edit": "Edit",
-            "delete": "Delete",
-            "searchByName": "Search by name",
-            "show": "Showing",
-            "outOf": "out of",
-            "results": "results",
-            "noResults": "No results found"
-        },
-        "dialogAdd": {
-            "title": "Add dish",
-            "desc": "Image, name, price, description fields are required",
-            "image": "Dish image",
-            "name": "Name",
-            "price": "Price",
-            "description": "Description",
-            "status": "Status",
-            "add": "Add"
-        },
-        "dialogEdit": {
-            "title": "Edit dish",
-            "desc": "Image, name, price, description fields are required",
-            "image": "Dish image",
-            "name": "Name",
-            "price": "Price",
-            "description": "Description",
-            "status": "Status",
-            "save": "Save"
-        }
-    },
-    "ErrorMessage": {
-        "required": "This field is required",
-        "invalidEmail": "Email is invalid",
-        "password": {
-            "required": "Password is required",
-            "description": "Please enter new password and confirm new password",
-            "minLength": "Password must be at least 6 characters",
-            "maxLength": "Password must be at most 100 characters",
-            "notMatch": "Password does not match"
-        },
-        "name": {
-            "required": "Name is required",
-            "minLength": "Name must be at least 2 characters",
-            "maxLength": "Name must be at most 50 characters"
-        },
-        "dish": {
-            "required": "Dish name is required",
-            "minLength": "Dish name must be at least 2 characters",
-            "maxLength": "Dish name must be at most 256 characters",
-            "description": {
-                "required": "Dish description is required",
-                "minLength": "Dish description must be at least 10 characters",
-                "maxLength": "Dish description must be at most 10000 characters"
-            },
-            "price": "Dish price is invalid"
-        },
-        "table": {
-            "required": "Table number is required",
-            "min": "Table number must be greater than 0",
-            "seats": {
-                "min": "Seats must be greater than 0"
-            }
-        }
-    },
-    "NavItems": {
-        "home": "Home",
-        "login": "Login",
-        "logout": {
-            "title": "Logout",
-            "message": "Are you sure you want to logout?",
-            "description": "Logging out may lose your current order history",
-            "confirm": "Confirm",
-            "cancel": "Cancel"
-        },
-        "manage": "Manage",
-        "orders": "Orders",
-        "menu": "Menu"
-    },
-    "DropdownAvatar": {
-        "home": "Home",
-        "settings": "Settings",
-        "support": "Support",
-        "logout": "Logout"
-    },
-    "Dashboard": {
-        "title": "Dashboard",
-        "description": "Overview of the store",
-        "fromDate": "From",
-        "toDate": "To",
-        "totalRevenue": "Total revenue",
-        "totalCustomers": {
-            "title": "Total customers",
-            "description": "Customers have ordered dishes"
-        },
-        "totalOrders": {
-            "title": "Total orders",
-            "description": "Orders have been paid"
-        },
-        "totalTables": "Total tables",
-        "revenueChart": {
-            "title":"Revenue chart",
-            "description": "Statistics of revenue by day"
-        },
-        "dishesChart" : {
-            "title": "Dishes chart",
-            "description": "Statistics of the number of dishes ordered"
-        }
-    },
-    "UpdateProfile": {
-        "settings": "Settings",
-        "title": "Profile information",
-        "avatar": "Avatar",
-        "name": "Name",
-        "changePassword": "Change password",
-        "oldPassword": "Old password",
-        "newPassword": "New password",
-        "confirmPassword": "Confirm password",
-        "save": "Save",
-        "cancel": "Cancel"
+    "dialogEdit": {
+      "title": "Edit account",
+      "description": "Name, email, password fields are required",
+      "avatar": "Avatar",
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "changePassword": "Change password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm password",
+      "save": "Save"
     }
+  },
+  "ManageDishes": {
+    "title": "Manage dishes",
+    "description": "Manage dishes in the menu",
+    "add": "Add dish",
+    "edit": "Edit dish",
+    "delete": "Delete dish",
+    "confirmDelete": {
+      "title": "Delete dish",
+      "message": "Are you sure you want to delete this dish? This action cannot be undone",
+      "confirm": "Confirm",
+      "cancel": "Cancel"
+    },
+    "table": {
+      "actions": "Actions",
+      "edit": "Edit",
+      "delete": "Delete",
+      "searchByName": "Search by name",
+      "show": "Showing",
+      "outOf": "out of",
+      "results": "results",
+      "noResults": "No results found"
+    },
+    "dialogAdd": {
+      "title": "Add dish",
+      "desc": "Image, name, price, description fields are required",
+      "image": "Dish image",
+      "name": "Name",
+      "price": "Price",
+      "description": "Description",
+      "status": "Status",
+      "add": "Add"
+    },
+    "dialogEdit": {
+      "title": "Edit dish",
+      "desc": "Image, name, price, description fields are required",
+      "image": "Dish image",
+      "name": "Name",
+      "price": "Price",
+      "description": "Description",
+      "status": "Status",
+      "save": "Save"
+    }
+  },
+  "ManageTables": {
+    "title": "Manage tables",
+    "description": "Manage tables in the store",
+    "add": "Add table",
+    "edit": "Edit table",
+    "delete": "Delete table",
+    "confirmDelete": {
+      "title": "Delete table",
+      "message": "Are you sure you want to delete this table? This action cannot be undone",
+      "confirm": "Confirm",
+      "cancel": "Cancel"
+    },
+    "table": {
+      "actions": "Actions",
+      "edit": "Edit",
+      "delete": "Delete",
+      "searchByNumber": "Search by table number",
+      "show": "Showing",
+      "outOf": "out of",
+      "results": "results",
+      "noResults": "No results found"
+    },
+    "dialogAdd": {
+      "title": "Add table",
+      "number": "Table number",
+      "capacity": "Seats",
+      "status": "Status",
+      "add": "Add"
+    },
+    "dialogEdit": {
+      "title": "Edit table",
+      "number": "Table number",
+      "capacity": "Seats",
+      "status": "Status",
+      "changeQRCode": "Change QR code",
+      "orderURL": "Order URL",
+      "save": "Save"
+    }
+  },
+  "ErrorMessage": {
+    "required": "This field is required",
+    "invalidEmail": "Email is invalid",
+    "password": {
+      "required": "Password is required",
+      "description": "Please enter new password and confirm new password",
+      "minLength": "Password must be at least 6 characters",
+      "maxLength": "Password must be at most 100 characters",
+      "notMatch": "Password does not match"
+    },
+    "name": {
+      "required": "Name is required",
+      "minLength": "Name must be at least 2 characters",
+      "maxLength": "Name must be at most 50 characters"
+    },
+    "dish": {
+      "required": "Dish name is required",
+      "minLength": "Dish name must be at least 2 characters",
+      "maxLength": "Dish name must be at most 256 characters",
+      "description": {
+        "required": "Dish description is required",
+        "minLength": "Dish description must be at least 10 characters",
+        "maxLength": "Dish description must be at most 10000 characters"
+      },
+      "price": "Dish price is invalid"
+    },
+    "table": {
+      "required": "Table number is required",
+      "min": "Table number must be greater than 0",
+      "capacity": "Seats must be greater than 0"
+    }
+  },
+  "NavItems": {
+    "home": "Home",
+    "login": "Login",
+    "logout": {
+      "title": "Logout",
+      "message": "Are you sure you want to logout?",
+      "description": "Logging out may lose your current order history",
+      "confirm": "Confirm",
+      "cancel": "Cancel"
+    },
+    "manage": "Manage",
+    "orders": "Orders",
+    "menu": "Menu"
+  },
+  "DropdownAvatar": {
+    "home": "Home",
+    "settings": "Settings",
+    "support": "Support",
+    "logout": "Logout"
+  },
+  "Dashboard": {
+    "title": "Dashboard",
+    "description": "Overview of the store",
+    "fromDate": "From",
+    "toDate": "To",
+    "totalRevenue": "Total revenue",
+    "totalCustomers": {
+      "title": "Total customers",
+      "description": "Customers have ordered dishes"
+    },
+    "totalOrders": {
+      "title": "Total orders",
+      "description": "Orders have been paid"
+    },
+    "totalTables": "Total tables",
+    "revenueChart": {
+      "title": "Revenue chart",
+      "description": "Statistics of revenue by day"
+    },
+    "dishesChart": {
+      "title": "Dishes chart",
+      "description": "Statistics of the number of dishes ordered"
+    }
+  },
+  "UpdateProfile": {
+    "settings": "Settings",
+    "title": "Profile information",
+    "avatar": "Avatar",
+    "name": "Name",
+    "changePassword": "Change password",
+    "oldPassword": "Old password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm password",
+    "save": "Save",
+    "cancel": "Cancel"
+  }
 }

@@ -3,7 +3,7 @@ import z from 'zod'
 
 export const CreateTableBody = z.object({
   number: z.coerce.number().positive({message: 'min'}),
-  capacity: z.coerce.number().positive({message: 'seats.min'}),
+  capacity: z.coerce.number().positive({message: 'capacity'}),
   status: z.enum(TableStatusValues).optional()
 })
 
@@ -34,7 +34,7 @@ export type TableListResType = z.TypeOf<typeof TableListRes>
 
 export const UpdateTableBody = z.object({
   changeToken: z.boolean(),
-  capacity: z.coerce.number().positive(),
+  capacity: z.coerce.number().positive({message: 'capacity'}),
   status: z.enum(TableStatusValues).optional()
 })
 export type UpdateTableBodyType = z.TypeOf<typeof UpdateTableBody>

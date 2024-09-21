@@ -1,7 +1,12 @@
 import dishApiRequest from '@/apiRequests/dish'
 import DishDetail from '@/app/[locale]/(public)/dishes/[slug]/dish-detail'
 import envConfig, {Locale} from '@/config'
-import {generateSlugUrl, getIdFromSlugUrl, wrapServerApi} from '@/lib/utils'
+import {
+  generateSlugUrl,
+  getIdFromSlugUrl,
+  htmlToTextForDescription,
+  wrapServerApi
+} from '@/lib/utils'
 import {baseOpenGraph} from '@/shared-metadata'
 import {Metadata} from 'next'
 import {getTranslations} from 'next-intl/server'
@@ -42,7 +47,7 @@ export async function generateMetadata({
 
   return {
     title: dish.name,
-    description: dish.description,
+    description: htmlToTextForDescription(dish.description),
     openGraph: {
       ...baseOpenGraph,
       title: dish.name,

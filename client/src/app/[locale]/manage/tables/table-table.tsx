@@ -52,6 +52,7 @@ import {useDeleteTableMutation, useGetTableList} from '@/queries/useTable'
 import {TableListResType} from '@/schemaValidations/table.schema'
 import {useSearchParams} from 'next/navigation'
 import {createContext, useContext, useEffect, useState} from 'react'
+import {useTranslations} from 'next-intl'
 
 type TableItem = TableListResType['data'][0]
 
@@ -115,6 +116,9 @@ export const columns: ColumnDef<TableItem>[] = [
       const openDeleteTable = () => {
         setTableDelete(row.original)
       }
+
+      const t = useTranslations('ManageDishes.table')
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -124,10 +128,14 @@ export const columns: ColumnDef<TableItem>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Hành động</DropdownMenuLabel>
+            <DropdownMenuLabel>{t('actions')}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={openEditTable}>Sửa</DropdownMenuItem>
-            <DropdownMenuItem onClick={openDeleteTable}>Xóa</DropdownMenuItem>
+            <DropdownMenuItem onClick={openEditTable}>
+              {t('edit')}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={openDeleteTable}>
+              {t('delete')}
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )
@@ -142,6 +150,7 @@ function AlertDialogDeleteTable({
   tableDelete: TableItem | null
   setTableDelete: (value: TableItem | null) => void
 }) {
+  const t = useTranslations('ManageTables.confirmDelete')
   const {mutateAsync} = useDeleteTableMutation()
   const deleteTable = async () => {
     if (tableDelete) {
@@ -168,18 +177,19 @@ function AlertDialogDeleteTable({
     >
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Xóa bàn ăn?</AlertDialogTitle>
-          <AlertDialogDescription>
-            Bàn số{' '}
+          <AlertDialogTitle>
+            {t('title')}{' '}
             <span className="bg-foreground text-primary-foreground rounded px-1">
               {tableDelete?.number}
-            </span>{' '}
-            sẽ bị xóa vĩnh viễn
-          </AlertDialogDescription>
+            </span>
+          </AlertDialogTitle>
+          <AlertDialogDescription>{t('message')}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Huỷ</AlertDialogCancel>
-          <AlertDialogAction onClick={deleteTable}>Xác nhận</AlertDialogAction>
+          <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
+          <AlertDialogAction onClick={deleteTable}>
+            {t('confirm')}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
@@ -188,6 +198,7 @@ function AlertDialogDeleteTable({
 // Số lượng item trên 1 trang
 const PAGE_SIZE = 10
 export default function TableTable() {
+  const t = useTranslations('ManageTables.table')
   const searchParam = useSearchParams()
   const page = searchParam.get('page') ? Number(searchParam.get('page')) : 1
   const pageIndex = page - 1
@@ -246,7 +257,7 @@ export default function TableTable() {
         />
         <div className="flex items-center py-4">
           <Input
-            placeholder="Tìm kiếm theo số bàn..."
+            placeholder={t('searchByNumber')}
             value={
               (table.getColumn('number')?.getFilterValue() as string) ?? ''
             }
@@ -302,7 +313,7 @@ export default function TableTable() {
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    Không có kết quả.
+                    {t('noResults')}
                   </TableCell>
                 </TableRow>
               )}
@@ -311,9 +322,9 @@ export default function TableTable() {
         </div>
         <div className="flex items-center justify-end space-x-2 py-4">
           <div className="text-xs text-muted-foreground py-4 flex-1 ">
-            Hiển thị{' '}
-            <strong>{table.getPaginationRowModel().rows.length}</strong> trong{' '}
-            <strong>{data.length}</strong> kết quả
+            {t('show')}{' '}
+            <strong>{table.getPaginationRowModel().rows.length}</strong>{' '}
+            {t('outOf')} <strong>{data.length}</strong> {t('results')}
           </div>
           <div>
             <AutoPagination
