@@ -75,6 +75,7 @@ export const setRefreshTokenToLocalStorage = (value: string) =>
 export const removeTokensFromLocalStorage = () => {
   isBrowser && localStorage.removeItem('accessToken')
   isBrowser && localStorage.removeItem('refreshToken')
+  isBrowser && localStorage.removeItem('token')
 }
 
 export const checkAndRefreshToken = async (param?: {

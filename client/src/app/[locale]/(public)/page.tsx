@@ -21,7 +21,7 @@ export async function generateMetadata({
   const url = envConfig.NEXT_PUBLIC_URL + `/${locale}`
 
   return {
-    title: t('title'),
+    title: t('homepage'),
     description: htmlToTextForDescription(t('description')),
     alternates: {
       canonical: url

@@ -1,6 +1,8 @@
 {
   "HomePage": {
+    "homepage": "Homepage",
     "title": "Đậu Homemade",
+    "defaultTitle": "Đậu Homemade",
     "description": "MODERN - REFRESHING - CONVENIENT",
     "menu": "Delicious dishes at Đậu"
   },
@@ -11,6 +13,12 @@
     "password": "Password",
     "login": "Login",
     "forgotPassword": "Forgot password?"
+  },
+  "GuestLogin": {
+    "title": "Login to order",
+    "description": "Please provide your name ^^",
+    "name": "Name",
+    "login": "Login"
   },
   "SwitchLanguage": {
     "title": "Switch language",
@@ -197,8 +205,12 @@
   "DropdownAvatar": {
     "home": "Home",
     "settings": "Settings",
-    "support": "Support",
-    "logout": "Logout"
+    "logout": {
+      "title": "Logout",
+      "message": "Are you sure you want to logout?",
+      "confirm": "Confirm",
+      "cancel": "Cancel"
+    }
   },
   "Dashboard": {
     "title": "Dashboard",

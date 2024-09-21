@@ -39,7 +39,7 @@ export async function generateMetadata({
   return {
     title: {
       template: `%s | ${t('title')}`,
-      default: t('description')
+      default: t('defaultTitle')
     },
     openGraph: {
       ...baseOpenGraph

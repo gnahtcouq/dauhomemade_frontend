@@ -25,27 +25,36 @@ import {useForm} from 'react-hook-form'
 import {useTranslations} from 'next-intl'
 
 export default function GuestLoginForm() {
+  const t = useTranslations('GuestLogin')
   const errorMessageT = useTranslations('ErrorMessage')
   const setRole = useAppStore((state) => state.setRole)
   const setSocket = useAppStore((state) => state.setSocket)
   const searchParams = useSearchParams()
   const params = useParams()
   const tableNumber = Number(params.number)
-  const token = searchParams.get('token')
   const router = useRouter()
   const loginMutation = useGuestLoginMutation()
   const form = useForm<GuestLoginBodyType>({
     resolver: zodResolver(GuestLoginBody),
     defaultValues: {
       name: '',
-      token: token ?? '',
+      token: '',
       tableNumber
     }
   })
 
   useEffect(() => {
-    if (!token) router.push('/')
-  }, [token, router])
+    const token = searchParams.get('token') || localStorage.getItem('token')
+    if (!token) {
+      router.push('/')
+    } else {
+      localStorage.setItem('token', token)
+      form.setValue('token', token)
+      const currentUrl = new URL(window.location.href)
+      currentUrl.searchParams.set('token', token)
+      router.replace(currentUrl.toString())
+    }
+  }, [searchParams, router, form])
 
   async function onSubmit(values: GuestLoginBodyType) {
     if (loginMutation.isPending) return
@@ -65,8 +74,8 @@ export default function GuestLoginForm() {
   return (
     <Card className="mx-auto max-w-sm">
       <CardHeader>
-        <CardTitle className="text-2xl">Đăng nhập gọi món</CardTitle>
-        <CardDescription>Cho Đậu xin tên của bạn nhé ^^</CardDescription>
+        <CardTitle className="text-2xl">{t('title')}</CardTitle>
+        <CardDescription>{t('description')}</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -84,7 +93,7 @@ export default function GuestLoginForm() {
                 render={({field, formState: {errors}}) => (
                   <FormItem>
                     <div className="grid gap-2">
-                      <Label htmlFor="name">Tên của bạn</Label>
+                      <Label htmlFor="name">{t('name')}</Label>
                       <Input id="name" type="text" required {...field} />
                       <FormMessage>
                         {Boolean(errors.name?.message) &&
@@ -96,7 +105,7 @@ export default function GuestLoginForm() {
               />
 
               <Button type="submit" className="w-full">
-                Đăng nhập
+                {t('login')}
               </Button>
             </div>
           </form>

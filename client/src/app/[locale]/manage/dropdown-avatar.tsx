@@ -1,6 +1,16 @@
 'use client'
 
 import {useAppStore} from '@/components/app-provider'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from '@/components/ui/alert-dialog'
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import {Button} from '@/components/ui/button'
 import {
@@ -12,9 +22,9 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import {handleErrorApi} from '@/lib/utils'
+import {Link, useRouter} from '@/navigation'
 import {useAccountMe} from '@/queries/useAccount'
 import {useLogoutMutation} from '@/queries/useAuth'
-import {Link, useRouter} from '@/navigation'
 import {useTranslations} from 'next-intl'
 
 export default function DropdownAvatar() {
@@ -70,13 +80,28 @@ export default function DropdownAvatar() {
             {t('settings')}
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer">
-          {t('support')}
-        </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={logout} className="cursor-pointer">
-          {t('logout')}
-        </DropdownMenuItem>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onSelect={(event) => event.preventDefault()}
+            >
+              {t('logout.title')}
+            </DropdownMenuItem>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>{t('logout.message')}</AlertDialogTitle>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>{t('logout.cancel')}</AlertDialogCancel>
+              <AlertDialogAction onClick={logout}>
+                {t('logout.confirm')}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </DropdownMenuContent>
     </DropdownMenu>
   )

@@ -1,6 +1,8 @@
 {
   "HomePage": {
+    "homepage": "Trang chủ",
     "title": "Đậu Homemade",
+    "defaultTitle": "Đậu Homemade",
     "description": "TÂN THỜI - MÁT MẺ - TIỆN NGHI",
     "menu": "Món ngon tại Đậu"
   },
@@ -11,6 +13,12 @@
     "password": "Mật khẩu",
     "login": "Đăng nhập",
     "forgotPassword": "Quên mật khẩu?"
+  },
+  "GuestLogin": {
+    "title": "Đăng nhập gọi món",
+    "description": "Cho Đậu xin tên của bạn nhé ^^",
+    "name": "Tên",
+    "login": "Đăng nhập"
   },
   "SwitchLanguage": {
     "title": "Chuyển ngôn ngữ",
@@ -197,8 +205,12 @@
   "DropdownAvatar": {
     "home": "Trang chủ",
     "settings": "Cài đặt",
-    "support": "Hỗ trợ",
-    "logout": "Đăng xuất"
+    "logout": {
+      "title": "Đăng xuất",
+      "message": "Bạn có chắc chắn muốn đăng xuất không?",
+      "confirm": "Đồng ý",
+      "cancel": "Hủy"
+    }
   },
   "Dashboard": {
     "title": "Thống kê",
