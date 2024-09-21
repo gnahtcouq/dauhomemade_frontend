@@ -11,6 +11,7 @@ import {
 } from 'next-intl/server'
 import {Inter as FontSans} from 'next/font/google'
 import './globals.css'
+import NextTopLoader from 'nextjs-toploader'
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -62,6 +63,10 @@ export default async function RootLayout({
           fontSans.variable
         )}
       >
+        <NextTopLoader
+          color="hsl(var(--muted-foreground))"
+          showSpinner={false}
+        />
         <NextIntlClientProvider messages={messages}>
           <AppProvider>
             <ThemeProvider

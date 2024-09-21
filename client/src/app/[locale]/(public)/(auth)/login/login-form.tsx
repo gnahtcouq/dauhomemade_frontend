@@ -14,6 +14,7 @@ import {useRouter} from '@/navigation'
 import {useLoginMutation} from '@/queries/useAuth'
 import {LoginBody, LoginBodyType} from '@/schemaValidations/auth.schema'
 import {zodResolver} from '@hookform/resolvers/zod'
+import {LoaderCircle} from 'lucide-react'
 import {useTranslations} from 'next-intl'
 import {useEffect} from 'react'
 import {useForm} from 'react-hook-form'
@@ -122,6 +123,9 @@ export default function LoginForm() {
                 )}
               />
               <Button type="submit" className="w-full">
+                {loginMutation.isPending && (
+                  <LoaderCircle className="w-5 h-5 mr-2 animate-spin" />
+                )}
                 {t('login')}
               </Button>
             </div>
