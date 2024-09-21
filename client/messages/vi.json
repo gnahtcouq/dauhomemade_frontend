@@ -6,6 +6,7 @@
   },
   "Login": {
     "title": "Đăng nhập vào Đậu",
+    "description": "Đăng nhập để quản lý cửa hàng của bạn",
     "email": "Email",
     "password": "Mật khẩu",
     "login": "Đăng nhập",

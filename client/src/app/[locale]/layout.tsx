@@ -12,6 +12,7 @@ import {
 import {Inter as FontSans} from 'next/font/google'
 import './globals.css'
 import NextTopLoader from 'nextjs-toploader'
+import {baseOpenGraph} from '@/shared-metadata'
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -36,8 +37,13 @@ export async function generateMetadata({
   })
 
   return {
-    title: t('title'),
-    description: t('description')
+    title: {
+      template: `%s | ${t('title')}`,
+      default: t('description')
+    },
+    openGraph: {
+      ...baseOpenGraph
+    }
   }
 }
 

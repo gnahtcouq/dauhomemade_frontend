@@ -6,6 +6,7 @@
   },
   "Login": {
     "title": "Login to Đậu",
+    "description": "Login to manage your store",
     "email": "Email",
     "password": "Password",
     "login": "Login",
