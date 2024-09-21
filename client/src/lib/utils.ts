@@ -1,6 +1,6 @@
 import authApiRequest from '@/apiRequests/auth'
 import guestApiRequest from '@/apiRequests/guest'
-import envConfig from '@/config'
+import envConfig, {defaultLocale} from '@/config'
 import {
   DishStatus,
   OrderStatus,
@@ -199,7 +199,11 @@ export const getTableLink = ({
   tableNumber: number
 }) => {
   return (
-    envConfig.NEXT_PUBLIC_URL + '/tables/' + tableNumber + '?token=' + token
+    envConfig.NEXT_PUBLIC_URL +
+    `/${defaultLocale}/tables/` +
+    tableNumber +
+    '?token=' +
+    token
   )
 }
 
