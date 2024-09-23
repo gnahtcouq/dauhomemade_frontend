@@ -118,7 +118,7 @@ export default function OrderCart() {
               alt={order.dishSnapshot.name}
               height={100}
               width={100}
-              quality={100}
+              quality={75}
               priority={true}
               className="object-cover w-[80px] h-[80px] rounded-md"
             />

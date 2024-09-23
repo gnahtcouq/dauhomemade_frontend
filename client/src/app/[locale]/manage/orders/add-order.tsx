@@ -230,7 +230,7 @@ export default function AddOrder() {
                   alt={dish.name}
                   height={100}
                   width={100}
-                  quality={100}
+                  quality={75}
                   className={`object-cover w-[80px] h-[80px] rounded-md ${
                     dish.status === DishStatus.Unavailable
                       ? 'filter-blur opacity-50'
