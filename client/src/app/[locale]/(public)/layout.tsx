@@ -2,11 +2,17 @@ import NavItems from '@/app/[locale]/(public)/nav-items'
 import DarkModeToggle from '@/components/dark-mode-toggle'
 import SwitchLanguage from '@/components/switch-language'
 import {Button} from '@/components/ui/button'
-import {Sheet, SheetContent, SheetTrigger} from '@/components/ui/sheet'
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger
+} from '@/components/ui/sheet'
 import {Link} from '@/navigation'
 import {Menu} from 'lucide-react'
 import {unstable_setRequestLocale} from 'next-intl/server'
 import Image from 'next/image'
+import {VisuallyHidden} from '@radix-ui/react-visually-hidden'
 
 export default function Layout({
   children,
@@ -52,6 +58,9 @@ export default function Layout({
             </Button>
           </SheetTrigger>
           <SheetContent side="left">
+            <SheetTitle>
+              <VisuallyHidden>Menu</VisuallyHidden>
+            </SheetTitle>
             <nav className="grid gap-6 text-lg font-medium">
               <Link
                 href="#"

@@ -4,6 +4,7 @@ const withNextIntl = createNextIntlPlugin();
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+    reactStrictMode: false,
     images: {
         remotePatterns: [
             {
@@ -12,7 +13,11 @@ const nextConfig = {
                 port: '81',
                 pathname: '/**'
             },
-        ]
+            {
+                hostname: 'localhost',
+                pathname: '/**'
+            },
+        ],
     }
 };
 

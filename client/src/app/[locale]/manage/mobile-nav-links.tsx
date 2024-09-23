@@ -2,12 +2,18 @@
 import menuItems from '@/app/[locale]/manage/menuItems'
 import {useAppStore} from '@/components/app-provider'
 import {Button} from '@/components/ui/button'
-import {Sheet, SheetContent, SheetTrigger} from '@/components/ui/sheet'
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger
+} from '@/components/ui/sheet'
 import {cn} from '@/lib/utils'
 import {PanelLeft} from 'lucide-react'
 import Image from 'next/image'
 import {Link} from '@/navigation'
 import {usePathname} from '@/navigation'
+import {VisuallyHidden} from '@radix-ui/react-visually-hidden'
 
 export default function MobileNavLinks() {
   const pathname = usePathname()
@@ -22,6 +28,9 @@ export default function MobileNavLinks() {
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="sm:max-w-xs">
+        <SheetTitle>
+          <VisuallyHidden>Menu</VisuallyHidden>
+        </SheetTitle>
         <nav className="grid gap-6 text-lg font-medium">
           <Link
             href="#"
