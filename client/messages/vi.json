@@ -232,7 +232,7 @@
     "totalTables": "Bàn phục vụ",
     "revenueChart": {
       "title": "Biểu đồ doanh thu",
-      "description": "Thống kê doanh thu theo ngày"
+      "description": "Thống kê doanh thu theo ngày bao gồm đơn chưa thanh toán"
     },
     "dishesChart": {
       "title": "Biểu đồ món ăn",

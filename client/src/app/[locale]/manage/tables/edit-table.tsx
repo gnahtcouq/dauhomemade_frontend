@@ -166,7 +166,9 @@ export default function EditTable({
                         />
                         <FormMessage>
                           {Boolean(errors.capacity?.message) &&
-                            errorMessageT(errors.capacity?.message as any)}
+                            errorMessageT(errors.capacity?.message as any)
+                              .replace('ErrorMessage.table.', '')
+                              .trim()}
                         </FormMessage>
                       </div>
                     </div>
@@ -220,7 +222,6 @@ export default function EditTable({
                           />
                         </div>
                       </div>
-
                       <FormMessage />
                     </div>
                   </FormItem>

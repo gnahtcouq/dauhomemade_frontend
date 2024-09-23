@@ -123,7 +123,9 @@ export default function AddTable() {
                         />
                         <FormMessage>
                           {Boolean(errors.number?.message) &&
-                            errorMessageT(errors.number?.message as any)}
+                            errorMessageT(errors.number?.message as any)
+                              .replace('ErrorMessage.table.', '')
+                              .trim()}
                         </FormMessage>
                       </div>
                     </div>
@@ -146,7 +148,9 @@ export default function AddTable() {
                         />
                         <FormMessage>
                           {Boolean(errors.capacity?.message) &&
-                            errorMessageT(errors.capacity?.message as any)}
+                            errorMessageT(errors.capacity?.message as any)
+                              .replace('ErrorMessage.table.', '')
+                              .trim()}
                         </FormMessage>
                       </div>
                     </div>
@@ -179,7 +183,6 @@ export default function AddTable() {
                           </SelectContent>
                         </Select>
                       </div>
-
                       <FormMessage />
                     </div>
                   </FormItem>

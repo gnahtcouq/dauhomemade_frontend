@@ -56,7 +56,6 @@ import {
 } from '@/schemaValidations/account.schema'
 import {useSearchParams} from 'next/navigation'
 import {createContext, useContext, useEffect, useState} from 'react'
-import {getVietnameseRole} from '@/lib/utils'
 import {useTranslations} from 'next-intl'
 
 type AccountItem = AccountListResType['data'][0]
@@ -114,7 +113,7 @@ export const columns: ColumnDef<AccountType>[] = [
   {
     accessorKey: 'role',
     header: 'Vai trò',
-    cell: ({row}) => <div>{getVietnameseRole(row.getValue('role'))}</div>
+    cell: ({row}) => <div>{row.getValue('role')}</div>
   },
   {
     id: 'actions',

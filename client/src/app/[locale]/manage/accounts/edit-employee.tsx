@@ -205,7 +205,9 @@ export default function EditEmployee({
                         <Input id="name" className="w-full" {...field} />
                         <FormMessage>
                           {Boolean(errors.name?.message) &&
-                            errorMessageT(errors.name?.message as any)}
+                            errorMessageT(errors.name?.message as any)
+                              .replace('ErrorMessage.', '')
+                              .trim()}
                         </FormMessage>
                       </div>
                     </div>
@@ -223,7 +225,9 @@ export default function EditEmployee({
                         <Input id="email" className="w-full" {...field} />
                         <FormMessage>
                           {Boolean(errors.email?.message) &&
-                            errorMessageT(errors.email?.message as any)}
+                            errorMessageT(errors.email?.message as any)
+                              .replace('ErrorMessage.', '')
+                              .trim()}
                         </FormMessage>
                       </div>
                     </div>
@@ -278,9 +282,9 @@ export default function EditEmployee({
                         />
                         <FormMessage>
                           {Boolean(errors.changePassword?.message) &&
-                            errorMessageT(
-                              errors.changePassword?.message as any
-                            )}
+                            errorMessageT(errors.changePassword?.message as any)
+                              .replace('ErrorMessage.', '')
+                              .trim()}
                         </FormMessage>
                       </div>
                     </div>
@@ -304,7 +308,9 @@ export default function EditEmployee({
                           />
                           <FormMessage>
                             {Boolean(errors.password?.message) &&
-                              errorMessageT(errors.password?.message as any)}
+                              errorMessageT(errors.password?.message as any)
+                                .replace('ErrorMessage.', '')
+                                .trim()}
                           </FormMessage>
                         </div>
                       </div>
@@ -333,7 +339,9 @@ export default function EditEmployee({
                             {Boolean(errors.confirmPassword?.message) &&
                               errorMessageT(
                                 errors.confirmPassword?.message as any
-                              )}
+                              )
+                                .replace('ErrorMessage.', '')
+                                .trim()}
                           </FormMessage>
                         </div>
                       </div>

@@ -252,6 +252,7 @@ export default function OrderTable() {
                 className="text-sm"
                 value={format(fromDate, 'yyyy-MM-dd HH:mm').replace(' ', 'T')}
                 onChange={(event) => setFromDate(new Date(event.target.value))}
+                disabled={role !== Role.Owner}
               />
             </div>
             <div className="flex items-center">
@@ -261,6 +262,7 @@ export default function OrderTable() {
                 placeholder="Đến ngày"
                 value={format(toDate, 'yyyy-MM-dd HH:mm').replace(' ', 'T')}
                 onChange={(event) => setToDate(new Date(event.target.value))}
+                disabled={role !== Role.Owner}
               />
             </div>
             <Button className="" variant={'outline'} onClick={resetDateFilter}>

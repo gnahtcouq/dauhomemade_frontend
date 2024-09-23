@@ -188,7 +188,9 @@ export default function AddDish() {
                         <Input id="name" className="w-full" {...field} />
                         <FormMessage>
                           {Boolean(errors.name?.message) &&
-                            errorMessageT(errors.name?.message as any)}
+                            errorMessageT(errors.name?.message as any)
+                              .replace('ErrorMessage.dish.', '')
+                              .trim()}
                         </FormMessage>
                       </div>
                     </div>
@@ -211,7 +213,9 @@ export default function AddDish() {
                         />
                         <FormMessage>
                           {Boolean(errors.price?.message) &&
-                            errorMessageT(errors.price?.message as any)}
+                            errorMessageT(errors.price?.message as any)
+                              .replace('ErrorMessage.dish.', '')
+                              .trim()}
                         </FormMessage>
                       </div>
                     </div>
@@ -233,7 +237,9 @@ export default function AddDish() {
                         />
                         <FormMessage>
                           {Boolean(errors.description?.message) &&
-                            errorMessageT(errors.description?.message as any)}
+                            errorMessageT(errors.description?.message as any)
+                              .replace('ErrorMessage.dish.', '')
+                              .trim()}
                         </FormMessage>
                       </div>
                     </div>

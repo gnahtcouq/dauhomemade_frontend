@@ -97,7 +97,9 @@ export default function GuestLoginForm() {
                       <Input id="name" type="text" required {...field} />
                       <FormMessage>
                         {Boolean(errors.name?.message) &&
-                          errorMessageT(errors.name?.message as any)}
+                          errorMessageT(errors.name?.message as any)
+                            .replace('ErrorMessage.', '')
+                            .trim()}
                       </FormMessage>
                     </div>
                   </FormItem>

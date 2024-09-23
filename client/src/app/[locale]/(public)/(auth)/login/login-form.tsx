@@ -10,7 +10,7 @@ import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
 import {toast} from '@/hooks/use-toast'
 import {generateSocketInstance, handleErrorApi} from '@/lib/utils'
-import {useRouter} from '@/navigation'
+import {Link, useRouter} from '@/navigation'
 import {useLoginMutation} from '@/queries/useAuth'
 import {LoginBody, LoginBodyType} from '@/schemaValidations/auth.schema'
 import {zodResolver} from '@hookform/resolvers/zod'
@@ -93,7 +93,9 @@ export default function LoginForm() {
                       <Input id="email" type="email" required {...field} />
                       <FormMessage>
                         {Boolean(errors.email?.message) &&
-                          errorMessageT(errors.email?.message as any)}
+                          errorMessageT(errors.email?.message as any)
+                            .replace('ErrorMessage.', '')
+                            .trim()}
                       </FormMessage>
                     </div>
                   </FormItem>
@@ -116,7 +118,9 @@ export default function LoginForm() {
                       />
                       <FormMessage>
                         {Boolean(errors.password?.message) &&
-                          errorMessageT(errors.password?.message as any)}
+                          errorMessageT(errors.password?.message as any)
+                            .replace('ErrorMessage.', '')
+                            .trim()}
                       </FormMessage>
                     </div>
                   </FormItem>
@@ -132,9 +136,9 @@ export default function LoginForm() {
           </form>
         </Form>
         <div className="text-center mt-4">
-          <a href="/forgot-password" className="text-blue-600">
+          <Link href="/forgot-password" className="text-blue-600">
             {t('forgotPassword')}
-          </a>
+          </Link>
         </div>
       </CardContent>
     </Card>

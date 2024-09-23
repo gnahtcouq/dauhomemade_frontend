@@ -179,19 +179,6 @@ export const getVietnameseTableStatus = (
   }
 }
 
-export const getVietnameseRole = (
-  role: (typeof RoleValues)[keyof typeof RoleValues]
-) => {
-  switch (role) {
-    case Role.Employee:
-      return 'Nhân viên'
-    case Role.Guest:
-      return 'Khách hàng'
-    default:
-      return 'Chủ cửa hàng'
-  }
-}
-
 export const getTableLink = ({
   token,
   tableNumber

@@ -232,7 +232,7 @@
     "totalTables": "Total tables",
     "revenueChart": {
       "title": "Revenue chart",
-      "description": "Statistics of revenue by day"
+      "description": "Statistics of revenue by day include unpaid orders"
     },
     "dishesChart": {
       "title": "Dishes chart",

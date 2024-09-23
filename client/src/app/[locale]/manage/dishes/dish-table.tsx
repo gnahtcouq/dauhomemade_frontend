@@ -119,7 +119,7 @@ export const columns: ColumnDef<DishItem>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Giá cả
+          Giá
           <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       )

@@ -78,7 +78,9 @@ export default function ChangePasswordForm() {
                       />
                       <FormMessage>
                         {Boolean(errors.oldPassword?.message) &&
-                          errorMessageT(errors.oldPassword?.message as any)}
+                          errorMessageT(errors.oldPassword?.message as any)
+                            .replace('ErrorMessage.', '')
+                            .trim()}
                       </FormMessage>
                     </div>
                   </FormItem>
@@ -100,7 +102,9 @@ export default function ChangePasswordForm() {
                       />
                       <FormMessage>
                         {Boolean(errors.password?.message) &&
-                          errorMessageT(errors.password?.message as any)}
+                          errorMessageT(errors.password?.message as any)
+                            .replace('ErrorMessage.', '')
+                            .trim()}
                       </FormMessage>
                     </div>
                   </FormItem>
@@ -124,7 +128,9 @@ export default function ChangePasswordForm() {
                       />
                       <FormMessage>
                         {Boolean(errors.confirmPassword?.message) &&
-                          errorMessageT(errors.confirmPassword?.message as any)}
+                          errorMessageT(errors.confirmPassword?.message as any)
+                            .replace('ErrorMessage.', '')
+                            .trim()}
                       </FormMessage>
                     </div>
                   </FormItem>
