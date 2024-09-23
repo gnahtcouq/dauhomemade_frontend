@@ -217,14 +217,17 @@
     "description": "Overview of the store",
     "fromDate": "From",
     "toDate": "To",
-    "totalRevenue": "Total revenue",
+    "totalRevenue": {
+      "title": "Total revenue",
+      "description": "Actual revenue received"
+    },
     "totalCustomers": {
       "title": "Total customers",
       "description": "Customers have ordered dishes"
     },
     "totalOrders": {
       "title": "Total orders",
-      "description": "Orders have been paid"
+      "description": "Paid/Unpaid"
     },
     "totalTables": "Total tables",
     "revenueChart": {

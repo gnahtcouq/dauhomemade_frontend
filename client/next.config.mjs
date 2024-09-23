@@ -7,13 +7,11 @@ const nextConfig = {
     images: {
         remotePatterns: [
             {
-                hostname: 'localhost',
+                protocol: 'https',
+                hostname: 'dau.stu.id.vn',
+                port: '81',
                 pathname: '/**'
             },
-            {
-                hostname: 'via.placeholder.com',
-                pathname: '/**'
-            }
         ]
     }
 };

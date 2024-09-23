@@ -22,6 +22,7 @@ export default function DashboardMain() {
   const revenue = data?.payload?.data?.revenue ?? 0
   const guestCount = data?.payload?.data?.guestCount ?? 0
   const orderCount = data?.payload?.data?.orderCount ?? 0
+  const orderPaidCount = data?.payload?.data?.orderPaidCount ?? 0
   const servingTableCount = data?.payload?.data?.servingTableCount ?? 0
   const revenueByDate = data?.payload?.data?.revenueByDate ?? []
   const dishIndicator = data?.payload?.data?.dishIndicator ?? []
@@ -61,7 +62,7 @@ export default function DashboardMain() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              {t('totalRevenue')}
+              {t('totalRevenue.title')}
             </CardTitle>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -78,6 +79,9 @@ export default function DashboardMain() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{formatCurrency(revenue)}</div>
+            <p className="text-xs text-muted-foreground">
+              {t('totalRevenue.description')}
+            </p>
           </CardContent>
         </Card>
         <Card>
@@ -127,7 +131,9 @@ export default function DashboardMain() {
             </svg>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{orderCount}</div>
+            <div className="text-2xl font-bold">
+              {orderPaidCount}/{orderCount}
+            </div>
             <p className="text-xs text-muted-foreground">
               {t('totalOrders.description')}
             </p>

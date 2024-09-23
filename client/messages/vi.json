@@ -217,14 +217,17 @@
     "description": "Tổng quan về cửa hàng",
     "fromDate": "Từ",
     "toDate": "Đến",
-    "totalRevenue": "Tổng doanh thu",
+    "totalRevenue": {
+      "title": "Tổng doanh thu",
+      "description": "Doanh thu thực nhận"
+    },
     "totalCustomers": {
       "title": "Tổng khách hàng",
       "description": "Khách hàng đã gọi món"
     },
     "totalOrders": {
       "title": "Tổng đơn hàng",
-      "description": "Đơn hàng đã thanh toán"
+      "description": "Đã thanh toán/Chưa thanh toán"
     },
     "totalTables": "Bàn phục vụ",
     "revenueChart": {
