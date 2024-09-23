@@ -1,6 +1,7 @@
+import {useAppStore} from '@/components/app-provider'
 import {Badge} from '@/components/ui/badge'
 import {Button} from '@/components/ui/button'
-import {OrderStatus} from '@/constants/type'
+import {OrderStatus, Role} from '@/constants/type'
 import {
   OrderStatusIcon,
   formatCurrency,
@@ -28,6 +29,7 @@ export default function OrderGuestDetail({
   orders: Orders
   paid?: (data: PayGuestOrdersResType) => void
 }) {
+  const role = useAppStore((state) => state.role)
   const ordersFilterToPurchase = guest
     ? orders.filter(
         (order) =>
@@ -171,7 +173,9 @@ export default function OrderGuestDetail({
           className="w-full"
           size={'sm'}
           variant={'secondary'}
-          disabled={ordersFilterToPurchase.length === 0}
+          disabled={
+            ordersFilterToPurchase.length === 0 || role === Role.Employee
+          }
           onClick={pay}
         >
           Thanh toán tất cả ({ordersFilterToPurchase.length} đơn)
