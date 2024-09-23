@@ -153,7 +153,7 @@ const request = async <Response>(
         const accessToken = (options?.headers as any)?.Authorization.split(
           'Bearer '
         )[1]
-        redirect(`/logout?accessToken=${accessToken}`)
+        redirect(`/login?accessToken=${accessToken}`)
       }
     } else {
       throw new HttpError(data)

@@ -1,6 +1,15 @@
 import {useAppStore} from '@/components/app-provider'
 import {Badge} from '@/components/ui/badge'
 import {Button} from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from '@/components/ui/dialog'
 import {OrderStatus, Role} from '@/constants/type'
 import {
   OrderStatusIcon,
@@ -16,7 +25,7 @@ import {
   PayGuestOrdersResType
 } from '@/schemaValidations/order.schema'
 import Image from 'next/image'
-import {Fragment} from 'react'
+import {Fragment, useState} from 'react'
 
 type Guest = GetOrdersResType['data'][0]['guest']
 type Orders = GetOrdersResType['data']
@@ -41,6 +50,7 @@ export default function OrderGuestDetail({
     ? orders.filter((order) => order.status === OrderStatus.Paid)
     : []
   const payForGuestMutation = usePayForGuestMutation()
+  const [isDialogOpen, setIsDialogOpen] = useState(false) // State quản lý dialog
 
   const pay = async () => {
     if (payForGuestMutation.isPending || !guest) return
@@ -52,6 +62,15 @@ export default function OrderGuestDetail({
     } catch (error) {
       handleErrorApi({error})
     }
+  }
+
+  const handleCashPayment = () => {
+    setIsDialogOpen(true) // Mở dialog khi nhấn thanh toán tiền mặt
+  }
+
+  const confirmCashPayment = () => {
+    setIsDialogOpen(false) // Đóng dialog khi xác nhận
+    pay() // Thực hiện thanh toán
   }
 
   return (
@@ -168,7 +187,7 @@ export default function OrderGuestDetail({
         </Badge>
       </div>
 
-      <div>
+      <div className="space-y-2">
         <Button
           className="w-full"
           size={'sm'}
@@ -176,9 +195,42 @@ export default function OrderGuestDetail({
           disabled={
             ordersFilterToPurchase.length === 0 || role === Role.Employee
           }
-          onClick={pay}
+          onClick={handleCashPayment} // Mở dialog khi nhấn nút này
         >
-          Thanh toán tất cả ({ordersFilterToPurchase.length} đơn)
+          Thanh toán tiền mặt
+        </Button>
+
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger asChild>
+            <span className="hidden"></span>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Xác nhận thanh toán</DialogTitle>
+              <DialogDescription>
+                Bạn có chắc chắn muốn thanh toán bằng tiền mặt cho đơn hàng này?
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+                Hủy
+              </Button>
+              <Button onClick={confirmCashPayment}>Xác nhận</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* Nút thanh toán bằng ZaloPay */}
+        <Button
+          className="w-full"
+          size={'sm'}
+          variant={'secondary'}
+          disabled={
+            ordersFilterToPurchase.length === 0 || role === Role.Employee
+          }
+          // onClick={payWithZaloPay}
+        >
+          Thanh toán qua ZaloPay
         </Button>
       </div>
     </div>

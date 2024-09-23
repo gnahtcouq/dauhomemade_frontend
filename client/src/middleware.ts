@@ -23,6 +23,7 @@ const onlyOwnerPaths = [
 ]
 const privatePaths = [...managePaths, ...guestPaths]
 const unAuthPaths = ['/vi/login', '/en/login']
+const loginPaths = ['/vi/login', '/en/login']
 
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
@@ -31,7 +32,7 @@ export function middleware(request: NextRequest) {
     defaultLocale
   })
   const response = handleI18nRouting(request)
-  const {pathname} = request.nextUrl
+  const {pathname, searchParams} = request.nextUrl
   const accessToken = request.cookies.get('accessToken')?.value
   const refreshToken = request.cookies.get('refreshToken')?.value
 
@@ -48,6 +49,12 @@ export function middleware(request: NextRequest) {
   if (refreshToken) {
     // 2.1. Nếu đã đăng nhập rồi thì không cho vào trang login
     if (unAuthPaths.some((path) => pathname.startsWith(path))) {
+      if (
+        loginPaths.some((path) => pathname.startsWith(path)) &&
+        searchParams.get('accessToken')
+      ) {
+        return response
+      }
       // return NextResponse.redirect(new URL('/', request.url))
       response.headers.set(
         'x-middleware-rewrite',
