@@ -1,4 +1,5 @@
 'use client'
+
 import AddOrder from '@/app/[locale]/manage/orders/add-order'
 import EditOrder from '@/app/[locale]/manage/orders/edit-order'
 import OrderStatics from '@/app/[locale]/manage/orders/order-statics'
@@ -354,14 +355,17 @@ export default function OrderTable() {
         />
         {orderListQuery.isPending && <TableSkeleton />}
         {!orderListQuery.isPending && (
-          <div className="rounded-md border">
-            <Table>
+          <div className="w-full overflow-x-auto rounded-md border">
+            <Table className="min-w-[640px] md:min-w-[768px] lg:min-w-[1024px]">
               <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow key={headerGroup.id}>
                     {headerGroup.headers.map((header) => {
                       return (
-                        <TableHead key={header.id}>
+                        <TableHead
+                          className="whitespace-nowrap"
+                          key={header.id}
+                        >
                           {header.isPlaceholder
                             ? null
                             : flexRender(
@@ -382,7 +386,7 @@ export default function OrderTable() {
                       data-state={row.getIsSelected() && 'selected'}
                     >
                       {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id}>
+                        <TableCell className="whitespace-nowrap" key={cell.id}>
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext()

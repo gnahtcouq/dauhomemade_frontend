@@ -99,6 +99,7 @@ const orderTableColumns: ColumnDef<OrderItem>[] = [
               alt={row.original.dishSnapshot.name}
               width={50}
               height={50}
+              quality={75}
               className="rounded-md object-cover w-[50px] h-[50px] cursor-pointer"
             />
           </PopoverTrigger>
@@ -109,27 +110,26 @@ const orderTableColumns: ColumnDef<OrderItem>[] = [
                 alt={row.original.dishSnapshot.name}
                 width={100}
                 height={100}
+                quality={75}
                 className="rounded-md object-cover w-[100px] h-[100px]"
               />
               <div className="space-y-1 text-sm">
                 <h3 className="font-semibold">
                   {row.original.dishSnapshot.name}
                 </h3>
-                <div className="italic">
+                <div className="italic font-semibold text-red-600 dark:text-red-400">
                   {formatCurrency(row.original.dishSnapshot.price)}
                 </div>
-                <div>{row.original.dishSnapshot.description}</div>
               </div>
             </div>
           </PopoverContent>
         </Popover>
-
-        <div className="space-y-2">
+        <div className="space-y-2 w-full overflow-hidden text-ellipsis whitespace-nowrap">
           <div className="flex items-center gap-2">
-            <span>{row.original.dishSnapshot.name}</span>
             <Badge className="px-1" variant={'secondary'}>
               x{row.original.quantity}
             </Badge>
+            <span>{row.original.dishSnapshot.name}</span>
           </div>
           <span className="italic text-red-600 dark:text-red-400">
             {formatCurrency(
