@@ -1,16 +1,17 @@
 'use client'
 
-export default function PaymentSuccess() {
-  //   // Tự động redirect sau khi hiển thị trang này
-  //   useEffect(() => {
-  //     const timer = setTimeout(() => {
-  //       // Redirect về trang chính (hoặc trang khác)
-  //       router.push('/')
-  //     }, 5000) // Redirect sau 5 giây
+import {useRouter} from '@/navigation'
+import {useEffect} from 'react'
 
-  //     // Cleanup timer khi component bị unmount
-  //     return () => clearTimeout(timer)
-  //   }, [router])
+export default function PaymentSuccess() {
+  const router = useRouter()
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      router.push('/')
+    }, 5000)
+    return () => clearTimeout(timer)
+  }, [router])
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -24,7 +25,7 @@ export default function PaymentSuccess() {
         </p>
 
         <button
-          //   onClick={() => router.push('/')}
+          onClick={() => router.push('/')}
           className="w-full mt-6 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
         >
           Về trang chủ ngay

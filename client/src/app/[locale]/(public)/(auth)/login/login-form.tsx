@@ -136,7 +136,7 @@ export default function LoginForm() {
           </form>
         </Form>
         <div className="text-center mt-4">
-          <Link href="/forgot-password" className="text-blue-600">
+          <Link href="#" className="text-blue-600">
             {t('forgotPassword')}
           </Link>
         </div>

@@ -21,9 +21,10 @@ const onlyOwnerPaths = [
   '/en/manage/dishes',
   '/en/manage/tables'
 ]
-const privatePaths = [...managePaths, ...guestPaths]
 const unAuthPaths = ['/vi/login', '/en/login']
 const loginPaths = ['/vi/login', '/en/login']
+const paymentPaths = ['/vi/guest/payment', '/en/guest/payment']
+const privatePaths = [...managePaths, ...guestPaths, ...paymentPaths]
 
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
