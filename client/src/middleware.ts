@@ -24,7 +24,7 @@ const onlyOwnerPaths = [
 const unAuthPaths = ['/vi/login', '/en/login']
 const loginPaths = ['/vi/login', '/en/login']
 const paymentPaths = ['/vi/guest/payment', '/en/guest/payment']
-const privatePaths = [...managePaths, ...guestPaths, ...paymentPaths]
+const privatePaths = [...managePaths, ...guestPaths]
 
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
@@ -87,6 +87,10 @@ export function middleware(request: NextRequest) {
     const isNotGuestGoToGuestPath =
       role !== Role.Guest &&
       guestPaths.some((path) => pathname.startsWith(path))
+    const isNotGuestAndNotOwnerGotoPaymentPath =
+      role !== Role.Guest &&
+      role !== Role.Owner &&
+      paymentPaths.some((path) => pathname.startsWith(path))
 
     // Không phải Owner nhưng truy cập vào các route Owner
     const isNotOwnerGoToOwnerPath =
@@ -96,7 +100,8 @@ export function middleware(request: NextRequest) {
     if (
       isGuestGoToManagePath ||
       isNotGuestGoToGuestPath ||
-      isNotOwnerGoToOwnerPath
+      isNotOwnerGoToOwnerPath ||
+      isNotGuestAndNotOwnerGotoPaymentPath
     ) {
       // return NextResponse.redirect(new URL('/', request.url))
       response.headers.set(
