@@ -8,7 +8,8 @@ import {
   PayGuestOrdersBodyType,
   PayGuestOrdersResType,
   UpdateOrderBodyType,
-  UpdateOrderResType
+  UpdateOrderResType,
+  ZaloPayGuestOrdersResType
 } from '@/schemaValidations/order.schema'
 import queryString from 'query-string'
 
@@ -32,7 +33,10 @@ const orderApiRequest = {
     http.get<GetOrderDetailResType>(`/orders/${orderId}`),
 
   pay: (body: PayGuestOrdersBodyType) =>
-    http.post<PayGuestOrdersResType>(`orders/pay`, body)
+    http.post<PayGuestOrdersResType>(`/orders/pay`, body),
+
+  zaloPay: (body: PayGuestOrdersBodyType) =>
+    http.post<ZaloPayGuestOrdersResType>(`/orders/zalopay`, body)
 }
 
 export default orderApiRequest

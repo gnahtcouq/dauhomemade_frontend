@@ -19,7 +19,10 @@ import {
   getVietnameseOrderStatus,
   handleErrorApi
 } from '@/lib/utils'
-import {usePayForGuestMutation} from '@/queries/useOrder'
+import {
+  usePayForGuestMutation,
+  useZaloPayForGuestMutation
+} from '@/queries/useOrder'
 import {
   GetOrdersResType,
   PayGuestOrdersResType
@@ -50,6 +53,7 @@ export default function OrderGuestDetail({
     ? orders.filter((order) => order.status === OrderStatus.Paid)
     : []
   const payForGuestMutation = usePayForGuestMutation()
+  const zaloPayForGuestMutation = useZaloPayForGuestMutation()
   const [isDialogOpen, setIsDialogOpen] = useState(false) // State quản lý dialog
 
   const pay = async () => {
@@ -59,6 +63,20 @@ export default function OrderGuestDetail({
         guestId: guest.id
       })
       paid && paid(result.payload)
+    } catch (error) {
+      handleErrorApi({error})
+    }
+  }
+
+  const zaloPay = async () => {
+    if (payForGuestMutation.isPending || !guest) return
+    try {
+      const result = await zaloPayForGuestMutation.mutateAsync({
+        guestId: guest.id
+      })
+      const paymentUrl = result?.payload?.data?.paymentUrl
+
+      if (paymentUrl) window.open(paymentUrl, '_blank')
     } catch (error) {
       handleErrorApi({error})
     }
@@ -228,9 +246,9 @@ export default function OrderGuestDetail({
           disabled={
             ordersFilterToPurchase.length === 0 || role === Role.Employee
           }
-          // onClick={payWithZaloPay}
+          onClick={zaloPay}
         >
-          Thanh toán qua ZaloPay
+          Thanh toán với ZaloPay
         </Button>
       </div>
     </div>

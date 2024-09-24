@@ -10,7 +10,7 @@ const nextConfig = {
             {
                 protocol: 'https',
                 hostname: 'dau.stu.id.vn',
-                port: '81',
+                // port: '81',
                 pathname: '/**'
             },
             {

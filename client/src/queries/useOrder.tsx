@@ -44,6 +44,12 @@ export const usePayForGuestMutation = () => {
   })
 }
 
+export const useZaloPayForGuestMutation = () => {
+  return useMutation({
+    mutationFn: (body: PayGuestOrdersBodyType) => orderApiRequest.zaloPay(body)
+  })
+}
+
 export const useCreateOrderMutation = () => {
   return useMutation({
     mutationFn: orderApiRequest.createOrders
