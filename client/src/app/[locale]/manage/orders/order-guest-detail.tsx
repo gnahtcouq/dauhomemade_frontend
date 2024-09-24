@@ -76,7 +76,9 @@ export default function OrderGuestDetail({
       })
       const paymentUrl = result?.payload?.data?.paymentUrl
 
-      if (paymentUrl) window.open(paymentUrl, '_blank')
+      if (paymentUrl) window.location.href = paymentUrl
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+      if (isMobile) window.location.href = paymentUrl
     } catch (error) {
       handleErrorApi({error})
     }
