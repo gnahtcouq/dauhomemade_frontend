@@ -4,8 +4,13 @@ import {useAppStore} from '@/components/app-provider'
 import {Badge} from '@/components/ui/badge'
 import {OrderStatus} from '@/constants/type'
 import {toast} from '@/hooks/use-toast'
-import {formatCurrency, getVietnameseOrderStatus} from '@/lib/utils'
+import {
+  formatCurrency,
+  getVietnameseOrderStatus,
+  handleErrorApi
+} from '@/lib/utils'
 import {useGuestGetOrderListQuery} from '@/queries/useGuest'
+import {useZaloPayForGuestMutation} from '@/queries/useOrder'
 import {
   PayGuestOrdersResType,
   UpdateOrderResType
@@ -17,6 +22,7 @@ export default function OrderCart() {
   const {data, refetch} = useGuestGetOrderListQuery()
   const orders = useMemo(() => data?.payload.data ?? [], [data])
   const socket = useAppStore((state) => state.socket)
+  const zaloPayForGuestMutation = useZaloPayForGuestMutation()
 
   const {notYetPaid, paid} = useMemo(() => {
     return orders.reduce(
@@ -107,6 +113,22 @@ export default function OrderCart() {
     }
   }, [refetch, socket])
 
+  const zaloPay = async () => {
+    if (zaloPayForGuestMutation.isPending) return
+    try {
+      const result = await zaloPayForGuestMutation.mutateAsync({
+        guestId: orders[0].guestId!
+      })
+      const paymentUrl = result?.payload?.data?.paymentUrl
+
+      if (paymentUrl) window.open(paymentUrl, '_blank')
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+      if (isMobile) window.location.href = paymentUrl
+    } catch (error) {
+      handleErrorApi({error})
+    }
+  }
+
   return (
     <>
       {orders.map((order, index) => (
@@ -125,9 +147,11 @@ export default function OrderCart() {
           </div>
           <div className="space-y-1">
             <h3 className="text-sm">{order.dishSnapshot.name}</h3>
-            <div className="text-xs font-semibold">
+            <div className="text-xs text-red-600 dark:text-red-400 font-semibold">
               {formatCurrency(order.dishSnapshot.price)} x{' '}
-              <Badge className="px-1">{order.quantity}</Badge>
+              <Badge className="px-1" variant={'secondary'}>
+                {order.quantity}
+              </Badge>
             </div>
           </div>
           <div className="flex-shrink-0 ml-auto flex justify-center items-center">
@@ -137,7 +161,7 @@ export default function OrderCart() {
           </div>
         </div>
       ))}
-      <div className="sticky bottom-0 bg-white dark:bg-gray-800 z-20 mb-24 pl-4 pr-4">
+      <div className="sticky bottom-0 bg-white dark:bg-gray-800 z-20 mb-24 p-4">
         {paid.quantity !== 0 && (
           <div className="w-full flex space-x-4 justify-between text-md font-semibold">
             <span>Đã thanh toán · {paid.quantity} món</span>
@@ -147,12 +171,20 @@ export default function OrderCart() {
           </div>
         )}
         {notYetPaid.quantity !== 0 && (
-          <div className="w-full flex space-x-4 justify-between text-md font-semibold">
-            <span>Chưa thanh toán · {notYetPaid.quantity} món</span>
-            <span className="text-red-600 dark:text-red-400">
-              {formatCurrency(notYetPaid.price)}
-            </span>
-          </div>
+          <>
+            <div className="w-full flex space-x-4 justify-between text-md font-semibold">
+              <span>Chưa thanh toán · {notYetPaid.quantity} món</span>
+              <span className="text-red-600 dark:text-red-400">
+                {formatCurrency(notYetPaid.price)}
+              </span>
+            </div>
+            <button
+              className="w-full bg-blue-600 text-white py-2 mt-4 rounded-md"
+              onClick={zaloPay}
+            >
+              Thanh toán qua ZaloPay
+            </button>
+          </>
         )}
       </div>
     </>

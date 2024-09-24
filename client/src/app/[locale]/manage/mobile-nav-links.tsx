@@ -33,7 +33,7 @@ export default function MobileNavLinks() {
         </SheetTitle>
         <nav className="grid gap-6 text-lg font-medium">
           <Link
-            href="#"
+            href="/"
             className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
           >
             <Image
@@ -42,7 +42,7 @@ export default function MobileNavLinks() {
               height={50}
               quality={100}
               alt="Banner"
-              className="h-12 w-12 transition-all group-hover:scale-110"
+              className="h-auto w-12 transition-all group-hover:scale-110"
             />
             <span className="sr-only">Acme Inc</span>
           </Link>

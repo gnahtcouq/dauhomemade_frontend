@@ -31,7 +31,7 @@ export default function NavLinks() {
               height={50}
               quality={100}
               alt="Banner"
-              className="h-12 w-12 transition-all group-hover:scale-110"
+              className="h-auto w-12 transition-all group-hover:scale-110"
             />
             <span className="sr-only">Acme Inc</span>
           </Link>

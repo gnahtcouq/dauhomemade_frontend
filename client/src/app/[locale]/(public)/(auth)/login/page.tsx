@@ -29,7 +29,7 @@ export default function Login({
 }) {
   unstable_setRequestLocale(locale)
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="flex items-center justify-center">
       <LoginForm />
       <Logout />
     </div>

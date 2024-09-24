@@ -69,14 +69,14 @@ export default function OrderGuestDetail({
   }
 
   const zaloPay = async () => {
-    if (payForGuestMutation.isPending || !guest) return
+    if (zaloPayForGuestMutation.isPending || !guest) return
     try {
       const result = await zaloPayForGuestMutation.mutateAsync({
         guestId: guest.id
       })
       const paymentUrl = result?.payload?.data?.paymentUrl
 
-      if (paymentUrl) window.location.href = paymentUrl
+      if (paymentUrl) window.open(paymentUrl, '_blank')
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
       if (isMobile) window.location.href = paymentUrl
     } catch (error) {
