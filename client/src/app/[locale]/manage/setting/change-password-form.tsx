@@ -15,11 +15,13 @@ import {toast} from '@/hooks/use-toast'
 import {handleErrorApi} from '@/lib/utils'
 import {useChangePasswordMutation} from '@/queries/useAccount'
 import {useTranslations} from 'next-intl'
+import {useEffect, useState} from 'react'
 
 export default function ChangePasswordForm() {
   const t = useTranslations('UpdateProfile')
   const errorMessageT = useTranslations('ErrorMessage')
   const changePasswordMutation = useChangePasswordMutation()
+  const [isChanged, setIsChanged] = useState(false)
   const form = useForm<ChangePasswordBodyType>({
     resolver: zodResolver(ChangePasswordBody),
     defaultValues: {
@@ -28,6 +30,16 @@ export default function ChangePasswordForm() {
       confirmPassword: ''
     }
   })
+
+  const oldPassword = form.watch('oldPassword')
+  const password = form.watch('password')
+  const confirmPassword = form.watch('confirmPassword')
+
+  useEffect(() => {
+    const isFormChanged =
+      oldPassword !== '' || password !== '' || confirmPassword !== ''
+    setIsChanged(isFormChanged)
+  }, [oldPassword, password, confirmPassword])
 
   const onSubmit = async (data: ChangePasswordBodyType) => {
     if (changePasswordMutation.isPending) return
@@ -140,7 +152,7 @@ export default function ChangePasswordForm() {
                 <Button variant="outline" size="sm" type="reset">
                   {t('cancel')}
                 </Button>
-                <Button size="sm" type="submit">
+                <Button size="sm" type="submit" disabled={!isChanged}>
                   {t('save')}
                 </Button>
               </div>

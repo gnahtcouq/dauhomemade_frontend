@@ -38,6 +38,7 @@ export default function UpdateProfileForm() {
 
   const avatar = form.watch('avatar')
   const name = form.watch('name')
+  const [isChanged, setIsChanged] = useState(false)
 
   useEffect(() => {
     if (data) {
@@ -48,6 +49,16 @@ export default function UpdateProfileForm() {
       })
     }
   }, [form, data])
+
+  useEffect(() => {
+    if (data) {
+      const {name: initialName, avatar: initialAvatar} = data.payload.data
+      setIsChanged(
+        name !== initialName ||
+          (avatar !== initialAvatar && avatar !== undefined)
+      )
+    }
+  }, [name, avatar, data])
 
   const previewAvatar = useMemo(() => {
     if (file) {
@@ -167,7 +178,7 @@ export default function UpdateProfileForm() {
                 <Button variant="outline" size="sm" type="reset">
                   {t('cancel')}
                 </Button>
-                <Button size="sm" type="submit">
+                <Button size="sm" type="submit" disabled={!isChanged}>
                   {t('save')}
                 </Button>
               </div>
