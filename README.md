@@ -47,5 +47,5 @@ Khách hàng
 
 ## Vấn đề bản quyền
 
-- Website được thực hiện với mục đích tích luỹ kiến thức, không có mục đích thương mại hoá
+- Website được thực hiện với mục đích nghiên cứu, không có mục đích thương mại hoá
 - Có sử dụng hình ảnh của [Đậu Homemade](https://dauhomemade.vn/)

@@ -126,11 +126,16 @@ export default function LoginForm() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full">
-                {loginMutation.isPending && (
-                  <LoaderCircle className="w-5 h-5 mr-2 animate-spin" />
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={loginMutation.isPending}
+              >
+                {loginMutation.isPending ? (
+                  <LoaderCircle className="w-5 h-5 mx-auto animate-spin" />
+                ) : (
+                  <>{t('login')}</>
                 )}
-                {t('login')}
               </Button>
             </div>
           </form>

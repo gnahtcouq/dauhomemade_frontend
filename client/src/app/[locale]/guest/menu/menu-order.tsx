@@ -10,6 +10,7 @@ import {GuestCreateOrdersBodyType} from '@/schemaValidations/guest.schema'
 import Image from 'next/image'
 import {useRouter} from '@/navigation'
 import {useMemo, useState} from 'react'
+import {LoaderCircle} from 'lucide-react'
 
 export default function MenuOrder() {
   const {data} = useGetDishListQuery()
@@ -17,6 +18,7 @@ export default function MenuOrder() {
   const [orders, setOrders] = useState<GuestCreateOrdersBodyType>([])
   const {mutateAsync} = useGuestOrderMutation()
   const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
 
   const totalPrice = useMemo(() => {
     return dishes.reduce((result, dish) => {
@@ -48,6 +50,7 @@ export default function MenuOrder() {
   }
 
   const handleOrder = async () => {
+    setIsLoading(true)
     try {
       await mutateAsync(orders)
       router.push('/guest/orders')
@@ -55,6 +58,8 @@ export default function MenuOrder() {
       handleErrorApi({
         error
       })
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -108,16 +113,22 @@ export default function MenuOrder() {
             </div>
           </div>
         ))}
-      <div className="sticky bottom-0 bg-white dark:bg-gray-800">
+      <div className="sticky bottom-0 bg-white dark:bg-[hsl(var(--background))]">
         <Button
           className="w-full justify-between"
           onClick={handleOrder}
-          disabled={totalItems === 0}
+          disabled={totalItems === 0 || isLoading}
         >
-          <span>Đặt hàng · {totalItems} món</span>
-          <span className="text-red-600 dark:text-red-400">
-            {formatCurrency(totalPrice)}
-          </span>
+          {isLoading ? (
+            <LoaderCircle className="w-5 h-5 mx-auto animate-spin" />
+          ) : (
+            <>
+              <span>Đặt hàng · {totalItems} món</span>
+              <span className="text-red-600 dark:text-red-600">
+                {formatCurrency(totalPrice)}
+              </span>
+            </>
+          )}
         </Button>
       </div>
     </>

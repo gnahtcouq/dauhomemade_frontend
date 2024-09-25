@@ -15,7 +15,7 @@ export default function PaymentSuccess() {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-2xl text-center">
+      <div className="bg-white dark:bg-[hsl(var(--background))] p-6 rounded-lg shadow-2xl text-center">
         <h1 className="text-2xl font-semibold text-green-500 dark:text-green-400 mb-4">
           Thanh toán thành công!
         </h1>

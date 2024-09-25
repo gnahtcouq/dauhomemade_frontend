@@ -28,7 +28,7 @@ import {
 } from '@/schemaValidations/guest.schema'
 import {CreateOrdersBodyType} from '@/schemaValidations/order.schema'
 import {zodResolver} from '@hookform/resolvers/zod'
-import {PlusCircle} from 'lucide-react'
+import {LoaderCircle, PlusCircle} from 'lucide-react'
 import Image from 'next/image'
 import {useMemo, useState} from 'react'
 import {useForm} from 'react-hook-form'
@@ -50,6 +50,10 @@ export default function AddOrder() {
       return result + order.quantity * dish.price
     }, 0)
   }, [dishes, orders])
+
+  const totalItems = useMemo(() => {
+    return orders.reduce((total, order) => total + order.quantity, 0)
+  }, [orders])
 
   const createOrderMutation = useCreateOrderMutation()
   const createGuestMutation = useCreateGuestMutation()
@@ -256,16 +260,24 @@ export default function AddOrder() {
               </div>
             </div>
           ))}
-        <DialogFooter>
+        <div className="sticky bottom-0 bg-white dark:bg-[hsl(var(--background))]">
           <Button
             className="w-full justify-between"
             onClick={handleOrder}
-            disabled={orders.length === 0}
+            disabled={totalItems === 0 || createOrderMutation.isPending}
           >
-            <span>Đặt hàng · {orders.length} món</span>
-            <span className="text-red-400">{formatCurrency(totalPrice)}</span>
+            {createOrderMutation.isPending ? (
+              <LoaderCircle className="w-5 h-5 mx-auto animate-spin" />
+            ) : (
+              <>
+                <span>Đặt hàng · {totalItems} món</span>
+                <span className="text-red-600 dark:text-red-400">
+                  {formatCurrency(totalPrice)}
+                </span>
+              </>
+            )}
           </Button>
-        </DialogFooter>
+        </div>
       </DialogContent>
     </Dialog>
   )

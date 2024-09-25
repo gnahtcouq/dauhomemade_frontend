@@ -1,4 +1,5 @@
 'use client'
+
 import {useAppStore} from '@/components/app-provider'
 import {Button} from '@/components/ui/button'
 import {
@@ -23,6 +24,7 @@ import {useParams, useSearchParams} from 'next/navigation'
 import {useEffect} from 'react'
 import {useForm} from 'react-hook-form'
 import {useTranslations} from 'next-intl'
+import {LoaderCircle} from 'lucide-react'
 
 export default function GuestLoginForm() {
   const t = useTranslations('GuestLogin')
@@ -106,8 +108,16 @@ export default function GuestLoginForm() {
                 )}
               />
 
-              <Button type="submit" className="w-full">
-                {t('login')}
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={loginMutation.isPending}
+              >
+                {loginMutation.isPending ? (
+                  <LoaderCircle className="w-5 h-5 mx-auto animate-spin" />
+                ) : (
+                  <>{t('login')}</>
+                )}
               </Button>
             </div>
           </form>

@@ -193,6 +193,7 @@ export default function AddTable() {
         </Form>
         <DialogFooter>
           <Button type="submit" form="add-table-form">
+            load
             {t('add')}
           </Button>
         </DialogFooter>

@@ -189,7 +189,7 @@ function AlertDialogDeleteDish({
         const result = await mutateAsync(dishDelete.id)
         setDishDelete(null)
         toast({
-          title: result.payload.message
+          description: result.payload.message
         })
       } catch (error) {
         handleErrorApi({error})

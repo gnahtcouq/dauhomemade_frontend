@@ -15,6 +15,7 @@ import {
   PayGuestOrdersResType,
   UpdateOrderResType
 } from '@/schemaValidations/order.schema'
+import {LoaderCircle} from 'lucide-react'
 import Image from 'next/image'
 import {useEffect, useMemo} from 'react'
 
@@ -161,7 +162,7 @@ export default function OrderCart() {
           </div>
         </div>
       ))}
-      <div className="sticky bottom-0 bg-white dark:bg-gray-800 z-20 mb-24 p-4">
+      <div className="sticky bottom-0 bg-white dark:bg-[hsl(var(--background))] z-20 mb-24 p-4">
         {paid.quantity !== 0 && (
           <div className="w-full flex space-x-4 justify-between text-md font-semibold">
             <span>Đã thanh toán · {paid.quantity} món</span>
@@ -181,8 +182,13 @@ export default function OrderCart() {
             <button
               className="w-full bg-blue-600 text-white py-2 mt-4 rounded-md"
               onClick={zaloPay}
+              disabled={zaloPayForGuestMutation.isPending}
             >
-              Thanh toán qua ZaloPay
+              {zaloPayForGuestMutation.isPending ? (
+                <LoaderCircle className="w-5 h-5 mx-auto animate-spin" />
+              ) : (
+                <>Thanh toán qua ZaloPay</>
+              )}
             </button>
           </>
         )}

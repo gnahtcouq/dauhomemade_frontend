@@ -27,6 +27,7 @@ import {
   GetOrdersResType,
   PayGuestOrdersResType
 } from '@/schemaValidations/order.schema'
+import {LoaderCircle} from 'lucide-react'
 import Image from 'next/image'
 import {Fragment, useState} from 'react'
 
@@ -213,11 +214,17 @@ export default function OrderGuestDetail({
           size={'sm'}
           variant={'secondary'}
           disabled={
-            ordersFilterToPurchase.length === 0 || role === Role.Employee
+            ordersFilterToPurchase.length === 0 ||
+            role === Role.Employee ||
+            payForGuestMutation.isPending
           }
           onClick={handleCashPayment} // Mở dialog khi nhấn nút này
         >
-          Thanh toán tiền mặt
+          {payForGuestMutation.isPending ? (
+            <LoaderCircle className="w-5 h-5 mx-auto animate-spin" />
+          ) : (
+            <>Thanh toán tiền mặt</>
+          )}
         </Button>
 
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -246,11 +253,17 @@ export default function OrderGuestDetail({
           size={'sm'}
           variant={'secondary'}
           disabled={
-            ordersFilterToPurchase.length === 0 || role === Role.Employee
+            ordersFilterToPurchase.length === 0 ||
+            role === Role.Employee ||
+            zaloPayForGuestMutation.isPending
           }
           onClick={zaloPay}
         >
-          Thanh toán với ZaloPay
+          {zaloPayForGuestMutation.isPending ? (
+            <LoaderCircle className="w-5 h-5 mx-auto animate-spin" />
+          ) : (
+            <>Thanh toán với ZaloPay</>
+          )}
         </Button>
       </div>
     </div>

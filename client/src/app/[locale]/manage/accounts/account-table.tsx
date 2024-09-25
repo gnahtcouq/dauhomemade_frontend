@@ -170,7 +170,7 @@ function AlertDialogDeleteAccount({
         const result = await mutateAsync(employeeDelete.id)
         setEmployeeDelete(null)
         toast({
-          title: result.payload.message
+          description: result.payload.message
         })
       } catch (error) {
         handleErrorApi({error})

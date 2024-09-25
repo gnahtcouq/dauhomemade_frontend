@@ -158,7 +158,7 @@ function AlertDialogDeleteTable({
         const result = await mutateAsync(tableDelete.number)
         setTableDelete(null)
         toast({
-          title: result.payload.message
+          description: result.payload.message
         })
       } catch (error) {
         handleErrorApi({error})
