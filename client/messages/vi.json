@@ -167,6 +167,26 @@
       "results": "kết quả",
       "noResults": "Không tìm thấy kết quả"
     },
+    "static": {
+      "empty": "Trống",
+      "guestsAreSittingaAtTable": "Khách đang ngồi ở bàn",
+      "serving": "Đang phục vụ",
+      "guest": "khách"
+    },
+    "detail": {
+      "name": "Tên",
+      "table": "Bàn",
+      "time": "Thời gian",
+      "order": "Đơn hàng",
+      "paid": "Đã thanh toán",
+      "notYetPaid": "Chưa thanh toán",
+      "paymentWithCash": "Thanh toán bằng tiền mặt",
+      "paymentWithZaloPay": "Thanh toán với ZaloPay",
+      "confirm": "Xác nhận thanh toán",
+      "description": "Bạn có chắc chắn muốn thanh toán bằng tiền mặt cho đơn hàng này?",
+      "confirmPayment": "Xác nhận",
+      "cancel": "Hủy"
+    },
     "dialogAdd": {
       "title": "Tạo đơn hàng",
       "newGuest": "Khách hàng mới",
@@ -256,6 +276,9 @@
       "required": "Số bàn không được để trống",
       "min": "Số bàn phải lớn hơn 0",
       "capacity": "Số ghế phải lớn hơn 0"
+    },
+    "order": {
+      "quantity": "Số lượng món ăn không hợp lệ"
     }
   },
   "NavItems": {

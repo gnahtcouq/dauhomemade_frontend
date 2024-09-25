@@ -28,6 +28,7 @@ import {
   PayGuestOrdersResType
 } from '@/schemaValidations/order.schema'
 import {LoaderCircle} from 'lucide-react'
+import {useTranslations} from 'next-intl'
 import Image from 'next/image'
 import {Fragment, useState} from 'react'
 
@@ -42,6 +43,7 @@ export default function OrderGuestDetail({
   orders: Orders
   paid?: (data: PayGuestOrdersResType) => void
 }) {
+  const t = useTranslations('ManageOrders.detail')
   const role = useAppStore((state) => state.role)
   const ordersFilterToPurchase = guest
     ? orders.filter(
@@ -99,22 +101,22 @@ export default function OrderGuestDetail({
       {guest && (
         <Fragment>
           <div className="space-x-1">
-            <span className="font-semibold">Tên:</span>
+            <span className="font-semibold">{t('name')}:</span>
             <span>{guest.name}</span>
             <span className="font-semibold">(#{guest.id})</span>
             <span>|</span>
-            <span className="font-semibold">Bàn:</span>
+            <span className="font-semibold">{t('table')}:</span>
             <span>{guest.tableNumber}</span>
           </div>
           <div className="space-x-1">
-            <span className="font-semibold">Ngày đăng ký:</span>
+            <span className="font-semibold">{t('time')}:</span>
             <span>{formatDateTimeToLocaleString(guest.createdAt)}</span>
           </div>
         </Fragment>
       )}
 
       <div className="space-y-1">
-        <div className="font-semibold">Đơn hàng:</div>
+        <div className="font-semibold">{t('order')}:</div>
         {orders.map((order, index) => {
           return (
             <div key={order.id} className="flex gap-2 items-center text-xs">
@@ -181,7 +183,7 @@ export default function OrderGuestDetail({
 
       <div className="space-x-1">
         <span className="font-semibold text-green-600 dark:text-green-400">
-          Đã thanh toán:
+          {t('paid')}:
         </span>
         <Badge variant={'outline'}>
           <span>
@@ -195,7 +197,7 @@ export default function OrderGuestDetail({
       </div>
       <div className="space-x-1">
         <span className="font-semibold text-red-600 dark:text-red-400">
-          Chưa thanh toán:
+          {t('notYetPaid')}:
         </span>
         <Badge>
           <span>
@@ -223,7 +225,7 @@ export default function OrderGuestDetail({
           {payForGuestMutation.isPending ? (
             <LoaderCircle className="w-5 h-5 mx-auto animate-spin" />
           ) : (
-            <>Thanh toán tiền mặt</>
+            <>{t('paymentWithCash')}</>
           )}
         </Button>
 
@@ -233,16 +235,16 @@ export default function OrderGuestDetail({
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Xác nhận thanh toán</DialogTitle>
-              <DialogDescription>
-                Bạn có chắc chắn muốn thanh toán bằng tiền mặt cho đơn hàng này?
-              </DialogDescription>
+              <DialogTitle>{t('confirm')}</DialogTitle>
+              <DialogDescription>{t('description')}</DialogDescription>
             </DialogHeader>
             <DialogFooter>
               <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
-                Hủy
+                {t('cancel')}
               </Button>
-              <Button onClick={confirmCashPayment}>Xác nhận</Button>
+              <Button onClick={confirmCashPayment}>
+                {t('confirmPayment')}
+              </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -262,7 +264,7 @@ export default function OrderGuestDetail({
           {zaloPayForGuestMutation.isPending ? (
             <LoaderCircle className="w-5 h-5 mx-auto animate-spin" />
           ) : (
-            <>Thanh toán với ZaloPay</>
+            <>{t('paymentWithZaloPay')}</>
           )}
         </Button>
       </div>

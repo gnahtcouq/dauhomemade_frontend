@@ -169,6 +169,26 @@
       "results": "results",
       "noResults": "No results found"
     },
+    "static": {
+      "empty": "Empty",
+      "guestsAreSittingaAtTable": "Guests are sitting at table",
+      "serving": "Serving",
+      "guest": "guest"
+    },
+    "detail": {
+      "name": "Name",
+      "table": "Table",
+      "time": "Time",
+      "order": "Order",
+      "paid": "Paid",
+      "notYetPaid": "Not yet paid",
+      "paymentWithCash": "Payment with cash",
+      "paymentWithZaloPay": "Payment with ZaloPay",
+      "confirm": "Confirm payment",
+      "description": "Are you sure you want to pay with cash for this order?",
+      "confirmPayment": "Confirm",
+      "cancel": "Cancel"
+    },
     "dialogAdd": {
       "title": "Add order",
       "newGuest": "New guest",
@@ -258,6 +278,9 @@
       "required": "Table number is required",
       "min": "Table number must be greater than 0",
       "capacity": "Seats must be greater than 0"
+    },
+    "order": {
+      "quantity": "Quantity is invalid"
     }
   },
   "NavItems": {

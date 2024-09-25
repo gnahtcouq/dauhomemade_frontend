@@ -23,6 +23,7 @@ import {
   DialogTitle
 } from '@/components/ui/dialog'
 import OrderGuestDetail from '@/app/[locale]/manage/orders/order-guest-detail'
+import {useTranslations} from 'next-intl'
 
 // Ví dụ:
 // const statics: Statics = {
@@ -61,6 +62,7 @@ export default function OrderStatics({
   tableList: TableListResType['data']
   servingGuestByTableNumber: ServingGuestByTableNumber
 }) {
+  const t = useTranslations('ManageOrders.static')
   const [selectedTableNumber, setSelectedTableNumber] = useState<number>(0)
   const selectedServingGuest = servingGuestByTableNumber[selectedTableNumber]
   return (
@@ -77,7 +79,7 @@ export default function OrderStatics({
           {selectedServingGuest && (
             <DialogHeader>
               <DialogTitle>
-                Khách đang ngồi tại bàn {selectedTableNumber}
+                {t('guestsAreSittingaAtTable')} {selectedTableNumber}
               </DialogTitle>
             </DialogHeader>
           )}
@@ -169,7 +171,7 @@ export default function OrderStatics({
                       </div>
                     </TooltipTrigger>
                     <TooltipContent>
-                      Đang phục vụ: {servingGuestCount} khách
+                      {t('serving')}: {servingGuestCount} {t('guest')}
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
@@ -182,7 +184,7 @@ export default function OrderStatics({
               />
               {isEmptyTable && (
                 <div className="flex justify-between items-center text-sm">
-                  Trống
+                  {t('empty')}
                 </div>
               )}
               {!isEmptyTable && (

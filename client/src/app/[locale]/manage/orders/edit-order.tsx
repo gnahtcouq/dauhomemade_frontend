@@ -54,6 +54,7 @@ export default function EditOrder({
   onSubmitSuccess?: () => void
 }) {
   const t = useTranslations('ManageOrders.dialogEdit')
+  const errorMessageT = useTranslations('ErrorMessage.order')
   const [selectedDish, setSelectedDish] = useState<
     DishListResType['data'][0] | null
   >(null)
@@ -158,7 +159,7 @@ export default function EditOrder({
               <FormField
                 control={form.control}
                 name="quantity"
-                render={({field}) => (
+                render={({field, formState: {errors}}) => (
                   <FormItem>
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
                       <Label htmlFor="quantity">{t('quantity')}</Label>
@@ -179,7 +180,12 @@ export default function EditOrder({
                             field.onChange(numberValue)
                           }}
                         />
-                        <FormMessage />
+                        <FormMessage>
+                          {Boolean(errors.quantity?.message) &&
+                            errorMessageT(errors.quantity?.message as any)
+                              .replace('ErrorMessage.order.', '')
+                              .trim()}
+                        </FormMessage>
                       </div>
                     </div>
                   </FormItem>
