@@ -30,6 +30,7 @@ import {
 import {GetOrdersResType} from '@/schemaValidations/order.schema'
 import {DotsHorizontalIcon} from '@radix-ui/react-icons'
 import {ColumnDef} from '@tanstack/react-table'
+import {useTranslations} from 'next-intl'
 import Image from 'next/image'
 import {useContext} from 'react'
 
@@ -208,6 +209,8 @@ const orderTableColumns: ColumnDef<OrderItem>[] = [
         setOrderIdEdit(row.original.id)
       }
 
+      const t = useTranslations('ManageOrders.table')
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -217,9 +220,11 @@ const orderTableColumns: ColumnDef<OrderItem>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Hành động</DropdownMenuLabel>
+            <DropdownMenuLabel>{t('actions')}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={openEditOrder}>Sửa</DropdownMenuItem>
+            <DropdownMenuItem onClick={openEditOrder}>
+              {t('edit')}
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )

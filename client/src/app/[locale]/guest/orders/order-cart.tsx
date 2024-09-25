@@ -132,36 +132,42 @@ export default function OrderCart() {
 
   return (
     <>
-      {orders.map((order, index) => (
-        <div key={order.id} className="flex gap-4">
-          <div className="text-xm font-semibold">{index + 1}</div>
-          <div className="flex-shrink-0">
-            <Image
-              src={order.dishSnapshot.image}
-              alt={order.dishSnapshot.name}
-              height={100}
-              width={100}
-              quality={75}
-              priority={true}
-              className="object-cover w-[80px] h-[80px] rounded-md"
-            />
-          </div>
-          <div className="space-y-1">
-            <h3 className="text-sm">{order.dishSnapshot.name}</h3>
-            <div className="text-xs text-red-600 dark:text-red-400 font-semibold">
-              {formatCurrency(order.dishSnapshot.price)} x{' '}
-              <Badge className="px-1" variant={'secondary'}>
-                {order.quantity}
+      {orders.length === 0 ? (
+        <div className="text-center text-gray-500 dark:text-gray-400">
+          Bạn chưa gọi món ăn nào cả
+        </div>
+      ) : (
+        orders.map((order, index) => (
+          <div key={order.id} className="flex gap-4">
+            <div className="text-xm font-semibold">{index + 1}</div>
+            <div className="flex-shrink-0">
+              <Image
+                src={order.dishSnapshot.image}
+                alt={order.dishSnapshot.name}
+                height={100}
+                width={100}
+                quality={75}
+                priority={true}
+                className="object-cover w-[80px] h-[80px] rounded-md"
+              />
+            </div>
+            <div className="space-y-1">
+              <h3 className="text-sm">{order.dishSnapshot.name}</h3>
+              <div className="text-xs text-red-600 dark:text-red-400 font-semibold">
+                {formatCurrency(order.dishSnapshot.price)} x{' '}
+                <Badge className="px-1" variant={'secondary'}>
+                  {order.quantity}
+                </Badge>
+              </div>
+            </div>
+            <div className="flex-shrink-0 ml-auto flex justify-center items-center">
+              <Badge variant={'outline'}>
+                {getVietnameseOrderStatus(order.status)}
               </Badge>
             </div>
           </div>
-          <div className="flex-shrink-0 ml-auto flex justify-center items-center">
-            <Badge variant={'outline'}>
-              {getVietnameseOrderStatus(order.status)}
-            </Badge>
-          </div>
-        </div>
-      ))}
+        ))
+      )}
       <div className="sticky bottom-0 bg-white dark:bg-[hsl(var(--background))] z-20 mb-24 p-4">
         {paid.quantity !== 0 && (
           <div className="w-full flex space-x-4 justify-between text-md font-semibold">

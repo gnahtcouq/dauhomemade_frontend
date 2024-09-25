@@ -40,6 +40,7 @@ import {
   UpdateOrderBodyType
 } from '@/schemaValidations/order.schema'
 import {zodResolver} from '@hookform/resolvers/zod'
+import {useTranslations} from 'next-intl'
 import {useEffect, useState} from 'react'
 import {useForm} from 'react-hook-form'
 
@@ -52,6 +53,7 @@ export default function EditOrder({
   setId: (value: number | undefined) => void
   onSubmitSuccess?: () => void
 }) {
+  const t = useTranslations('ManageOrders.dialogEdit')
   const [selectedDish, setSelectedDish] = useState<
     DishListResType['data'][0] | null
   >(null)
@@ -115,7 +117,7 @@ export default function EditOrder({
     >
       <DialogContent className="sm:max-w-[600px] max-h-screen overflow-auto">
         <DialogHeader>
-          <DialogTitle>Cập nhật đơn hàng</DialogTitle>
+          <DialogTitle>{t('title')}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -132,7 +134,7 @@ export default function EditOrder({
                 name="dishId"
                 render={({field}) => (
                   <FormItem className="grid grid-cols-4 items-center justify-items-start gap-4">
-                    <FormLabel>Món ăn</FormLabel>
+                    <FormLabel>{t('dish')}</FormLabel>
                     <div className="flex items-center col-span-2 space-x-4">
                       {/* <Avatar className="aspect-square w-[50px] h-[50px] rounded-md object-cover">
                         <AvatarImage src={selectedDish?.image} />
@@ -159,7 +161,7 @@ export default function EditOrder({
                 render={({field}) => (
                   <FormItem>
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                      <Label htmlFor="quantity">Số lượng</Label>
+                      <Label htmlFor="quantity">{t('quantity')}</Label>
                       <div className="col-span-3 w-full space-y-2">
                         <Input
                           id="quantity"
@@ -189,7 +191,7 @@ export default function EditOrder({
                 render={({field}) => (
                   <FormItem>
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                      <FormLabel>Trạng thái</FormLabel>
+                      <FormLabel>{t('status')}</FormLabel>
                       <Select
                         onValueChange={field.onChange}
                         value={field.value}
@@ -197,7 +199,7 @@ export default function EditOrder({
                       >
                         <FormControl className="col-span-3">
                           <SelectTrigger className="w-[200px]">
-                            <SelectValue placeholder="Trạng thái" />
+                            <SelectValue placeholder={t('status')} />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -218,7 +220,7 @@ export default function EditOrder({
         </Form>
         <DialogFooter>
           <Button type="submit" form="edit-order-form">
-            Lưu
+            {t('save')}
           </Button>
         </DialogFooter>
       </DialogContent>

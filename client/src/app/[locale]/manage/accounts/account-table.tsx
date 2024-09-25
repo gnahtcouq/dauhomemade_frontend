@@ -304,7 +304,7 @@ export default function AccountTable() {
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
                     return (
-                      <TableHead key={header.id}>
+                      <TableHead className="whitespace-nowrap" key={header.id}>
                         {header.isPlaceholder
                           ? null
                           : flexRender(
@@ -325,7 +325,7 @@ export default function AccountTable() {
                     data-state={row.getIsSelected() && 'selected'}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
+                      <TableCell className="whitespace-nowrap" key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()

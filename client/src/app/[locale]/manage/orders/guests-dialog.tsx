@@ -32,6 +32,7 @@ import {
   useReactTable
 } from '@tanstack/react-table'
 import {endOfDay, format, startOfDay} from 'date-fns'
+import {useTranslations} from 'next-intl'
 import {useEffect, useState} from 'react'
 
 type GuestItem = GetListGuestsResType['data'][0]
@@ -87,6 +88,7 @@ export default function GuestsDialog({
 }: {
   onChoose: (guest: GuestItem) => void
 }) {
+  const t = useTranslations('ManageOrders.chooseGuest')
   const [open, setOpen] = useState(false)
   const [fromDate, setFromDate] = useState(initFromDate)
   const [toDate, setToDate] = useState(initToDate)
@@ -146,20 +148,20 @@ export default function GuestsDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Chọn khách</Button>
+        <Button variant="outline">{t('title')}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[700px] max-h-full overflow-auto">
         <DialogHeader>
-          <DialogTitle>Chọn khách hàng</DialogTitle>
+          <DialogTitle>{t('title')}</DialogTitle>
         </DialogHeader>
         <div>
           <div className="w-full">
             <div className="flex flex-wrap gap-2">
               <div className="flex items-center">
-                <span className="mr-2">Từ</span>
+                <span className="mr-2">{t('fromDate')}</span>
                 <Input
                   type="datetime-local"
-                  placeholder="Từ ngày"
+                  placeholder={t('fromDate')}
                   className="text-sm"
                   value={format(fromDate, 'yyyy-MM-dd HH:mm').replace(' ', 'T')}
                   onChange={(event) =>
@@ -168,10 +170,10 @@ export default function GuestsDialog({
                 />
               </div>
               <div className="flex items-center">
-                <span className="mr-2">Đến</span>
+                <span className="mr-2">{t('toDate')}</span>
                 <Input
                   type="datetime-local"
-                  placeholder="Đến ngày"
+                  placeholder={t('toDate')}
                   value={format(toDate, 'yyyy-MM-dd HH:mm').replace(' ', 'T')}
                   onChange={(event) => setToDate(new Date(event.target.value))}
                 />
@@ -186,7 +188,7 @@ export default function GuestsDialog({
             </div>
             <div className="flex items-center py-4 gap-2">
               <Input
-                placeholder="Tên hoặc ID"
+                placeholder={t('searchByGuestName')}
                 value={
                   (table.getColumn('name')?.getFilterValue() as string) ?? ''
                 }
@@ -196,7 +198,7 @@ export default function GuestsDialog({
                 className="w-[170px]"
               />
               <Input
-                placeholder="Số bàn"
+                placeholder={t('searchByTableNumber')}
                 value={
                   (table
                     .getColumn('tableNumber')
@@ -207,7 +209,7 @@ export default function GuestsDialog({
                     .getColumn('tableNumber')
                     ?.setFilterValue(event.target.value)
                 }
-                className="w-[80px]"
+                className="w-[170px]"
               />
             </div>
             <div className="rounded-md border">
@@ -257,7 +259,7 @@ export default function GuestsDialog({
                         colSpan={columns.length}
                         className="h-24 text-center"
                       >
-                        Không có kết quả.
+                        {t('noResults')}
                       </TableCell>
                     </TableRow>
                   )}
@@ -266,9 +268,9 @@ export default function GuestsDialog({
             </div>
             <div className="flex items-center justify-end space-x-2 py-4">
               <div className="text-xs text-muted-foreground py-4 flex-1 ">
-                Hiển thị{' '}
+                {t('show')}{' '}
                 <strong>{table.getPaginationRowModel().rows.length}</strong>{' '}
-                trong <strong>{data.length}</strong> kết quả
+                {t('outOf')} <strong>{data.length}</strong> {t('results')}
               </div>
               <div>
                 <AutoPagination

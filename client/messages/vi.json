@@ -29,7 +29,7 @@
     "notFound": "Không tìm thấy món ăn"
   },
   "ManageAccounts": {
-    "title": "Quản lý tài khoản",
+    "title": "Tài khoản",
     "description": "Quản lý tài khoản nhân viên và chủ cửa hàng",
     "add": "Thêm tài khoản",
     "edit": "Sửa tài khoản",
@@ -75,7 +75,7 @@
     }
   },
   "ManageDishes": {
-    "title": "Quản lý món ăn",
+    "title": "Món ăn",
     "description": "Quản lý món ăn trong menu",
     "add": "Thêm món ăn",
     "edit": "Sửa món ăn",
@@ -117,8 +117,78 @@
       "save": "Lưu"
     }
   },
+  "ManageOrders": {
+    "title": "Đơn hàng",
+    "description": "Quản lý đơn hàng của cửa hàng",
+    "add": "Tạo đơn hàng",
+    "edit": "Sửa đơn hàng",
+    "table": {
+      "fromDate": "Từ",
+      "toDate": "Đến",
+      "actions": "Hành động",
+      "edit": "Sửa",
+      "delete": "Xóa",
+      "searchByGuestName": "Tên khách",
+      "searchByTableNumber": "Số bàn",
+      "status": "Trạng thái",
+      "show": "Hiển thị",
+      "outOf": "trong",
+      "results": "kết quả",
+      "noResults": "Không tìm thấy kết quả"
+    },
+    "chooseGuest": {
+      "title": "Chọn khách hàng",
+      "fromDate": "Từ",
+      "toDate": "Đến",
+      "actions": "Hành động",
+      "searchByGuestName": "Tên khách hoặc ID",
+      "searchByTableNumber": "Số bàn",
+      "show": "Hiển thị",
+      "outOf": "trong",
+      "results": "kết quả",
+      "noResults": "Không tìm thấy kết quả"
+    },
+    "chooseTable": {
+      "title": "Chọn bàn ăn",
+      "changeTable": "Thay đổi",
+      "tableNumber": "Số bàn",
+      "searchByTableNumber": "Số bàn",
+      "show": "Hiển thị",
+      "outOf": "trong",
+      "results": "kết quả",
+      "noResults": "Không tìm thấy kết quả"
+    },
+    "chooseDish": {
+      "title": "Chọn món ăn",
+      "changeDish": "Thay đổi",
+      "searchByDishName": "Tìm kiếm theo tên món ăn",
+      "show": "Hiển thị",
+      "outOf": "trong",
+      "results": "kết quả",
+      "noResults": "Không tìm thấy kết quả"
+    },
+    "dialogAdd": {
+      "title": "Tạo đơn hàng",
+      "newGuest": "Khách hàng mới",
+      "selectedGuest": "Khách đã chọn",
+      "outOfStock": "Hết hàng",
+      "name": "Tên",
+      "chooseTable": "Chọn bàn",
+      "chooseGuest": "Chọn khách",
+      "order": "Đặt hàng",
+      "dish": "món ăn",
+      "tableNumber": "Số bàn"
+    },
+    "dialogEdit": {
+      "title": "Sửa đơn hàng",
+      "dish": "Món ăn",
+      "quantity": "Số lượng",
+      "status": "Trạng thái",
+      "save": "Lưu"
+    }
+  },
   "ManageTables": {
-    "title": "Quản lý bàn ăn",
+    "title": "Bàn ăn",
     "description": "Quản lý bàn ăn trong cửa hàng",
     "add": "Thêm bàn ăn",
     "edit": "Sửa bàn ăn",

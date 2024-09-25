@@ -29,11 +29,13 @@ import {
 import {CreateOrdersBodyType} from '@/schemaValidations/order.schema'
 import {zodResolver} from '@hookform/resolvers/zod'
 import {LoaderCircle, PlusCircle} from 'lucide-react'
+import {useTranslations} from 'next-intl'
 import Image from 'next/image'
 import {useMemo, useState} from 'react'
 import {useForm} from 'react-hook-form'
 
 export default function AddOrder() {
+  const t = useTranslations('ManageOrders.dialogAdd')
   const [open, setOpen] = useState(false)
   const [selectedGuest, setSelectedGuest] = useState<
     GetListGuestsResType['data'][0] | null
@@ -130,16 +132,16 @@ export default function AddOrder() {
         <Button size="sm" className="h-7 gap-1">
           <PlusCircle className="h-3.5 w-3.5" />
           <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-            Tạo đơn hàng
+            {t('title')}
           </span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px] max-h-screen overflow-auto">
         <DialogHeader>
-          <DialogTitle>Tạo đơn hàng</DialogTitle>
+          <DialogTitle>{t('title')}</DialogTitle>
         </DialogHeader>
         <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-          <Label htmlFor="isNewGuest">Khách hàng mới</Label>
+          <Label htmlFor="isNewGuest">{t('newGuest')}</Label>
           <div className="col-span-3 flex items-center">
             <Switch
               id="isNewGuest"
@@ -162,7 +164,7 @@ export default function AddOrder() {
                   render={({field}) => (
                     <FormItem>
                       <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                        <Label htmlFor="name">Tên khách hàng</Label>
+                        <Label htmlFor="name">{t('name')}</Label>
                         <div className="col-span-3 w-full space-y-2">
                           <Input id="name" className="w-full" {...field} />
                           <FormMessage />
@@ -177,7 +179,7 @@ export default function AddOrder() {
                   render={({field}) => (
                     <FormItem>
                       <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                        <Label htmlFor="tableNumber">Chọn bàn</Label>
+                        <Label htmlFor="tableNumber">{t('chooseTable')}</Label>
                         <div className="col-span-3 w-full space-y-2">
                           <div className="flex items-center gap-4">
                             <div>{field.value}</div>
@@ -205,12 +207,14 @@ export default function AddOrder() {
         )}
         {!isNewGuest && selectedGuest && (
           <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-            <Label htmlFor="selectedGuest">Khách đã chọn</Label>
+            <Label htmlFor="selectedGuest">{t('selectedGuest')}</Label>
             <div className="col-span-3 w-full gap-4 flex items-center">
               <div>
                 {selectedGuest.name} (#{selectedGuest.id})
               </div>
-              <div>Bàn: {selectedGuest.tableNumber}</div>
+              <div>
+                {t('tableNumber')}: {selectedGuest.tableNumber}
+              </div>
             </div>
           </div>
         )}
@@ -226,7 +230,7 @@ export default function AddOrder() {
               <div className="flex-shrink-0">
                 {dish.status === DishStatus.Unavailable && (
                   <span className="bg-red-600 text-white text-xs px-1 rounded-md font-bold">
-                    Tạm hết
+                    {t('outOfStock')}
                   </span>
                 )}
                 <Image
@@ -270,7 +274,9 @@ export default function AddOrder() {
               <LoaderCircle className="w-5 h-5 mx-auto animate-spin" />
             ) : (
               <>
-                <span>Đặt hàng · {totalItems} món</span>
+                <span>
+                  {t('order')} · {totalItems} {t('dish')}
+                </span>
                 <span className="text-red-600 dark:text-red-400">
                   {formatCurrency(totalPrice)}
                 </span>

@@ -53,6 +53,7 @@ import {useGetOrderListQuery, useUpdateOrderMutation} from '@/queries/useOrder'
 import {useGetTableList} from '@/queries/useTable'
 import {GuestCreateOrdersResType} from '@/schemaValidations/guest.schema'
 import {endOfDay, format, startOfDay} from 'date-fns'
+import {useTranslations} from 'next-intl'
 
 export const OrderTableContext = createContext({
   setOrderIdEdit: (value: number | undefined) => {},
@@ -82,6 +83,7 @@ const PAGE_SIZE = 10
 const initFromDate = startOfDay(new Date())
 const initToDate = endOfDay(new Date())
 export default function OrderTable() {
+  const t = useTranslations('ManageOrders.table')
   const role = useAppStore((state) => state.role) ?? ''
   const socket = useAppStore((state) => state.socket)
   const searchParam = useSearchParams()
@@ -245,10 +247,10 @@ export default function OrderTable() {
         <div className=" flex items-center">
           <div className="flex flex-wrap gap-2">
             <div className="flex items-center">
-              <span className="mr-2">Từ</span>
+              <span className="mr-2">{t('fromDate')}</span>
               <Input
                 type="datetime-local"
-                placeholder="Từ ngày"
+                placeholder={t('fromDate')}
                 className="text-sm"
                 value={format(fromDate, 'yyyy-MM-dd HH:mm').replace(' ', 'T')}
                 onChange={(event) => setFromDate(new Date(event.target.value))}
@@ -256,10 +258,10 @@ export default function OrderTable() {
               />
             </div>
             <div className="flex items-center">
-              <span className="mr-2">Đến</span>
+              <span className="mr-2">{t('toDate')}</span>
               <Input
                 type="datetime-local"
-                placeholder="Đến ngày"
+                placeholder={t('toDate')}
                 value={format(toDate, 'yyyy-MM-dd HH:mm').replace(' ', 'T')}
                 onChange={(event) => setToDate(new Date(event.target.value))}
                 disabled={role !== Role.Owner}
@@ -275,24 +277,24 @@ export default function OrderTable() {
         </div>
         <div className="flex flex-wrap items-center gap-4 py-4">
           <Input
-            placeholder="Tên khách"
+            placeholder={t('searchByGuestName')}
             value={
               (table.getColumn('guestName')?.getFilterValue() as string) ?? ''
             }
             onChange={(event) =>
               table.getColumn('guestName')?.setFilterValue(event.target.value)
             }
-            className="max-w-[100px]"
+            className="max-w-[120px]"
           />
           <Input
-            placeholder="Số bàn"
+            placeholder={t('searchByTableNumber')}
             value={
               (table.getColumn('tableNumber')?.getFilterValue() as string) ?? ''
             }
             onChange={(event) =>
               table.getColumn('tableNumber')?.setFilterValue(event.target.value)
             }
-            className="max-w-[80px]"
+            className="max-w-[120px]"
           />
           <Popover open={openStatusFilter} onOpenChange={setOpenStatusFilter}>
             <PopoverTrigger asChild>
@@ -308,7 +310,7 @@ export default function OrderTable() {
                         .getColumn('status')
                         ?.getFilterValue() as (typeof OrderStatusValues)[number]
                     )
-                  : 'Trạng thái'}
+                  : t('status')}
                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
             </PopoverTrigger>
@@ -403,7 +405,7 @@ export default function OrderTable() {
                       colSpan={orderTableColumns.length}
                       className="h-24 text-center"
                     >
-                      Không có kết quả.
+                      {t('noResults')}
                     </TableCell>
                   </TableRow>
                 )}
@@ -413,9 +415,9 @@ export default function OrderTable() {
         )}
         <div className="flex items-center justify-end space-x-2 py-4">
           <div className="text-xs text-muted-foreground py-4 flex-1 ">
-            Hiển thị{' '}
-            <strong>{table.getPaginationRowModel().rows.length}</strong> trong{' '}
-            <strong>{orderList.length}</strong> kết quả
+            {t('show')}{' '}
+            <strong>{table.getPaginationRowModel().rows.length}</strong>{' '}
+            {t('outOf')} <strong>{orderList.length}</strong> {t('results')}
           </div>
           <div>
             <AutoPagination

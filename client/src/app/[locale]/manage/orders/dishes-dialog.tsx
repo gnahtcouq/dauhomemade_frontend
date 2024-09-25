@@ -35,6 +35,7 @@ import {
   getSortedRowModel,
   useReactTable
 } from '@tanstack/react-table'
+import {useTranslations} from 'next-intl'
 import Image from 'next/image'
 import {useEffect, useState} from 'react'
 
@@ -79,6 +80,7 @@ export const columns: ColumnDef<DishItem>[] = [
 
 const PAGE_SIZE = 10
 export function DishesDialog({onChoose}: {onChoose: (dish: DishItem) => void}) {
+  const t = useTranslations('ManageOrders.chooseDish')
   const [open, setOpen] = useState(false)
   const dishListQuery = useGetDishListQuery()
   const data = dishListQuery.data?.payload.data ?? []
@@ -128,17 +130,17 @@ export function DishesDialog({onChoose}: {onChoose: (dish: DishItem) => void}) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Thay đổi</Button>
+        <Button variant="outline">{t('changeDish')}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px] max-h-full overflow-auto">
         <DialogHeader>
-          <DialogTitle>Chọn món ăn</DialogTitle>
+          <DialogTitle>{t('title')}</DialogTitle>
         </DialogHeader>
         <div>
           <div className="w-full">
             <div className="flex items-center py-4">
               <Input
-                placeholder="Tìm kiếm theo tên..."
+                placeholder={t('searchByDishName')}
                 value={
                   (table.getColumn('dishName')?.getFilterValue() as string) ??
                   ''
@@ -196,7 +198,7 @@ export function DishesDialog({onChoose}: {onChoose: (dish: DishItem) => void}) {
                         colSpan={columns.length}
                         className="h-24 text-center"
                       >
-                        Không có kết quả.
+                        {t('noResults')}
                       </TableCell>
                     </TableRow>
                   )}
@@ -205,9 +207,9 @@ export function DishesDialog({onChoose}: {onChoose: (dish: DishItem) => void}) {
             </div>
             <div className="flex items-center justify-end space-x-2 py-4">
               <div className="text-xs text-muted-foreground py-4 flex-1 ">
-                Hiển thị{' '}
+                {t('show')}{' '}
                 <strong>{table.getPaginationRowModel().rows.length}</strong>{' '}
-                trong <strong>{data.length}</strong> kết quả
+                {t('outOf')} <strong>{data.length}</strong> {t('results')}
               </div>
               <div>
                 <AutoPagination

@@ -29,7 +29,7 @@
     "notFound": "Dish not found"
   },
   "ManageAccounts": {
-    "title": "Manage accounts",
+    "title": "Accounts",
     "description": "Manage employee and owner accounts",
     "add": "Add account",
     "edit": "Edit account",
@@ -75,7 +75,7 @@
     }
   },
   "ManageDishes": {
-    "title": "Manage dishes",
+    "title": "Dishes",
     "description": "Manage dishes in the menu",
     "add": "Add dish",
     "edit": "Edit dish",
@@ -117,8 +117,80 @@
       "save": "Save"
     }
   },
+  "ManageOrders": {
+    "title": "Orders",
+    "description": "Manage orders in the store",
+    "add": "Add order",
+    "edit": "Edit order",
+    "table": {
+      "fromDate": "From",
+      "toDate": "To",
+      "actions": "Actions",
+      "edit": "Edit",
+      "delete": "Delete",
+      "searchByGuestName": "Guest name",
+      "searchByTableNumber": "Table number",
+      "status": "Status",
+      "show": "Showing",
+      "outOf": "out of",
+      "results": "results",
+      "noResults": "No results found"
+    },
+    "chooseGuest": {
+      "title": "Choose guest",
+      "fromDate": "From",
+      "toDate": "To",
+      "actions": "Actions",
+      "edit": "Edit",
+      "delete": "Delete",
+      "searchByGuestName": "Guest name or ID",
+      "searchByTableNumber": "Table number",
+      "show": "Showing",
+      "outOf": "out of",
+      "results": "results",
+      "noResults": "No results found"
+    },
+    "chooseTable": {
+      "title": "Choose table",
+      "changeTable": "Change",
+      "tableNumber": "Table number",
+      "searchByTableNumber": "Search by table number",
+      "show": "Showing",
+      "outOf": "out of",
+      "results": "results",
+      "noResults": "No results found"
+    },
+    "chooseDish": {
+      "title": "Choose dish",
+      "changeDish": "Change",
+      "searchByDishName": "Search by dish name",
+      "show": "Showing",
+      "outOf": "out of",
+      "results": "results",
+      "noResults": "No results found"
+    },
+    "dialogAdd": {
+      "title": "Add order",
+      "newGuest": "New guest",
+      "selectedGuest": "Selected guest",
+      "outOfStock": "Out of stock",
+      "name": "Name",
+      "chooseTable": "Choose table",
+      "chooseGuest": "Choose guest",
+      "order": "Order",
+      "dish": "dish",
+      "tableNumber": "Table number"
+    },
+    "dialogEdit": {
+      "title": "Edit order",
+      "dish": "Dish",
+      "quantity": "Quantity",
+      "status": "Status",
+      "save": "Save"
+    }
+  },
   "ManageTables": {
-    "title": "Manage tables",
+    "title": "Tables",
     "description": "Manage tables in the store",
     "add": "Add table",
     "edit": "Edit table",
