@@ -20,6 +20,10 @@
     "name": "Tên",
     "login": "Đăng nhập"
   },
+  "Payment": {
+    "title": "Thanh toán thành công",
+    "description": "Cảm ơn bạn đã sử dụng dịch vụ của Đậu Homemade"
+  },
   "SwitchLanguage": {
     "title": "Chuyển ngôn ngữ",
     "vi": "Tiếng Việt",

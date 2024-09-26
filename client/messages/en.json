@@ -20,6 +20,10 @@
     "name": "Name",
     "login": "Login"
   },
+  "Payment": {
+    "title": "Payment successful",
+    "description": "Thank you for using our service"
+  },
   "SwitchLanguage": {
     "title": "Switch language",
     "vi": "Vietnamese",
