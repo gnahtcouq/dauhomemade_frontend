@@ -88,8 +88,7 @@ export function middleware(request: NextRequest) {
       role !== Role.Guest &&
       guestPaths.some((path) => pathname.startsWith(path))
     const isNotGuestAndNotOwnerGotoPaymentPath =
-      role !== Role.Guest &&
-      role !== Role.Owner &&
+      role === Role.Employee &&
       paymentPaths.some((path) => pathname.startsWith(path))
 
     // Không phải Owner nhưng truy cập vào các route Owner
