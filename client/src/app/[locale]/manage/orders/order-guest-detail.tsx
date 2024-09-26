@@ -256,7 +256,6 @@ export default function OrderGuestDetail({
           variant={'secondary'}
           disabled={
             ordersFilterToPurchase.length === 0 ||
-            role === Role.Employee ||
             zaloPayForGuestMutation.isPending
           }
           onClick={zaloPay}
