@@ -1,3 +1,4 @@
+import TableTable from '@/app/[locale]/manage/tables/table-table'
 import {
   Card,
   CardContent,
@@ -5,9 +6,38 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card'
-import TableTable from '@/app/[locale]/manage/tables/table-table'
-import {Suspense} from 'react'
+import envConfig, {Locale} from '@/config'
+import {Metadata} from 'next'
 import {getTranslations, unstable_setRequestLocale} from 'next-intl/server'
+import {Suspense} from 'react'
+
+type Props = {
+  params: {locale: Locale}
+  searchParams: {[key: string]: string | string[] | undefined}
+}
+
+export async function generateMetadata({
+  params,
+  searchParams
+}: Props): Promise<Metadata> {
+  const t = await getTranslations({
+    locale: params.locale,
+    namespace: 'ManageTables'
+  })
+
+  const url = envConfig.NEXT_PUBLIC_URL + `/${params.locale}/manage/tables`
+
+  return {
+    title: t('title'),
+    description: t('description'),
+    alternates: {
+      canonical: url
+    },
+    robots: {
+      index: false
+    }
+  }
+}
 
 export default async function TablesPage({
   params: {locale}

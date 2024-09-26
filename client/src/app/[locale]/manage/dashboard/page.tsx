@@ -1,3 +1,4 @@
+import DashboardMain from '@/app/[locale]/manage/dashboard/dashboard-main'
 import {
   Card,
   CardContent,
@@ -5,8 +6,37 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card'
-import DashboardMain from '@/app/[locale]/manage/dashboard/dashboard-main'
+import envConfig, {Locale} from '@/config'
+import {Metadata} from 'next'
 import {getTranslations, unstable_setRequestLocale} from 'next-intl/server'
+
+type Props = {
+  params: {locale: Locale}
+  searchParams: {[key: string]: string | string[] | undefined}
+}
+
+export async function generateMetadata({
+  params,
+  searchParams
+}: Props): Promise<Metadata> {
+  const t = await getTranslations({
+    locale: params.locale,
+    namespace: 'Dashboard'
+  })
+
+  const url = envConfig.NEXT_PUBLIC_URL + `/${params.locale}/manage/dashboard`
+
+  return {
+    title: t('title'),
+    description: t('description'),
+    alternates: {
+      canonical: url
+    },
+    robots: {
+      index: false
+    }
+  }
+}
 
 export default async function Dashboard({
   params: {locale}

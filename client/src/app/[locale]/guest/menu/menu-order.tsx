@@ -11,8 +11,10 @@ import Image from 'next/image'
 import {useRouter} from '@/navigation'
 import {useMemo, useState} from 'react'
 import {LoaderCircle} from 'lucide-react'
+import {useTranslations} from 'next-intl'
 
 export default function MenuOrder() {
+  const t = useTranslations('ManageOrders.dialogAdd')
   const {data} = useGetDishListQuery()
   const dishes = useMemo(() => data?.payload.data ?? [], [data])
   const [orders, setOrders] = useState<GuestCreateOrdersBodyType>([])
@@ -78,7 +80,7 @@ export default function MenuOrder() {
               <span>
                 {dish.status === DishStatus.Unavailable && (
                   <span className="bg-red-600 text-white text-xs px-1 rounded-md font-bold">
-                    Tạm hết
+                    {t('outOfStock')}
                   </span>
                 )}
               </span>
@@ -123,7 +125,9 @@ export default function MenuOrder() {
             <LoaderCircle className="w-5 h-5 mx-auto animate-spin" />
           ) : (
             <>
-              <span>Đặt hàng · {totalItems} món</span>
+              <span>
+                {t('order')} · {totalItems} {t('dish')}
+              </span>
               <span className="text-red-600 dark:text-red-600">
                 {formatCurrency(totalPrice)}
               </span>

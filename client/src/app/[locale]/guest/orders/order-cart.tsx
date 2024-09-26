@@ -16,10 +16,12 @@ import {
   UpdateOrderResType
 } from '@/schemaValidations/order.schema'
 import {LoaderCircle} from 'lucide-react'
+import {useTranslations} from 'next-intl'
 import Image from 'next/image'
 import {useEffect, useMemo} from 'react'
 
 export default function OrderCart() {
+  const t = useTranslations('ManageOrders.detail')
   const {data, refetch} = useGuestGetOrderListQuery()
   const orders = useMemo(() => data?.payload.data ?? [], [data])
   const socket = useAppStore((state) => state.socket)
@@ -134,7 +136,7 @@ export default function OrderCart() {
     <>
       {orders.length === 0 ? (
         <div className="text-center text-gray-500 dark:text-gray-400">
-          Bạn chưa gọi món ăn nào cả
+          {t('haventOrderedYet')}
         </div>
       ) : (
         orders.map((order, index) => (
@@ -171,7 +173,9 @@ export default function OrderCart() {
       <div className="sticky bottom-0 bg-white dark:bg-[hsl(var(--background))] z-20 mb-24 p-4">
         {paid.quantity !== 0 && (
           <div className="w-full flex space-x-4 justify-between text-md font-semibold">
-            <span>Đã thanh toán · {paid.quantity} món</span>
+            <span>
+              {t('paid')} · {paid.quantity} {t('dish')}
+            </span>
             <span className="text-green-600 dark:text-green-400">
               {formatCurrency(paid.price)}
             </span>
@@ -180,7 +184,9 @@ export default function OrderCart() {
         {notYetPaid.quantity !== 0 && (
           <>
             <div className="w-full flex space-x-4 justify-between text-md font-semibold">
-              <span>Chưa thanh toán · {notYetPaid.quantity} món</span>
+              <span>
+                {t('notYetPaid')} · {notYetPaid.quantity} {t('dish')}
+              </span>
               <span className="text-red-600 dark:text-red-400">
                 {formatCurrency(notYetPaid.price)}
               </span>
@@ -193,7 +199,7 @@ export default function OrderCart() {
               {zaloPayForGuestMutation.isPending ? (
                 <LoaderCircle className="w-5 h-5 mx-auto animate-spin" />
               ) : (
-                <>Thanh toán qua ZaloPay</>
+                <>{t('paymentWithZaloPay')}</>
               )}
             </button>
           </>

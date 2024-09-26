@@ -1,7 +1,37 @@
 import ChangePasswordForm from '@/app/[locale]/manage/setting/change-password-form'
 import UpdateProfileForm from '@/app/[locale]/manage/setting/update-profile-form'
+import envConfig, {Locale} from '@/config'
+import {Metadata} from 'next'
 import {useTranslations} from 'next-intl'
-import {unstable_setRequestLocale} from 'next-intl/server'
+import {getTranslations, unstable_setRequestLocale} from 'next-intl/server'
+
+type Props = {
+  params: {locale: Locale}
+  searchParams: {[key: string]: string | string[] | undefined}
+}
+
+export async function generateMetadata({
+  params,
+  searchParams
+}: Props): Promise<Metadata> {
+  const t = await getTranslations({
+    locale: params.locale,
+    namespace: 'UpdateProfile'
+  })
+
+  const url = envConfig.NEXT_PUBLIC_URL + `/${params.locale}/manage/settings`
+
+  return {
+    title: t('title'),
+    description: t('description'),
+    alternates: {
+      canonical: url
+    },
+    robots: {
+      index: false
+    }
+  }
+}
 
 export default function Setting({
   params: {locale}

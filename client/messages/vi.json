@@ -178,6 +178,8 @@
       "table": "Bàn",
       "time": "Thời gian",
       "order": "Đơn hàng",
+      "dish": "món ăn",
+      "haventOrderedYet": "Bạn chưa đặt món ăn nào cả",
       "paid": "Đã thanh toán",
       "notYetPaid": "Chưa thanh toán",
       "paymentWithCash": "Thanh toán bằng tiền mặt",
@@ -244,6 +246,16 @@
       "changeQRCode": "Thay đổi mã QR",
       "orderURL": "URL đặt món",
       "save": "Lưu"
+    }
+  },
+  "Guest": {
+    "order": {
+      "title": "Thực đơn",
+      "description": "Thực đơn của bạn"
+    },
+    "menu": {
+      "title": "Menu",
+      "description": "Menu nhà Đậu"
     }
   },
   "ErrorMessage": {
@@ -334,6 +346,7 @@
   },
   "UpdateProfile": {
     "settings": "Cài đặt",
+    "description": "Thay đổi thông tin cá nhân",
     "title": "Thông tin cá nhân",
     "avatar": "Ảnh đại diện",
     "name": "Tên",

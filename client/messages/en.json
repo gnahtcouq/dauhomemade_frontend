@@ -180,6 +180,8 @@
       "table": "Table",
       "time": "Time",
       "order": "Order",
+      "dish": "dish",
+      "haventOrderedYet": "You haven't ordered any food yet",
       "paid": "Paid",
       "notYetPaid": "Not yet paid",
       "paymentWithCash": "Payment with cash",
@@ -246,6 +248,16 @@
       "changeQRCode": "Change QR code",
       "orderURL": "Order URL",
       "save": "Save"
+    }
+  },
+  "Guest": {
+    "order": {
+      "title": "Order",
+      "description": "Your order"
+    },
+    "menu": {
+      "title": "Menu",
+      "description": "Menu of delicious dishes"
     }
   },
   "ErrorMessage": {
@@ -336,6 +348,7 @@
   },
   "UpdateProfile": {
     "settings": "Settings",
+    "description": "Update your profile information",
     "title": "Profile information",
     "avatar": "Avatar",
     "name": "Name",
