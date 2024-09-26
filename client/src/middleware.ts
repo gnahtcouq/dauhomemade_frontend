@@ -42,9 +42,9 @@ export function middleware(request: NextRequest) {
   if (privatePaths.some((path) => pathname.startsWith(path)) && !refreshToken) {
     const url = new URL(`/${locale}/login`, request.url)
     url.searchParams.set('clearTokens', 'true')
-    return NextResponse.redirect(url)
-    // response.headers.set('x-middleware-rewrite', url.toString())
-    // return response
+    // return NextResponse.redirect(url)
+    response.headers.set('x-middleware-rewrite', url.toString())
+    return response
   }
 
   // 2. Đã đăng nhập
@@ -57,12 +57,12 @@ export function middleware(request: NextRequest) {
       ) {
         return response
       }
-      return NextResponse.redirect(new URL('/', request.url))
-      // response.headers.set(
-      //   'x-middleware-rewrite',
-      //   new URL('/', request.url).toString()
-      // )
-      // return response
+      // return NextResponse.redirect(new URL('/', request.url))
+      response.headers.set(
+        'x-middleware-rewrite',
+        new URL(`/${locale}/`, request.url).toString()
+      )
+      return response
     }
 
     // 2.2 Trường hợp đăng nhập rồi nhưng access token lại hết hạn
@@ -73,9 +73,9 @@ export function middleware(request: NextRequest) {
       const url = new URL(`/${locale}/refresh-token`, request.url)
       url.searchParams.set('refreshToken', refreshToken)
       url.searchParams.set('redirect', pathname)
-      return NextResponse.redirect(url)
-      // response.headers.set('x-middleware-rewrite', url.toString())
-      // return response
+      // return NextResponse.redirect(url)
+      response.headers.set('x-middleware-rewrite', url.toString())
+      return response
     }
 
     // 2.3 Trường hợp truy cập không đúng role, redirect về trang chủ
@@ -104,18 +104,18 @@ export function middleware(request: NextRequest) {
       isNotOwnerGoToOwnerPath ||
       isNotGuestAndNotOwnerGotoPaymentPath
     ) {
-      return NextResponse.redirect(new URL('/', request.url))
-      // response.headers.set(
-      //   'x-middleware-rewrite',
-      //   new URL('/', request.url).toString()
-      // )
-      // return response
+      // return NextResponse.redirect(new URL('/', request.url))
+      response.headers.set(
+        'x-middleware-rewrite',
+        new URL(`/${locale}/`, request.url).toString()
+      )
+      return response
     }
-    return NextResponse.next()
+    return response
   }
 
-  return NextResponse.next()
-  // return response
+  // return NextResponse.next()
+  return response
 }
 
 // See "Matching Paths" below to learn more
