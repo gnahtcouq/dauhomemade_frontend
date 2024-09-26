@@ -39,12 +39,16 @@ export function middleware(request: NextRequest) {
   const locale = request.cookies.get('NEXT_LOCALE')?.value || defaultLocale
 
   // 1. Chưa đăng nhập thì không cho vào private paths
-  if (privatePaths.some((path) => pathname.startsWith(path)) && !refreshToken) {
+  if (
+    (privatePaths.some((path) => pathname.startsWith(path)) ||
+      paymentPaths.some((path) => pathname.startsWith(path))) &&
+    !refreshToken
+  ) {
     const url = new URL(`/${locale}/login`, request.url)
     url.searchParams.set('clearTokens', 'true')
-    // return NextResponse.redirect(url)
-    response.headers.set('x-middleware-rewrite', url.toString())
-    return response
+    return NextResponse.redirect(url)
+    // response.headers.set('x-middleware-rewrite', url.toString())
+    // return response
   }
 
   // 2. Đã đăng nhập
@@ -57,12 +61,12 @@ export function middleware(request: NextRequest) {
       ) {
         return response
       }
-      // return NextResponse.redirect(new URL('/', request.url))
-      response.headers.set(
-        'x-middleware-rewrite',
-        new URL(`/${locale}/`, request.url).toString()
-      )
-      return response
+      return NextResponse.redirect(new URL('/', request.url))
+      // response.headers.set(
+      //   'x-middleware-rewrite',
+      //   new URL(`/${locale}/`, request.url).toString()
+      // )
+      // return response
     }
 
     // 2.2 Trường hợp đăng nhập rồi nhưng access token lại hết hạn
@@ -73,9 +77,9 @@ export function middleware(request: NextRequest) {
       const url = new URL(`/${locale}/refresh-token`, request.url)
       url.searchParams.set('refreshToken', refreshToken)
       url.searchParams.set('redirect', pathname)
-      // return NextResponse.redirect(url)
-      response.headers.set('x-middleware-rewrite', url.toString())
-      return response
+      return NextResponse.redirect(url)
+      // response.headers.set('x-middleware-rewrite', url.toString())
+      // return response
     }
 
     // 2.3 Trường hợp truy cập không đúng role, redirect về trang chủ
@@ -90,8 +94,7 @@ export function middleware(request: NextRequest) {
       guestPaths.some((path) => pathname.startsWith(path))
     // Không phải Owner & Guest nhưng truy cập vào payment path
     const isNotGuestAndNotOwnerGotoPaymentPath =
-      role !== Role.Guest &&
-      role !== Role.Owner &&
+      role === Role.Employee &&
       paymentPaths.some((path) => pathname.startsWith(path))
     // Không phải Owner nhưng truy cập vào các route Owner
     const isNotOwnerGoToOwnerPath =
@@ -104,17 +107,16 @@ export function middleware(request: NextRequest) {
       isNotOwnerGoToOwnerPath ||
       isNotGuestAndNotOwnerGotoPaymentPath
     ) {
-      // return NextResponse.redirect(new URL('/', request.url))
-      response.headers.set(
-        'x-middleware-rewrite',
-        new URL(`/${locale}/`, request.url).toString()
-      )
-      return response
+      return NextResponse.redirect(new URL('/', request.url))
+      // response.headers.set(
+      //   'x-middleware-rewrite',
+      //   new URL(`/${locale}/`, request.url).toString()
+      // )
+      // return response
     }
     return response
   }
 
-  // return NextResponse.next()
   return response
 }
 
