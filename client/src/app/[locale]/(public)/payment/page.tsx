@@ -1,4 +1,4 @@
-import PaymentSuccess from '@/app/[locale]/guest/payment/payment-success'
+import PaymentSuccess from '@/app/[locale]/(public)/payment/payment-success'
 
 export default function OrdersPage() {
   return (

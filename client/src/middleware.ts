@@ -3,7 +3,7 @@ import {Role} from '@/constants/type'
 import {TokenPayload} from '@/types/jwt.types'
 import jwt from 'jsonwebtoken'
 import createMiddleware from 'next-intl/middleware'
-import type {NextRequest} from 'next/server'
+import {NextResponse, type NextRequest} from 'next/server'
 
 const decodeToken = (token: string) => {
   return jwt.decode(token) as TokenPayload
@@ -23,7 +23,7 @@ const onlyOwnerPaths = [
 ]
 const unAuthPaths = ['/vi/login', '/en/login']
 const loginPaths = ['/vi/login', '/en/login']
-const paymentPaths = ['/vi/guest/payment', '/en/guest/payment']
+const paymentPaths = ['/vi/payment', '/en/payment']
 const privatePaths = [...managePaths, ...guestPaths]
 
 // This function can be marked `async` if using `await` inside
@@ -36,14 +36,15 @@ export function middleware(request: NextRequest) {
   const {pathname, searchParams} = request.nextUrl
   const accessToken = request.cookies.get('accessToken')?.value
   const refreshToken = request.cookies.get('refreshToken')?.value
+  const locale = request.cookies.get('NEXT_LOCALE')?.value || defaultLocale
 
   // 1. Chưa đăng nhập thì không cho vào private paths
   if (privatePaths.some((path) => pathname.startsWith(path)) && !refreshToken) {
-    const url = new URL('/login', request.url)
+    const url = new URL(`/${locale}/login`, request.url)
     url.searchParams.set('clearTokens', 'true')
-    // return NextResponse.redirect(url)
-    response.headers.set('x-middleware-rewrite', url.toString())
-    return response
+    return NextResponse.redirect(url)
+    // response.headers.set('x-middleware-rewrite', url.toString())
+    // return response
   }
 
   // 2. Đã đăng nhập
@@ -56,12 +57,12 @@ export function middleware(request: NextRequest) {
       ) {
         return response
       }
-      // return NextResponse.redirect(new URL('/', request.url))
-      response.headers.set(
-        'x-middleware-rewrite',
-        new URL('/', request.url).toString()
-      )
-      return response
+      return NextResponse.redirect(new URL('/', request.url))
+      // response.headers.set(
+      //   'x-middleware-rewrite',
+      //   new URL('/', request.url).toString()
+      // )
+      // return response
     }
 
     // 2.2 Trường hợp đăng nhập rồi nhưng access token lại hết hạn
@@ -69,12 +70,12 @@ export function middleware(request: NextRequest) {
       privatePaths.some((path) => pathname.startsWith(path)) &&
       !accessToken
     ) {
-      const url = new URL('/refresh-token', request.url)
+      const url = new URL(`/${locale}/refresh-token`, request.url)
       url.searchParams.set('refreshToken', refreshToken)
       url.searchParams.set('redirect', pathname)
-      // return NextResponse.redirect(url)
-      response.headers.set('x-middleware-rewrite', url.toString())
-      return response
+      return NextResponse.redirect(url)
+      // response.headers.set('x-middleware-rewrite', url.toString())
+      // return response
     }
 
     // 2.3 Trường hợp truy cập không đúng role, redirect về trang chủ
@@ -87,10 +88,11 @@ export function middleware(request: NextRequest) {
     const isNotGuestGoToGuestPath =
       role !== Role.Guest &&
       guestPaths.some((path) => pathname.startsWith(path))
+    // Không phải Owner & Guest nhưng truy cập vào payment path
     const isNotGuestAndNotOwnerGotoPaymentPath =
-      role === Role.Employee &&
+      role !== Role.Guest &&
+      role !== Role.Owner &&
       paymentPaths.some((path) => pathname.startsWith(path))
-
     // Không phải Owner nhưng truy cập vào các route Owner
     const isNotOwnerGoToOwnerPath =
       role !== Role.Owner &&
@@ -102,18 +104,18 @@ export function middleware(request: NextRequest) {
       isNotOwnerGoToOwnerPath ||
       isNotGuestAndNotOwnerGotoPaymentPath
     ) {
-      // return NextResponse.redirect(new URL('/', request.url))
-      response.headers.set(
-        'x-middleware-rewrite',
-        new URL('/', request.url).toString()
-      )
-      return response
+      return NextResponse.redirect(new URL('/', request.url))
+      // response.headers.set(
+      //   'x-middleware-rewrite',
+      //   new URL('/', request.url).toString()
+      // )
+      // return response
     }
-    return response
+    return NextResponse.next()
   }
 
-  // return NextResponse.next()
-  return response
+  return NextResponse.next()
+  // return response
 }
 
 // See "Matching Paths" below to learn more
