@@ -92,10 +92,6 @@ export function middleware(request: NextRequest) {
     const isNotGuestGoToGuestPath =
       role !== Role.Guest &&
       guestPaths.some((path) => pathname.startsWith(path))
-    // Không phải Owner & Guest nhưng truy cập vào payment path
-    const isNotGuestAndNotOwnerGotoPaymentPath =
-      role === Role.Employee &&
-      paymentPaths.some((path) => pathname.startsWith(path))
     // Không phải Owner nhưng truy cập vào các route Owner
     const isNotOwnerGoToOwnerPath =
       role !== Role.Owner &&
@@ -104,8 +100,7 @@ export function middleware(request: NextRequest) {
     if (
       isGuestGoToManagePath ||
       isNotGuestGoToGuestPath ||
-      isNotOwnerGoToOwnerPath ||
-      isNotGuestAndNotOwnerGotoPaymentPath
+      isNotOwnerGoToOwnerPath
     ) {
       return NextResponse.redirect(new URL('/', request.url))
       // response.headers.set(
