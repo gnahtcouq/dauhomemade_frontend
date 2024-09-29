@@ -50,7 +50,7 @@ export default async function Home({
   }
 
   // Chỉ lấy ra 6 món ăn đầu tiên
-  const displayedDishes = dishList.filter(dish => dish.categoryId === 1).slice(0, 4)
+  const displayedDishes = dishList.filter(dish => dish.category.id === 1).slice(0, 4)
 
   return (
     <div className="w-full space-y-4">
