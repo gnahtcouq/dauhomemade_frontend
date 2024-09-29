@@ -1,7 +1,7 @@
 'use client'
 
 import {Button} from '@/components/ui/button'
-import {CaretSortIcon, DotsHorizontalIcon} from '@radix-ui/react-icons'
+import {DotsHorizontalIcon} from '@radix-ui/react-icons'
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -14,8 +14,9 @@ import {
   getSortedRowModel,
   useReactTable
 } from '@tanstack/react-table'
-import AddDish from '@/app/[locale]/manage/dishes/add-dish'
-import EditDish from '@/app/[locale]/manage/dishes/edit-dish'
+
+import AddCategory from '@/app/[locale]/manage/categories/add-category'
+import EditCategory from '@/app/[locale]/manage/categories/edit-category'
 import AutoPagination from '@/components/auto-pagination'
 import {
   AlertDialog,
@@ -27,7 +28,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle
 } from '@/components/ui/alert-dialog'
-import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -46,56 +46,38 @@ import {
   TableRow
 } from '@/components/ui/table'
 import {toast} from '@/hooks/use-toast'
+import {handleErrorApi, simpleMatchText} from '@/lib/utils'
 import {
-  formatCurrency,
-  getVietnameseDishStatus,
-  handleErrorApi,
-  simpleMatchText,
-  truncateDescription
-} from '@/lib/utils'
-import {useDeleteDishMutation, useGetDishListQuery} from '@/queries/useDish'
-import {DishListResType} from '@/schemaValidations/dish.schema'
+  useDeleteCategoryMutation,
+  useGetCategoryList
+} from '@/queries/useCategory'
+import {CategoryListResType} from '@/schemaValidations/category.schema'
+import {useTranslations} from 'next-intl'
 import {useSearchParams} from 'next/navigation'
 import {createContext, useContext, useEffect, useState} from 'react'
-import DOMPurify from 'dompurify'
-import {useTranslations} from 'next-intl'
 
-type DishItem = DishListResType['data'][0]
+type CategoryItem = CategoryListResType['data'][0]
 
-const DishTableContext = createContext<{
-  setDishIdEdit: (value: number) => void
-  dishIdEdit: number | undefined
-  dishDelete: DishItem | null
-  setDishDelete: (value: DishItem | null) => void
+const CategoryTableContext = createContext<{
+  setCategoryIdEdit: (value: number) => void
+  categoryIdEdit: number | undefined
+  categoryDelete: CategoryItem | null
+  setCategoryDelete: (value: CategoryItem | null) => void
 }>({
-  setDishIdEdit: (value: number | undefined) => {},
-  dishIdEdit: undefined,
-  dishDelete: null,
-  setDishDelete: (value: DishItem | null) => {}
+  setCategoryIdEdit: (value: number | undefined) => {},
+  categoryIdEdit: undefined,
+  categoryDelete: null,
+  setCategoryDelete: (value: CategoryItem | null) => {}
 })
 
-export const columns: ColumnDef<DishItem>[] = [
+export const columns: ColumnDef<CategoryItem>[] = [
   {
     accessorKey: 'id',
     header: 'ID'
   },
   {
-    accessorKey: 'image',
-    header: 'Ảnh',
-    cell: ({row}) => (
-      <div>
-        <Avatar className="aspect-square w-[100px] h-[100px] rounded-md object-cover">
-          <AvatarImage src={row.getValue('image')} />
-          <AvatarFallback className="rounded-none">
-            {row.original.name}
-          </AvatarFallback>
-        </Avatar>
-      </div>
-    )
-  },
-  {
     accessorKey: 'name',
-    header: 'Tên',
+    header: 'Tên danh mục',
     cell: ({row}) => <div className="capitalize">{row.getValue('name')}</div>,
     filterFn: (row, columnId, filterValue: string) => {
       if (filterValue === undefined) return true
@@ -106,64 +88,20 @@ export const columns: ColumnDef<DishItem>[] = [
     }
   },
   {
-    accessorKey: 'description',
-    header: 'Mô tả',
-    cell: ({row}) => {
-      const description = DOMPurify.sanitize(
-        row.getValue('description')
-      ) as string
-      return (
-        <div className="whitespace-pre-line">
-          {truncateDescription(description, 50)}
-        </div>
-      )
-    }
-  },
-  {
-    accessorKey: 'category.name',
-    header: 'Danh mục',
-    cell: ({row}) => (
-      <div className="capitalize">{row.original.category.name}</div>
-    )
-  },
-  {
-    accessorKey: 'price',
-    header: ({column}) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Giá
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    cell: ({row}) => (
-      <div className="capitalize">{formatCurrency(row.getValue('price'))}</div>
-    )
-  },
-  {
-    accessorKey: 'status',
-    header: 'Trạng thái',
-    cell: ({row}) => (
-      <div>{getVietnameseDishStatus(row.getValue('status'))}</div>
-    )
-  },
-  {
     id: 'actions',
     enableHiding: false,
     cell: function Actions({row}) {
-      const {setDishIdEdit, setDishDelete} = useContext(DishTableContext)
-      const openEditDish = () => {
-        setDishIdEdit(row.original.id)
+      const {setCategoryIdEdit, setCategoryDelete} =
+        useContext(CategoryTableContext)
+      const openEditCategory = () => {
+        setCategoryIdEdit(row.original.id)
       }
 
-      const openDeleteDish = () => {
-        setDishDelete(row.original)
+      const openDeleteCategory = () => {
+        setCategoryDelete(row.original)
       }
 
-      const t = useTranslations('ManageDishes.table')
+      const t = useTranslations('ManageCategories.table')
 
       return (
         <DropdownMenu>
@@ -176,10 +114,10 @@ export const columns: ColumnDef<DishItem>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>{t('actions')}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={openEditDish}>
+            <DropdownMenuItem onClick={openEditCategory}>
               {t('edit')}
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={openDeleteDish}>
+            <DropdownMenuItem onClick={openDeleteCategory}>
               {t('delete')}
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -189,20 +127,20 @@ export const columns: ColumnDef<DishItem>[] = [
   }
 ]
 
-function AlertDialogDeleteDish({
-  dishDelete,
-  setDishDelete
+function AlertDialogDeleteCategory({
+  categoryDelete,
+  setCategoryDelete
 }: {
-  dishDelete: DishItem | null
-  setDishDelete: (value: DishItem | null) => void
+  categoryDelete: CategoryItem | null
+  setCategoryDelete: (value: CategoryItem | null) => void
 }) {
-  const t = useTranslations('ManageDishes.confirmDelete')
-  const {mutateAsync} = useDeleteDishMutation()
-  const deleteDish = async () => {
-    if (dishDelete) {
+  const t = useTranslations('ManageCategories.confirmDelete')
+  const {mutateAsync} = useDeleteCategoryMutation()
+  const deleteCategory = async () => {
+    if (categoryDelete) {
       try {
-        const result = await mutateAsync(dishDelete.id)
-        setDishDelete(null)
+        const result = await mutateAsync(categoryDelete.id)
+        setCategoryDelete(null)
         toast({
           description: result.payload.message
         })
@@ -214,10 +152,10 @@ function AlertDialogDeleteDish({
 
   return (
     <AlertDialog
-      open={Boolean(dishDelete)}
+      open={Boolean(categoryDelete)}
       onOpenChange={(value) => {
         if (!value) {
-          setDishDelete(null)
+          setCategoryDelete(null)
         }
       }}
     >
@@ -226,14 +164,14 @@ function AlertDialogDeleteDish({
           <AlertDialogTitle>
             {t('title')}{' '}
             <span className="bg-foreground text-primary-foreground rounded px-1">
-              {dishDelete?.name}
+              {categoryDelete?.name}
             </span>
           </AlertDialogTitle>
           <AlertDialogDescription>{t('message')}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
-          <AlertDialogAction onClick={deleteDish}>
+          <AlertDialogAction onClick={deleteCategory}>
             {t('confirm')}
           </AlertDialogAction>
         </AlertDialogFooter>
@@ -243,15 +181,18 @@ function AlertDialogDeleteDish({
 }
 // Số lượng item trên 1 trang
 const PAGE_SIZE = 10
-export default function DishTable() {
-  const t = useTranslations('ManageDishes.table')
+export default function CategoryTable() {
+  const t = useTranslations('ManageCategories.table')
   const searchParam = useSearchParams()
   const page = searchParam.get('page') ? Number(searchParam.get('page')) : 1
   const pageIndex = page - 1
-  const [dishIdEdit, setDishIdEdit] = useState<number | undefined>()
-  const [dishDelete, setDishDelete] = useState<DishItem | null>(null)
-  const dishListQuery = useGetDishListQuery()
-  const data = dishListQuery.data?.payload.data ?? []
+  // const params = Object.fromEntries(searchParam.entries())
+  const [categoryIdEdit, setCategoryIdEdit] = useState<number | undefined>()
+  const [categoryDelete, setCategoryDelete] = useState<CategoryItem | null>(
+    null
+  )
+  const categoryListQuery = useGetCategoryList()
+  const data = categoryListQuery.data?.payload.data ?? []
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
@@ -261,7 +202,7 @@ export default function DishTable() {
     pageSize: PAGE_SIZE //default page size
   })
 
-  const table = useReactTable({
+  const category = useReactTable({
     data,
     columns,
     onSortingChange: setSorting,
@@ -284,43 +225,50 @@ export default function DishTable() {
   })
 
   useEffect(() => {
-    table.setPagination({
+    category.setPagination({
       pageIndex,
       pageSize: PAGE_SIZE
     })
-  }, [table, pageIndex])
+  }, [category, pageIndex])
 
   return (
-    <DishTableContext.Provider
-      value={{dishIdEdit, setDishIdEdit, dishDelete, setDishDelete}}
+    <CategoryTableContext.Provider
+      value={{
+        categoryIdEdit,
+        setCategoryIdEdit,
+        categoryDelete,
+        setCategoryDelete
+      }}
     >
       <div className="w-full">
-        <EditDish id={dishIdEdit} setId={setDishIdEdit} />
-        <AlertDialogDeleteDish
-          dishDelete={dishDelete}
-          setDishDelete={setDishDelete}
+        <EditCategory id={categoryIdEdit} setId={setCategoryIdEdit} />
+        <AlertDialogDeleteCategory
+          categoryDelete={categoryDelete}
+          setCategoryDelete={setCategoryDelete}
         />
         <div className="flex items-center py-4">
           <Input
             placeholder={t('searchByName')}
-            value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
+            value={
+              (category.getColumn('name')?.getFilterValue() as string) ?? ''
+            }
             onChange={(event) =>
-              table.getColumn('name')?.setFilterValue(event.target.value)
+              category.getColumn('name')?.setFilterValue(event.target.value)
             }
             className="max-w-sm"
           />
           <div className="ml-auto flex items-center gap-2">
-            <AddDish />
+            <AddCategory />
           </div>
         </div>
-        <div className="rounded-md border">
-          <Table>
+        <div className="w-full overflow-x-auto rounded-md border">
+          <Table className="min-w-[640px] md:min-w-[768px] lg:min-w-[1024px]">
             <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
+              {category.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
                     return (
-                      <TableHead key={header.id}>
+                      <TableHead className="whitespace-nowrap" key={header.id}>
                         {header.isPlaceholder
                           ? null
                           : flexRender(
@@ -334,14 +282,14 @@ export default function DishTable() {
               ))}
             </TableHeader>
             <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
+              {category.getRowModel().rows?.length ? (
+                category.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && 'selected'}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
+                      <TableCell className="whitespace-nowrap" key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
@@ -366,18 +314,18 @@ export default function DishTable() {
         <div className="flex items-center justify-end space-x-2 py-4">
           <div className="text-xs text-muted-foreground py-4 flex-1 ">
             {t('show')}{' '}
-            <strong>{table.getPaginationRowModel().rows.length}</strong>{' '}
+            <strong>{category.getPaginationRowModel().rows.length}</strong>{' '}
             {t('outOf')} <strong>{data.length}</strong> {t('results')}
           </div>
           <div>
             <AutoPagination
-              page={table.getState().pagination.pageIndex + 1}
-              pageSize={table.getPageCount()}
-              pathname="/manage/dishes"
+              page={category.getState().pagination.pageIndex + 1}
+              pageSize={category.getPageCount()}
+              pathname="/manage/categories"
             />
           </div>
         </div>
       </div>
-    </DishTableContext.Provider>
+    </CategoryTableContext.Provider>
   )
 }

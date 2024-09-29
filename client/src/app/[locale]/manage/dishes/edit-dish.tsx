@@ -1,6 +1,7 @@
 'use client'
 
 import revalidateApiRequest from '@/apiRequests/revalidate'
+import {CategoriesDialog} from '@/app/[locale]/manage/categories/categories-dialog'
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import {Button} from '@/components/ui/button'
 import {
@@ -56,6 +57,7 @@ export default function EditDish({
   const errorMessageT = useTranslations('ErrorMessage.dish')
   const [file, setFile] = useState<File | null>(null)
   const imageInputRef = useRef<HTMLInputElement | null>(null)
+  const [selectedCategoryName, setSelectedCategoryName] = useState('')
   const updateDishMutation = useUpdateDishMutation()
   const uploadMediaMutation = useUploadMediaMutation()
   const {data} = useGetDish({
@@ -83,14 +85,17 @@ export default function EditDish({
 
   useEffect(() => {
     if (data) {
-      const {name, description, price, image, status} = data.payload.data
+      const {name, description, price, image, status, category} =
+        data.payload.data
       form.reset({
         name,
         description,
         price,
         image: image ?? undefined,
-        status
+        status,
+        categoryId: category.id
       })
+      setSelectedCategoryName(category.name)
     }
   }, [data, form])
 
@@ -191,7 +196,6 @@ export default function EditDish({
                   </FormItem>
                 )}
               />
-
               <FormField
                 control={form.control}
                 name="name"
@@ -289,6 +293,33 @@ export default function EditDish({
                         </Select>
                       </div>
                       <FormMessage />
+                    </div>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="categoryId"
+                render={({field}) => (
+                  <FormItem>
+                    <div className="grid grid-cols-4 items-center justify-items-start gap-4">
+                      <Label htmlFor="categoryId">Danh mục</Label>
+                      <div className="col-span-3 w-full space-y-2">
+                        <div className="flex items-center gap-4">
+                          <Input
+                            id="categoryId"
+                            value={selectedCategoryName}
+                            readOnly
+                            className="w-full"
+                          />
+                          <CategoriesDialog
+                            onChoose={(category) => {
+                              field.onChange(category.id)
+                              setSelectedCategoryName(category.name)
+                            }}
+                          />
+                        </div>
+                      </div>
                     </div>
                   </FormItem>
                 )}

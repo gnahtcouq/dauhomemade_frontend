@@ -48,7 +48,7 @@ import {
   TableRow
 } from '@/components/ui/table'
 import {toast} from '@/hooks/use-toast'
-import {handleErrorApi} from '@/lib/utils'
+import {handleErrorApi, simpleMatchText} from '@/lib/utils'
 import {useDeleteAccountMutation, useGetAccountList} from '@/queries/useAccount'
 import {
   AccountListResType,
@@ -94,7 +94,14 @@ export const columns: ColumnDef<AccountType>[] = [
   {
     accessorKey: 'name',
     header: 'Tên',
-    cell: ({row}) => <div className="capitalize">{row.getValue('name')}</div>
+    cell: ({row}) => <div className="capitalize">{row.getValue('name')}</div>,
+    filterFn: (row, columnId, filterValue: string) => {
+      if (filterValue === undefined) return true
+      return simpleMatchText(
+        String(row.getValue(columnId)),
+        String(filterValue)
+      )
+    }
   },
   {
     accessorKey: 'email',

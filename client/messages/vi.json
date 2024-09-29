@@ -119,6 +119,15 @@
       "description": "Mô tả",
       "status": "Trạng thái",
       "save": "Lưu"
+    },
+    "chooseCategory": {
+      "title": "Chọn danh mục",
+      "changeCategory": "Thay đổi",
+      "searchByCategoryName": "Tìm kiếm theo tên danh mục",
+      "show": "Hiển thị",
+      "outOf": "trong",
+      "results": "kết quả",
+      "noResults": "Không tìm thấy kết quả"
     }
   },
   "ManageOrders": {
@@ -252,6 +261,39 @@
       "save": "Lưu"
     }
   },
+  "ManageCategories": {
+    "title": "Danh mục",
+    "description": "Quản lý danh mục trong cửa hàng",
+    "add": "Thêm danh mục",
+    "edit": "Sửa danh mục",
+    "delete": "Xóa danh mục",
+    "confirmDelete": {
+      "title": "Xóa danh mục",
+      "message": "Bạn có chắc chắn muốn xóa danh mục này không? Hành động này không thể hoàn tác",
+      "confirm": "Xác nhận",
+      "cancel": "Hủy"
+    },
+    "table": {
+      "actions": "Hành động",
+      "edit": "Sửa",
+      "delete": "Xóa",
+      "searchByName": "Tìm kiếm theo tên",
+      "show": "Hiển thị",
+      "outOf": "trong",
+      "results": "kết quả",
+      "noResults": "Không tìm thấy kết quả"
+    },
+    "dialogAdd": {
+      "title": "Thêm danh mục",
+      "name": "Tên danh mục",
+      "add": "Thêm"
+    },
+    "dialogEdit": {
+      "title": "Sửa danh mục",
+      "name": "Tên danh mục",
+      "save": "Lưu"
+    }
+  },
   "Guest": {
     "order": {
       "title": "Thực đơn",
@@ -292,6 +334,11 @@
       "required": "Số bàn không được để trống",
       "min": "Số bàn phải lớn hơn 0",
       "capacity": "Số ghế phải lớn hơn 0"
+    },
+    "category": {
+      "required": "Tên danh mục không được để trống",
+      "minLength": "Tên danh mục phải có ít nhất 2 ký tự",
+      "maxLength": "Tên danh mục phải có tối đa 256 ký tự"
     },
     "order": {
       "quantity": "Số lượng món ăn không hợp lệ"

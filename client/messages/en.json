@@ -119,6 +119,15 @@
       "description": "Description",
       "status": "Status",
       "save": "Save"
+    },
+    "chooseCategory": {
+      "title": "Choose category",
+      "changeCategory": "Change",
+      "searchByCategoryName": "Search by category name",
+      "show": "Showing",
+      "outOf": "out of",
+      "results": "results",
+      "noResults": "No results found"
     }
   },
   "ManageOrders": {
@@ -254,6 +263,39 @@
       "save": "Save"
     }
   },
+  "ManageCategories": {
+    "title": "Categories",
+    "description": "Manage categories in the store",
+    "add": "Add category",
+    "edit": "Edit category",
+    "delete": "Delete category",
+    "confirmDelete": {
+      "title": "Delete category",
+      "message": "Are you sure you want to delete this category? This action cannot be undone",
+      "confirm": "Confirm",
+      "cancel": "Cancel"
+    },
+    "category": {
+      "actions": "Actions",
+      "edit": "Edit",
+      "delete": "Delete",
+      "searchByName": "Search by category name",
+      "show": "Showing",
+      "outOf": "out of",
+      "results": "results",
+      "noResults": "No results found"
+    },
+    "dialogAdd": {
+      "title": "Add category",
+      "name": "Name",
+      "add": "Add"
+    },
+    "dialogEdit": {
+      "title": "Edit category",
+      "name": "Name",
+      "save": "Save"
+    }
+  },
   "Guest": {
     "order": {
       "title": "Order",
@@ -294,6 +336,11 @@
       "required": "Table number is required",
       "min": "Table number must be greater than 0",
       "capacity": "Seats must be greater than 0"
+    },
+    "category": {
+      "required": "Category name is required",
+      "minLength": "Category name must be at least 2 characters",
+      "maxLength": "Category name must be at most 256 characters"
     },
     "order": {
       "quantity": "Quantity is invalid"

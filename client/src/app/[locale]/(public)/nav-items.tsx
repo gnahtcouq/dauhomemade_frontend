@@ -18,6 +18,7 @@ import {Link, useRouter} from '@/navigation'
 import {useLogoutMutation} from '@/queries/useAuth'
 import {RoleType} from '@/types/jwt.types'
 import {useTranslations} from 'next-intl'
+import React from 'react'
 
 export default function NavItems({className}: {className?: string}) {
   const t = useTranslations('NavItems')

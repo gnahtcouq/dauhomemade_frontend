@@ -18,6 +18,7 @@ import {
 import {LoaderCircle} from 'lucide-react'
 import {useTranslations} from 'next-intl'
 import Image from 'next/image'
+import React from 'react'
 import {useEffect, useMemo} from 'react'
 
 export default function OrderCart() {

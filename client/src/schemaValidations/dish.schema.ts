@@ -1,4 +1,5 @@
 import {DishStatusValues} from '@/constants/type'
+import {CategorySchema} from '@/schemaValidations/category.schema'
 import z from 'zod'
 
 export const CreateDishBody = z.object({
@@ -16,7 +17,8 @@ export const CreateDishBody = z.object({
       message: 'description.maxLength'
     }),
   image: z.string().url(),
-  status: z.enum(DishStatusValues).optional()
+  status: z.enum(DishStatusValues).optional(),
+  categoryId: z.number()
 })
 
 export type CreateDishBodyType = z.TypeOf<typeof CreateDishBody>
@@ -28,6 +30,7 @@ export const DishSchema = z.object({
   description: z.string(),
   image: z.string(),
   status: z.enum(DishStatusValues),
+  category: CategorySchema.optional(),
   createdAt: z.date(),
   updatedAt: z.date()
 })

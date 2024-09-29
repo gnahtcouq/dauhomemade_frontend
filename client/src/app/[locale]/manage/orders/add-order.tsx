@@ -28,9 +28,10 @@ import {
 } from '@/schemaValidations/guest.schema'
 import {CreateOrdersBodyType} from '@/schemaValidations/order.schema'
 import {zodResolver} from '@hookform/resolvers/zod'
-import {LoaderCircle, PlusCircle} from 'lucide-react'
+import {ChevronLeft, LoaderCircle, PlusCircle} from 'lucide-react'
 import {useTranslations} from 'next-intl'
 import Image from 'next/image'
+import React from 'react'
 import {useMemo, useState} from 'react'
 import {useForm} from 'react-hook-form'
 
@@ -44,6 +45,11 @@ export default function AddOrder() {
   const [orders, setOrders] = useState<CreateOrdersBodyType['orders']>([])
   const {data} = useGetDishListQuery()
   const dishes = useMemo(() => data?.payload.data ?? [], [data])
+  const categories = useMemo(() => {
+    const uniqueCategories = new Set(dishes.map((dish) => dish.category.name))
+    return Array.from(uniqueCategories)
+  }, [dishes])
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
 
   const totalPrice = useMemo(() => {
     return dishes.reduce((result, dish) => {
@@ -118,6 +124,7 @@ export default function AddOrder() {
     setSelectedGuest(null)
     setIsNewGuest(true)
     setOpen(false)
+    setSelectedCategory(null)
   }
 
   return (
@@ -218,52 +225,83 @@ export default function AddOrder() {
             </div>
           </div>
         )}
-        {dishes
-          .filter((dish: {status: any}) => dish.status !== DishStatus.Hidden)
-          .map((dish) => (
-            <div
-              key={dish.id}
-              className={cn('flex gap-4', {
-                'pointer-events-none': dish.status === DishStatus.Unavailable
-              })}
-            >
-              <div className="flex-shrink-0">
-                {dish.status === DishStatus.Unavailable && (
-                  <span className="bg-red-600 text-white text-xs px-1 rounded-md font-bold">
-                    {t('outOfStock')}
-                  </span>
-                )}
-                <Image
-                  src={dish.image}
-                  alt={dish.name}
-                  height={100}
-                  width={100}
-                  quality={75}
-                  className={`object-cover w-[80px] h-[80px] rounded-md ${
-                    dish.status === DishStatus.Unavailable
-                      ? 'filter-blur opacity-50'
-                      : ''
-                  }`}
-                />
-              </div>
-              <div className="space-y-1">
-                <h3 className="text-sm">{dish.name}</h3>
-                {/* <p className="text-xs">{dish.description}</p> */}
-                <p className="font-semibold text-red-600 dark:text-red-400">
-                  {formatCurrency(dish.price)}
-                </p>
-              </div>
-              <div className="flex-shrink-0 ml-auto flex justify-center items-center">
-                <Quantity
-                  onChange={(value) => handleQuantityChange(dish.id, value)}
-                  value={
-                    orders.find((order) => order.dishId === dish.id)
-                      ?.quantity ?? 0
-                  }
-                />
-              </div>
+        {!selectedCategory ? (
+          <>
+            <Label htmlFor="selectedMenu">Menu</Label>
+            <div className="grid grid-cols-2 gap-4">
+              {categories.map((category) => (
+                <Button
+                  key={category}
+                  className="w-full capitalize"
+                  variant="outline"
+                  onClick={() => setSelectedCategory(category)}
+                >
+                  {category}
+                </Button>
+              ))}
             </div>
-          ))}
+          </>
+        ) : (
+          <>
+            <Label htmlFor="selectedMenu">Menu</Label>
+            <div className="flex justify-start mb-4">
+              <Button variant="ghost" onClick={() => setSelectedCategory(null)}>
+                <ChevronLeft />
+              </Button>
+            </div>
+            {dishes
+              .filter(
+                (dish) =>
+                  dish.category.name === selectedCategory &&
+                  dish.status !== DishStatus.Hidden
+              )
+              .map((dish) => (
+                <div
+                  key={dish.id}
+                  className={cn('flex gap-4', {
+                    'pointer-events-none':
+                      dish.status === DishStatus.Unavailable
+                  })}
+                >
+                  <div className="flex-shrink-0">
+                    {dish.status === DishStatus.Unavailable && (
+                      <span className="bg-red-600 text-white text-xs px-1 rounded-md font-bold">
+                        {t('outOfStock')}
+                      </span>
+                    )}
+                    <Image
+                      src={dish.image}
+                      alt={dish.name}
+                      height={100}
+                      width={100}
+                      quality={75}
+                      className={`object-cover w-[80px] h-[80px] rounded-md ${
+                        dish.status === DishStatus.Unavailable
+                          ? 'filter-blur opacity-50'
+                          : ''
+                      }`}
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-sm">{dish.name}</h3>
+                    {/* <p className="text-xs">{dish.description}</p> */}
+                    <p className="font-semibold text-red-600 dark:text-red-400">
+                      {formatCurrency(dish.price)}
+                    </p>
+                  </div>
+                  <div className="flex-shrink-0 ml-auto flex justify-center items-center">
+                    <Quantity
+                      onChange={(value) => handleQuantityChange(dish.id, value)}
+                      value={
+                        orders.find((order) => order.dishId === dish.id)
+                          ?.quantity ?? 0
+                      }
+                    />
+                  </div>
+                </div>
+              ))}
+          </>
+        )}
         <div className="sticky bottom-0 bg-white dark:bg-[hsl(var(--background))]">
           <Button
             className="w-full justify-between"
