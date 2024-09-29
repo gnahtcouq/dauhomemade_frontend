@@ -120,7 +120,6 @@ export function DishBarChart({
               name={'Đơn thanh toán:'}
               layout="vertical"
               radius={[0, 5, 5, 0]}
-              label={{position: 'right', fontSize: 12}} // Hiển thị nhãn bên phải của thanh
             />
           </BarChart>
         </ChartContainer>
