@@ -61,7 +61,8 @@ export default function AddDish() {
       description: '',
       price: 0,
       image: undefined,
-      status: DishStatus.Unavailable
+      status: DishStatus.Unavailable,
+      categoryId: 0
     }
   })
   const image = form.watch('image')
@@ -76,6 +77,7 @@ export default function AddDish() {
   const reset = () => {
     form.reset()
     setFile(null)
+    setSelectedCategoryName('')
   }
 
   const onSubmit = async (values: CreateDishBodyType) => {

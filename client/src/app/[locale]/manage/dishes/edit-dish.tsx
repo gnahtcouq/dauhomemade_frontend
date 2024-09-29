@@ -71,7 +71,8 @@ export default function EditDish({
       description: '',
       price: 0,
       image: undefined,
-      status: DishStatus.Unavailable
+      status: DishStatus.Unavailable,
+      categoryId: 0
     }
   })
   const image = form.watch('image')
@@ -133,6 +134,7 @@ export default function EditDish({
   const reset = () => {
     setId(undefined)
     setFile(null)
+    setSelectedCategoryName('')
   }
 
   return (
