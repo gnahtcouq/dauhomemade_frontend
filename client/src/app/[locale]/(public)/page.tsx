@@ -50,7 +50,7 @@ export default async function Home({
   }
 
   // Chỉ lấy ra 6 món ăn đầu tiên
-  const displayedDishes = dishList.slice(0, 6)
+  const displayedDishes = dishList.filter(dish => dish.categoryId === 1).slice(0, 4)
 
   return (
     <div className="w-full space-y-4">
@@ -60,7 +60,6 @@ export default async function Home({
           src="/banner.jpg"
           width={1200}
           height={600}
-          quality={100}
           alt="Banner"
           className="absolute top-0 left-0 w-full h-full object-cover"
         />

@@ -38,7 +38,6 @@ export default function Layout({
               src="/logo.png"
               width={50}
               height={50}
-              quality={100}
               alt="Banner"
               className="h-12 w-12"
             />
@@ -70,7 +69,6 @@ export default function Layout({
                   src="/logo.png"
                   width={50}
                   height={50}
-                  quality={100}
                   alt="Banner"
                   className="h-12 w-12"
                 />

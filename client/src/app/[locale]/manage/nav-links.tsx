@@ -29,7 +29,6 @@ export default function NavLinks() {
               src="/logo.png"
               width={50}
               height={50}
-              quality={100}
               alt="Banner"
               className="h-auto w-12 transition-all group-hover:scale-110"
             />

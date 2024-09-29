@@ -24,7 +24,6 @@ export default async function DishDetail({
           src={dish.image}
           width={700}
           height={700}
-          quality={100}
           alt={dish.name}
           className="object-cover w-full h-full rounded-md transition-transform duration-300 transform group-hover:scale-110"
           title={dish.name}
