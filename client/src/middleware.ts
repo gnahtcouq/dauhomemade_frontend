@@ -73,7 +73,7 @@ export function middleware(request: NextRequest) {
     if (
       (privatePaths.some((path) => pathname.startsWith(path)) &&
         !accessToken) ||
-      isAccessTokenExpired(accessToken)
+      decodeToken(accessToken).exp < Date.now() / 1000
     ) {
       const url = new URL(`/${locale}/refresh-token`, request.url)
       url.searchParams.set('refreshToken', refreshToken)
@@ -114,11 +114,6 @@ export function middleware(request: NextRequest) {
   }
 
   return response
-}
-
-function isAccessTokenExpired(accessToken: string) {
-  const decodedToken = decodeToken(accessToken)
-  return decodedToken.exp < Date.now() / 1000
 }
 
 // See "Matching Paths" below to learn more
