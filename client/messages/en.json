@@ -275,7 +275,7 @@
       "confirm": "Confirm",
       "cancel": "Cancel"
     },
-    "category": {
+    "table": {
       "actions": "Actions",
       "edit": "Edit",
       "delete": "Delete",

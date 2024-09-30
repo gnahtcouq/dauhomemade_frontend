@@ -1,6 +1,5 @@
 import {defaultLocale, locales} from '@/config'
 import {Role} from '@/constants/type'
-import {isAccessTokenExpired} from '@/lib/utils'
 import {TokenPayload} from '@/types/jwt.types'
 import jwt from 'jsonwebtoken'
 import createMiddleware from 'next-intl/middleware'
@@ -115,6 +114,11 @@ export function middleware(request: NextRequest) {
   }
 
   return response
+}
+
+function isAccessTokenExpired(accessToken: string) {
+  const decodedToken = decodeToken(accessToken)
+  return decodedToken.exp < Date.now() / 1000
 }
 
 // See "Matching Paths" below to learn more

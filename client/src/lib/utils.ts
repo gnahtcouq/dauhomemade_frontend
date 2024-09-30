@@ -1,31 +1,30 @@
 import authApiRequest from '@/apiRequests/auth'
 import guestApiRequest from '@/apiRequests/guest'
-import envConfig, {defaultLocale} from '@/config'
+import envConfig, { defaultLocale } from '@/config'
 import {
   DishStatus,
   OrderStatus,
   Role,
-  RoleValues,
   TableStatus
 } from '@/constants/type'
-import {toast} from '@/hooks/use-toast'
-import {EntityError} from '@/lib/http'
-import {TokenPayload} from '@/types/jwt.types'
-import {clsx, type ClassValue} from 'clsx'
-import {format} from 'date-fns'
+import { toast } from '@/hooks/use-toast'
+import { EntityError } from '@/lib/http'
+import { TokenPayload } from '@/types/jwt.types'
+import { clsx, type ClassValue } from 'clsx'
+import { format } from 'date-fns'
+import { convert } from 'html-to-text'
 import jwt from 'jsonwebtoken'
-import {BookX, CookingPot, HandCoins, Loader, Truck} from 'lucide-react'
-import {UseFormSetError} from 'react-hook-form'
-import {io} from 'socket.io-client'
-import {twMerge} from 'tailwind-merge'
+import { BookX, CookingPot, HandCoins, Loader, Truck } from 'lucide-react'
+import { UseFormSetError } from 'react-hook-form'
 import slugify from 'slugify'
-import {convert} from 'html-to-text'
+import { io } from 'socket.io-client'
+import { twMerge } from 'tailwind-merge'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-/* 
+/*
 Xoá đi ký tự `/` đầu tiên của path
 */
 export function normalizePath(path: string) {
@@ -238,11 +237,6 @@ export const OrderStatusIcon = {
 
 export const decodeToken = (token: string) => {
   return jwt.decode(token) as TokenPayload
-}
-
-export const isAccessTokenExpired = (accessToken: string) => {
-  const decodedToken = decodeToken(accessToken)
-  return decodedToken.exp < Date.now() / 1000
 }
 
 export const truncateDescription = (description: string, maxLength: number) => {

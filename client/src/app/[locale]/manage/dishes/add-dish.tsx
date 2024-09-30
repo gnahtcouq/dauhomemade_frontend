@@ -40,8 +40,9 @@ import {
   CreateDishBodyType
 } from '@/schemaValidations/dish.schema'
 import {zodResolver} from '@hookform/resolvers/zod'
-import {PlusCircle, Upload} from 'lucide-react'
+import {LoaderCircle, PlusCircle, Upload} from 'lucide-react'
 import {useTranslations} from 'next-intl'
+import React from 'react'
 import {useMemo, useRef, useState} from 'react'
 import {useForm} from 'react-hook-form'
 
@@ -312,8 +313,16 @@ export default function AddDish() {
           </form>
         </Form>
         <DialogFooter>
-          <Button type="submit" form="add-dish-form">
-            {t('add')}
+          <Button
+            type="submit"
+            form="add-dish-form"
+            disabled={addDishMutation.isPending}
+          >
+            {addDishMutation.isPending ? (
+              <LoaderCircle className="w-5 h-5 mx-auto animate-spin" />
+            ) : (
+              <>{t('add')}</>
+            )}
           </Button>
         </DialogFooter>
       </DialogContent>
