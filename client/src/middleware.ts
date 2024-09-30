@@ -1,5 +1,6 @@
 import {defaultLocale, locales} from '@/config'
 import {Role} from '@/constants/type'
+import {isAccessTokenExpired} from '@/lib/utils'
 import {TokenPayload} from '@/types/jwt.types'
 import jwt from 'jsonwebtoken'
 import createMiddleware from 'next-intl/middleware'
@@ -61,7 +62,7 @@ export function middleware(request: NextRequest) {
       ) {
         return response
       }
-      return NextResponse.redirect(new URL('/', request.url))
+      return NextResponse.redirect(new URL(`/${locale}`, request.url))
       // response.headers.set(
       //   'x-middleware-rewrite',
       //   new URL(`/${locale}/`, request.url).toString()
@@ -71,8 +72,9 @@ export function middleware(request: NextRequest) {
 
     // 2.2 Trường hợp đăng nhập rồi nhưng access token lại hết hạn
     if (
-      privatePaths.some((path) => pathname.startsWith(path)) &&
-      !accessToken
+      (privatePaths.some((path) => pathname.startsWith(path)) &&
+        !accessToken) ||
+      isAccessTokenExpired(accessToken)
     ) {
       const url = new URL(`/${locale}/refresh-token`, request.url)
       url.searchParams.set('refreshToken', refreshToken)
@@ -102,7 +104,7 @@ export function middleware(request: NextRequest) {
       isNotGuestGoToGuestPath ||
       isNotOwnerGoToOwnerPath
     ) {
-      return NextResponse.redirect(new URL('/', request.url))
+      return NextResponse.redirect(new URL(`/${locale}`, request.url))
       // response.headers.set(
       //   'x-middleware-rewrite',
       //   new URL(`/${locale}/`, request.url).toString()

@@ -72,15 +72,21 @@ export function DishBarChart({
     'name' | 'successOrders'
   >[]
 }) {
+  const sortedChartData = useMemo(() => {
+    return chartData
+      .sort((a, b) => b.successOrders - a.successOrders)
+      .slice(0, 6)
+  }, [chartData])
+
   const chartDataColors = useMemo(
     () =>
-      chartData.map((data, index) => {
+      sortedChartData.map((data, index) => {
         return {
           ...data,
           fill: colors[index] ?? colors[colors.length - 1]
         }
       }),
-    [chartData]
+    [sortedChartData]
   )
   const t = useTranslations('Dashboard')
 

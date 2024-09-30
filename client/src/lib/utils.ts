@@ -240,6 +240,11 @@ export const decodeToken = (token: string) => {
   return jwt.decode(token) as TokenPayload
 }
 
+export const isAccessTokenExpired = (accessToken: string) => {
+  const decodedToken = decodeToken(accessToken)
+  return decodedToken.exp < Date.now() / 1000
+}
+
 export const truncateDescription = (description: string, maxLength: number) => {
   if (description.length <= maxLength) return description
   const truncated = description.slice(0, maxLength)
