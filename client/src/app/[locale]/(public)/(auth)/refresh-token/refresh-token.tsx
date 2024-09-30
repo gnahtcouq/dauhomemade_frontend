@@ -20,7 +20,7 @@ export default function RefreshToken() {
     if (refreshTokenFromUrl) {
       checkAndRefreshToken({
         onSuccess: () => {
-          router.push(pathname)
+          router.push(`/${pathname}`)
         },
         onError: () => {
           removeTokensFromLocalStorage()
