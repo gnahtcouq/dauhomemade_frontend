@@ -30,6 +30,7 @@ export default function RefreshToken() {
         }
       })
     } else {
+      console.log(1)
       router.push('/')
     }
   }, [router, refreshTokenFromUrl, redirectPathname])
