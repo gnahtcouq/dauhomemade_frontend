@@ -69,19 +69,6 @@ export function middleware(request: NextRequest) {
       // return response
     }
 
-    // 2.2 Trường hợp đăng nhập rồi nhưng access token lại hết hạn
-    if (
-      privatePaths.some((path) => pathname.startsWith(path)) &&
-      !accessToken
-    ) {
-      const url = new URL(`/${locale}/refresh-token`, request.url)
-      url.searchParams.set('refreshToken', refreshToken)
-      url.searchParams.set('redirect', pathname)
-      return NextResponse.redirect(url)
-      // response.headers.set('x-middleware-rewrite', url.toString())
-      // return response
-    }
-
     // 2.3 Trường hợp truy cập không đúng role, redirect về trang chủ
     const role = decodeToken(refreshToken).role
     // Guest nhưng truy cập vào route Owner

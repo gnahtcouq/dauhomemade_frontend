@@ -1,10 +1,6 @@
 'use client'
 
-import {
-  checkAndRefreshToken,
-  getRefreshTokenFromLocalStorage,
-  removeTokensFromLocalStorage
-} from '@/lib/utils'
+import {checkAndRefreshToken, removeTokensFromLocalStorage} from '@/lib/utils'
 import {useRouter} from '@/navigation'
 import {useSearchParams} from 'next/navigation'
 import {useEffect} from 'react'
@@ -20,7 +16,7 @@ export default function RefreshToken() {
     if (refreshTokenFromUrl) {
       checkAndRefreshToken({
         onSuccess: () => {
-          router.push(`${pathname}`)
+          router.push(pathname)
         },
         onError: () => {
           removeTokensFromLocalStorage()

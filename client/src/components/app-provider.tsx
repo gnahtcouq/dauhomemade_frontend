@@ -3,6 +3,7 @@
 import ListenLogoutSocket from '@/components/listen-logout-socket'
 import RefreshToken from '@/components/refresh-token'
 import {
+  checkAndRefreshToken,
   decodeToken,
   generateSocketInstance,
   getAccessTokenFromLocalStorage,
@@ -82,6 +83,23 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
       }
       count.current++
     }
+
+    // Thêm logic kiểm tra và làm mới token
+    checkAndRefreshToken({
+      onSuccess: () => {
+        console.log('Token refreshed successfully')
+        const accessToken = getAccessTokenFromLocalStorage()
+        if (accessToken) {
+          const role = decodeToken(accessToken).role
+          setRole(role)
+          setSocket(generateSocketInstance(accessToken))
+        }
+      },
+      onError: () => {
+        console.log('Failed to refresh token')
+        removeTokensFromLocalStorage()
+      }
+    })
   }, [setRole, setSocket])
 
   // const disconnectSocket = useCallback(() => {
