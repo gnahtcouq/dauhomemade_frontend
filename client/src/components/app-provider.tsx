@@ -9,6 +9,7 @@ import {
   decodeToken,
   generateSocketInstance,
   getAccessTokenFromLocalStorage,
+  getRefreshTokenFromLocalStorage,
   removeTokensFromLocalStorage,
   setAccessTokenToLocalStorage,
   setRefreshTokenToLocalStorage
@@ -81,6 +82,7 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
     const fetchData = async () => {
       if (count.current === 0) {
         const accessToken = getAccessTokenFromLocalStorage()
+        const refreshToken = getRefreshTokenFromLocalStorage()
         if (accessToken) {
           const role = decodeToken(accessToken).role
           setRole(role)
@@ -88,7 +90,10 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
 
           const now = Math.floor(new Date().getTime() / 1000) - 1
           // Thêm logic kiểm tra và làm mới token
-          if (decodeToken(accessToken).exp < now) {
+          if (
+            decodeToken(accessToken).exp < now &&
+            decodeToken(refreshToken).exp > now
+          ) {
             const res =
               role === Role.Guest
                 ? await guestApiRequest.refreshToken()
