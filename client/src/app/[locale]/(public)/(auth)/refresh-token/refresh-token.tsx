@@ -13,6 +13,7 @@ export default function RefreshToken() {
   const searchParams = useSearchParams()
   const refreshTokenFromUrl = searchParams.get('refreshToken')
   const redirectPathname = searchParams.get('redirect')
+  const pathname = redirectPathname.replace(/^\/(vi|en)/, '')
   useEffect(() => {
     if (
       refreshTokenFromUrl &&
@@ -20,13 +21,13 @@ export default function RefreshToken() {
     ) {
       checkAndRefreshToken({
         onSuccess: () => {
-          router.push(redirectPathname ?? '/')
+          router.push(pathname ?? '/')
         }
       })
     } else {
       router.push('/')
     }
-  }, [router, refreshTokenFromUrl, redirectPathname])
+  }, [router, refreshTokenFromUrl, pathname])
 
   return <div>Refresh token...</div>
 }

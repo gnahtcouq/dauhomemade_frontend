@@ -77,9 +77,9 @@ export function middleware(request: NextRequest) {
       const url = new URL(`/${locale}/refresh-token`, request.url)
       url.searchParams.set('refreshToken', refreshToken)
       url.searchParams.set('redirect', pathname)
-      // return NextResponse.redirect(url)
-      response.headers.set('x-middleware-rewrite', url.toString())
-      return response
+      return NextResponse.redirect(url)
+      // response.headers.set('x-middleware-rewrite', url.toString())
+      // return response
     }
 
     // 2.3 Trường hợp truy cập không đúng role, redirect về trang chủ
