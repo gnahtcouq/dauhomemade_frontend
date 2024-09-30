@@ -109,7 +109,7 @@ export function middleware(request: NextRequest) {
       // )
       // return response
     }
-    return NextResponse.next()
+    return response
   }
   return response
 }

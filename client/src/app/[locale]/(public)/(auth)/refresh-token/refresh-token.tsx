@@ -14,6 +14,7 @@ export default function RefreshToken() {
   const searchParams = useSearchParams()
   const refreshTokenFromUrl = searchParams.get('refreshToken')
   const redirectPathname = searchParams.get('redirect')
+  const pathname = redirectPathname.replace(/^\/(vi|en)/, '')
 
   useEffect(() => {
     if (
@@ -21,19 +22,16 @@ export default function RefreshToken() {
       refreshTokenFromUrl === getRefreshTokenFromLocalStorage()
     ) {
       checkAndRefreshToken({
-        onSuccess: () => {
-          router.push(redirectPathname)
-        },
         onError: () => {
           removeTokensFromLocalStorage()
           router.push('/login')
         }
       })
+      router.push(pathname)
     } else {
-      console.log(1)
       router.push('/')
     }
-  }, [router, refreshTokenFromUrl, redirectPathname])
+  }, [router, refreshTokenFromUrl, pathname])
 
   return <div>Refresh token...</div>
 }
