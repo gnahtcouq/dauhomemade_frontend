@@ -1,13 +1,18 @@
 'use client'
 
+import authApiRequest from '@/apiRequests/auth'
+import guestApiRequest from '@/apiRequests/guest'
 import ListenLogoutSocket from '@/components/listen-logout-socket'
 import RefreshToken from '@/components/refresh-token'
+import {Role} from '@/constants/type'
 import {
   checkAndRefreshToken,
   decodeToken,
   generateSocketInstance,
   getAccessTokenFromLocalStorage,
-  removeTokensFromLocalStorage
+  removeTokensFromLocalStorage,
+  setAccessTokenToLocalStorage,
+  setRefreshTokenToLocalStorage
 } from '@/lib/utils'
 import {RoleType} from '@/types/jwt.types'
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
@@ -74,26 +79,31 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
   const count = useRef(0)
 
   useEffect(() => {
-    if (count.current === 0) {
-      const accessToken = getAccessTokenFromLocalStorage()
-      if (accessToken) {
-        const role = decodeToken(accessToken).role
-        setRole(role)
-        setSocket(generateSocketInstance(accessToken))
-        // Thêm logic kiểm tra và làm mới token
-        if (
-          decodeToken(accessToken).exp <
-          Math.floor(new Date().getTime() / 1000) - 1
-        ) {
-          checkAndRefreshToken({
-            onSuccess: () => {
-              console.log('Token refreshed successfully')
-            }
-          })
+    const fetchData = async () => {
+      if (count.current === 0) {
+        const accessToken = getAccessTokenFromLocalStorage()
+        if (accessToken) {
+          const role = decodeToken(accessToken).role
+          setRole(role)
+          setSocket(generateSocketInstance(accessToken))
+          // Thêm logic kiểm tra và làm mới token
+          if (
+            decodeToken(accessToken).exp <
+            Math.floor(new Date().getTime() / 1000) - 1
+          ) {
+            const res =
+              role === Role.Guest
+                ? await guestApiRequest.refreshToken()
+                : await authApiRequest.refreshToken()
+            setAccessTokenToLocalStorage(res.payload.data.accessToken)
+            setRefreshTokenToLocalStorage(res.payload.data.refreshToken)
+            console.log('Refresh token success')
+          }
         }
+        count.current++
       }
-      count.current++
     }
+    fetchData()
   }, [setRole, setSocket])
 
   // const disconnectSocket = useCallback(() => {
