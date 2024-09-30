@@ -142,9 +142,7 @@ const request = async <Response>(
             // Nếu không không được xử lý đúng cách
             // Vì nếu rơi vào trường hợp tại trang Login, chúng ta có gọi các API cần access token
             // Mà access token đã bị xóa thì nó lại nhảy vào đây, và cứ thế nó sẽ bị lặp
-            if (window.location.pathname !== `/${locale}/login`) {
-              location.href = `/${locale}/login`
-            }
+            location.href = `/${locale}/login`
           }
         }
       } else {
@@ -153,7 +151,7 @@ const request = async <Response>(
         const accessToken = (options?.headers as any)?.Authorization.split(
           'Bearer '
         )[1]
-        redirect(`/login?accessToken=${accessToken}`)
+        redirect(`/logout?accessToken=${accessToken}`)
       }
     } else {
       throw new HttpError(data)
