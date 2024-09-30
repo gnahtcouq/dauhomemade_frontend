@@ -1,5 +1,5 @@
 import guestApiRequest from '@/apiRequests/guest'
-import jwt from 'jsonwebtoken'
+import {jwtDecode} from 'jwt-decode'
 import {cookies} from 'next/headers'
 
 export async function POST() {
@@ -17,10 +17,10 @@ export async function POST() {
     const {payload} = await guestApiRequest.sRefreshToken({
       refreshToken
     })
-    const decodedAccessToken = jwt.decode(payload.data.accessToken) as {
+    const decodedAccessToken = jwtDecode(payload.data.accessToken) as {
       exp: number
     }
-    const decodedRefreshToken = jwt.decode(payload.data.refreshToken) as {
+    const decodedRefreshToken = jwtDecode(payload.data.refreshToken) as {
       exp: number
     }
     cookieStore.set('accessToken', payload.data.accessToken, {

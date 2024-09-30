@@ -1,7 +1,7 @@
 import guestApiRequest from '@/apiRequests/guest'
 import {HttpError} from '@/lib/http'
 import {GuestLoginBodyType} from '@/schemaValidations/guest.schema'
-import jwt from 'jsonwebtoken'
+import {jwtDecode} from 'jwt-decode'
 import {cookies} from 'next/headers'
 
 export async function POST(request: Request) {
@@ -10,8 +10,8 @@ export async function POST(request: Request) {
   try {
     const {payload} = await guestApiRequest.sLogin(body)
     const {accessToken, refreshToken} = payload.data
-    const decodedAccessToken = jwt.decode(accessToken) as {exp: number}
-    const decodedRefreshToken = jwt.decode(refreshToken) as {exp: number}
+    const decodedAccessToken = jwtDecode(accessToken) as {exp: number}
+    const decodedRefreshToken = jwtDecode(refreshToken) as {exp: number}
     cookieStore.set('accessToken', accessToken, {
       path: '/',
       httpOnly: true,

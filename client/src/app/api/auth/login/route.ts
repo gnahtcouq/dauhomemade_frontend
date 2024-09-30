@@ -1,7 +1,7 @@
 import authApiRequest from '@/apiRequests/auth'
 import {HttpError} from '@/lib/http'
 import {LoginBodyType} from '@/schemaValidations/auth.schema'
-import jwt from 'jsonwebtoken'
+import {jwtDecode} from 'jwt-decode'
 import {cookies} from 'next/headers'
 
 export async function POST(request: Request) {
@@ -10,8 +10,8 @@ export async function POST(request: Request) {
   try {
     const {payload} = await authApiRequest.sLogin(body)
     const {accessToken, refreshToken} = payload.data
-    const decodedAccessToken = jwt.decode(accessToken) as {exp: number}
-    const decodedRefreshToken = jwt.decode(refreshToken) as {exp: number}
+    const decodedAccessToken = jwtDecode(accessToken) as {exp: number}
+    const decodedRefreshToken = jwtDecode(refreshToken) as {exp: number}
     cookieStore.set('accessToken', accessToken, {
       path: '/',
       httpOnly: true,
