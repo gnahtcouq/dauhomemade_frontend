@@ -17,10 +17,7 @@ export default function RefreshToken() {
   const pathname = redirectPathname.replace(/^\/(vi|en)/, '')
 
   useEffect(() => {
-    if (
-      refreshTokenFromUrl &&
-      refreshTokenFromUrl === getRefreshTokenFromLocalStorage()
-    ) {
+    if (refreshTokenFromUrl) {
       checkAndRefreshToken({
         onError: () => {
           removeTokensFromLocalStorage()
