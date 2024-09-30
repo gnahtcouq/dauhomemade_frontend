@@ -72,8 +72,7 @@ export function middleware(request: NextRequest) {
     // 2.2 Trường hợp đăng nhập rồi nhưng access token lại hết hạn
     if (
       (privatePaths.some((path) => pathname.startsWith(path)) &&
-        !accessToken) ||
-      decodeToken(accessToken).exp < Date.now() / 1000
+        !accessToken)
     ) {
       const url = new URL(`/${locale}/refresh-token`, request.url)
       url.searchParams.set('refreshToken', refreshToken)
