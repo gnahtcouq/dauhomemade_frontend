@@ -50,7 +50,9 @@ export default async function Home({
   }
 
   // Chỉ lấy ra 6 món ăn đầu tiên
-  const displayedDishes = dishList.filter(dish => dish.category.id === 1).slice(0, 4)
+  const displayedDishes = dishList
+    .filter((dish) => dish.category.id === 1)
+    .slice(0, 4)
 
   return (
     <div className="w-full space-y-4">
@@ -60,6 +62,7 @@ export default async function Home({
           src="/banner.jpg"
           width={1200}
           height={600}
+          loading="lazy"
           alt="Banner"
           className="absolute top-0 left-0 w-full h-full object-cover"
         />
@@ -89,6 +92,7 @@ export default async function Home({
                   src={dish.image}
                   width={150}
                   height={150}
+                  loading="lazy"
                   alt={dish.name}
                   className="object-cover w-[150px] h-[150px] rounded-md"
                 />
