@@ -80,17 +80,17 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
         const role = decodeToken(accessToken).role
         setRole(role)
         setSocket(generateSocketInstance(accessToken))
-      }
-      // Thêm logic kiểm tra và làm mới token
-      if (
-        decodeToken(accessToken).exp <
-        Math.floor(new Date().getTime() / 1000) - 1
-      ) {
-        checkAndRefreshToken({
-          onSuccess: () => {
-            console.log('Token refreshed successfully')
-          }
-        })
+        // Thêm logic kiểm tra và làm mới token
+        if (
+          decodeToken(accessToken).exp <
+          Math.floor(new Date().getTime() / 1000) - 1
+        ) {
+          checkAndRefreshToken({
+            onSuccess: () => {
+              console.log('Token refreshed successfully')
+            }
+          })
+        }
       }
       count.current++
     }
