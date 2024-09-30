@@ -19,12 +19,14 @@ export default function RefreshToken() {
   useEffect(() => {
     if (refreshTokenFromUrl) {
       checkAndRefreshToken({
+        onSuccess: () => {
+          router.push(pathname)
+        },
         onError: () => {
           removeTokensFromLocalStorage()
           router.push('/login')
         }
       })
-      router.push(pathname)
     } else {
       router.push('/')
     }
