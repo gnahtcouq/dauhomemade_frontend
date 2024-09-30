@@ -34,7 +34,6 @@ export function middleware(request: NextRequest) {
   })
   const response = handleI18nRouting(request)
   const {pathname, searchParams} = request.nextUrl
-  const accessToken = request.cookies.get('accessToken')?.value
   const refreshToken = request.cookies.get('refreshToken')?.value
   const locale = request.cookies.get('NEXT_LOCALE')?.value || defaultLocale
 
