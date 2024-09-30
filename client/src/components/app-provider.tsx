@@ -6,7 +6,6 @@ import ListenLogoutSocket from '@/components/listen-logout-socket'
 import RefreshToken from '@/components/refresh-token'
 import {Role} from '@/constants/type'
 import {
-  checkAndRefreshToken,
   decodeToken,
   generateSocketInstance,
   getAccessTokenFromLocalStorage,
@@ -86,11 +85,10 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
           const role = decodeToken(accessToken).role
           setRole(role)
           setSocket(generateSocketInstance(accessToken))
+
+          const now = Math.floor(new Date().getTime() / 1000) - 1
           // Thêm logic kiểm tra và làm mới token
-          if (
-            decodeToken(accessToken).exp <
-            Math.floor(new Date().getTime() / 1000) - 1
-          ) {
+          if (decodeToken(accessToken).exp < now) {
             const res =
               role === Role.Guest
                 ? await guestApiRequest.refreshToken()
