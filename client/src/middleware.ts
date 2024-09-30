@@ -111,6 +111,7 @@ export function middleware(request: NextRequest) {
     }
     return NextResponse.next()
   }
+  return response
 }
 
 // See "Matching Paths" below to learn more
