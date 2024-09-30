@@ -75,16 +75,6 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
 
   useEffect(() => {
     if (count.current === 0) {
-      // Thêm logic kiểm tra và làm mới token
-      checkAndRefreshToken({
-        onSuccess: () => {
-          console.log('Token refreshed successfully')
-        },
-        onError: () => {
-          console.log('Failed to refresh token')
-          removeTokensFromLocalStorage()
-        }
-      })
       const accessToken = getAccessTokenFromLocalStorage()
       if (accessToken) {
         const role = decodeToken(accessToken).role
@@ -92,6 +82,12 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
         setSocket(generateSocketInstance(accessToken))
       }
       count.current++
+      // Thêm logic kiểm tra và làm mới token
+      checkAndRefreshToken({
+        onSuccess: () => {
+          console.log('Token refreshed successfully')
+        }
+      })
     }
   }, [setRole, setSocket])
 
