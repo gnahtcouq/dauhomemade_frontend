@@ -17,10 +17,17 @@ export default function MenuOrder() {
   const t = useTranslations('ManageOrders.dialogAdd')
   const {data} = useGetDishListQuery()
   const dishes = useMemo(() => data?.payload.data ?? [], [data])
-  const categories = useMemo(() => {
-    const uniqueCategories = new Set(dishes.map((dish) => dish.category.name))
-    return Array.from(uniqueCategories)
+  // Lọc danh sách món ăn để chỉ bao gồm các món ăn không có trạng thái Hidden
+  const visibleDishes = useMemo(() => {
+    return dishes.filter((dish) => dish.status !== DishStatus.Hidden)
   }, [dishes])
+  // Tạo danh sách danh mục từ các món ăn không có trạng thái Hidden
+  const categories = useMemo(() => {
+    const uniqueCategories = new Set(
+      visibleDishes.map((dish) => dish.category.name)
+    )
+    return Array.from(uniqueCategories)
+  }, [visibleDishes])
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [orders, setOrders] = useState<GuestCreateOrdersBodyType>([])
   const {mutateAsync} = useGuestOrderMutation()
