@@ -81,13 +81,18 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
         setRole(role)
         setSocket(generateSocketInstance(accessToken))
       }
-      count.current++
       // Thêm logic kiểm tra và làm mới token
-      checkAndRefreshToken({
-        onSuccess: () => {
-          console.log('Token refreshed successfully')
-        }
-      })
+      if (
+        decodeToken(accessToken).exp <
+        Math.floor(new Date().getTime() / 1000) - 1
+      ) {
+        checkAndRefreshToken({
+          onSuccess: () => {
+            console.log('Token refreshed successfully')
+          }
+        })
+      }
+      count.current++
     }
   }, [setRole, setSocket])
 
