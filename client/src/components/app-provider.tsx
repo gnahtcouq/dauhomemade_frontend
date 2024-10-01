@@ -85,6 +85,7 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
         if (accessToken) {
           const role = decodeToken(accessToken).role
           setRole(role)
+          setSocket(generateSocketInstance(accessToken))
           if (decodeToken(accessToken).exp < now) {
             const res =
               role === Role.Guest
@@ -92,9 +93,9 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
                 : await authApiRequest.refreshToken()
             setAccessTokenToLocalStorage(res.payload.data.accessToken)
             setRefreshTokenToLocalStorage(res.payload.data.refreshToken)
+            setSocket(generateSocketInstance(res.payload.data.accessToken))
             console.log('Refresh token success')
           }
-          setSocket(generateSocketInstance(accessToken))
         }
         count.current++
       }
