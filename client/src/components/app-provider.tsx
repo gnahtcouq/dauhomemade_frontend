@@ -78,29 +78,15 @@ export default function AppProvider({children}: {children: React.ReactNode}) {
   const count = useRef(0)
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (count.current === 0) {
-        const accessToken = getAccessTokenFromLocalStorage()
-        const now = Math.floor(new Date().getTime() / 1000) - 1
-        if (accessToken) {
-          const role = decodeToken(accessToken).role
-          setRole(role)
-          setSocket(generateSocketInstance(accessToken))
-          if (decodeToken(accessToken).exp < now) {
-            const res =
-              role === Role.Guest
-                ? await guestApiRequest.refreshToken()
-                : await authApiRequest.refreshToken()
-            setAccessTokenToLocalStorage(res.payload.data.accessToken)
-            setRefreshTokenToLocalStorage(res.payload.data.refreshToken)
-            setSocket(generateSocketInstance(res.payload.data.accessToken))
-            console.log('Refresh token success')
-          }
-        }
-        count.current++
+    if (count.current === 0) {
+      const accessToken = getAccessTokenFromLocalStorage()
+      if (accessToken) {
+        const role = decodeToken(accessToken).role
+        setRole(role)
+        setSocket(generateSocketInstance(accessToken))
       }
     }
-    fetchData()
+    count.current++
   }, [setRole, setSocket])
 
   // const disconnectSocket = useCallback(() => {
