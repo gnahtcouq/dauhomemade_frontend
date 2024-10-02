@@ -31,9 +31,11 @@ const CarouselSection: React.FC<CarouselSectionProps> = ({
       }}
       plugins={[plugin.current]}
       onMouseEnter={plugin.current.stop}
-      onMouseLeave={plugin.current.reset}
+      onMouseLeave={() => {
+        plugin.current.play()
+      }}
       className="w-full max-w-screen-lg mx-auto"
-      style={{ willChange: 'transform' }}
+      style={{willChange: 'transform'}}
     >
       <CarouselContent>
         {displayedDishesCarousel.map((dish) => (

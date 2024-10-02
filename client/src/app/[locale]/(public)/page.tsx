@@ -62,9 +62,9 @@ export default async function Home({
     .filter((dish) => dish.category.id === 1)
     .slice(0, 4)
 
-  const displayedDishesCarousel = dishList
-    .filter((dish) => dish.category.id === 3)
-    .slice(0, 6)
+  const displayedDishesCarousel = dishList.filter(
+    (dish) => dish.category.id === 3
+  )
 
   return (
     <div className="w-full space-y-4">
