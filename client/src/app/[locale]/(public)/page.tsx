@@ -1,16 +1,24 @@
 import dishApiRequest from '@/apiRequests/dish'
-import {DishListResType} from '@/schemaValidations/dish.schema'
-import Image from 'next/image'
-import {Link} from '@/navigation'
-import {getTranslations} from 'next-intl/server'
+import CarouselSection from '@/app/[locale]/(public)/carousel-section'
+import {Card} from '@/components/ui/card'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious
+} from '@/components/ui/carousel'
+import envConfig, {Locale} from '@/config'
 import {
   formatCurrency,
   generateSlugUrl,
   htmlToTextForDescription,
   truncateDescription
 } from '@/lib/utils'
-import {unstable_setRequestLocale} from 'next-intl/server'
-import envConfig, {Locale} from '@/config'
+import {Link} from '@/navigation'
+import {DishListResType} from '@/schemaValidations/dish.schema'
+import {getTranslations, unstable_setRequestLocale} from 'next-intl/server'
+import Image from 'next/image'
 
 export async function generateMetadata({
   params: {locale}
@@ -54,6 +62,10 @@ export default async function Home({
     .filter((dish) => dish.category.id === 1)
     .slice(0, 4)
 
+  const displayedDishesCarousel = dishList
+    .filter((dish) => dish.category.id === 3)
+    .slice(0, 6)
+
   return (
     <div className="w-full space-y-4">
       <section className="relative z-10">
@@ -74,6 +86,10 @@ export default async function Home({
             {t('description')}
           </p>
         </div>
+      </section>
+      <section className="space-y-10 py-16">
+        <h2 className="text-center text-2xl font-bold">Nhâm nhi khai vị</h2>
+        <CarouselSection displayedDishesCarousel={displayedDishesCarousel} />
       </section>
       <section className="space-y-10 py-16">
         <h2 className="text-center text-2xl font-bold">{t('menu')}</h2>
