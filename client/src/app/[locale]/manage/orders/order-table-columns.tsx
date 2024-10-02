@@ -32,13 +32,24 @@ import {DotsHorizontalIcon} from '@radix-ui/react-icons'
 import {ColumnDef} from '@tanstack/react-table'
 import {useTranslations} from 'next-intl'
 import Image from 'next/image'
+import React from 'react'
 import {useContext} from 'react'
 
 type OrderItem = GetOrdersResType['data'][0]
+
+const useTableTranslations = () => {
+  return useTranslations('ManageOrders.table')
+}
+
+const TableHeaderCustomize = ({translationKey}: {translationKey: string}) => {
+  const t = useTableTranslations()
+  return <>{t(translationKey as any)}</>
+}
+
 const orderTableColumns: ColumnDef<OrderItem>[] = [
   {
     accessorKey: 'tableNumber',
-    header: 'Bàn',
+    header: () => <TableHeaderCustomize translationKey="table" />,
     cell: ({row}) => <div>{row.getValue('tableNumber')}</div>,
     filterFn: (row, columnId, filterValue: string) => {
       if (filterValue === undefined) return true
@@ -50,7 +61,7 @@ const orderTableColumns: ColumnDef<OrderItem>[] = [
   },
   {
     id: 'guestName',
-    header: 'Khách hàng',
+    header: () => <TableHeaderCustomize translationKey="guest" />,
     cell: function Cell({row}) {
       const {orderObjectByGuestId} = useContext(OrderTableContext)
       const guest = row.original.guest
@@ -90,7 +101,7 @@ const orderTableColumns: ColumnDef<OrderItem>[] = [
   },
   {
     id: 'dishName',
-    header: 'Món ăn',
+    header: () => <TableHeaderCustomize translationKey="dish" />,
     cell: ({row}) => (
       <div className="flex items-center gap-2">
         <Popover>
@@ -143,7 +154,7 @@ const orderTableColumns: ColumnDef<OrderItem>[] = [
   },
   {
     accessorKey: 'status',
-    header: 'Trạng thái',
+    header: () => <TableHeaderCustomize translationKey="status" />,
     cell: function Cell({row}) {
       const {changeStatus, role} = useContext(OrderTableContext)
       const changeOrderStatus = async (
@@ -181,12 +192,12 @@ const orderTableColumns: ColumnDef<OrderItem>[] = [
   },
   {
     id: 'orderHandlerName',
-    header: 'Người xử lý',
+    header: () => <TableHeaderCustomize translationKey="orderHandler" />,
     cell: ({row}) => <div>{row.original.orderHandler?.name ?? ''}</div>
   },
   {
     accessorKey: 'createdAt',
-    header: () => <div>Tạo/Cập nhật</div>,
+    header: () => <TableHeaderCustomize translationKey="createdUpdated" />,
     cell: ({row}) => (
       <div className="space-y-2 text-sm">
         <div className="flex items-center space-x-4">

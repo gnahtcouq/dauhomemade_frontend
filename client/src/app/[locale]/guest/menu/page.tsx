@@ -1,6 +1,6 @@
 import MenuOrder from '@/app/[locale]/guest/menu/menu-order'
 import envConfig, {Locale} from '@/config'
-import {getTranslations} from 'next-intl/server'
+import {getTranslations, unstable_setRequestLocale} from 'next-intl/server'
 
 export async function generateMetadata({
   params: {locale}
@@ -26,6 +26,7 @@ export default async function MenuPage({
     locale: string
   }
 }) {
+  unstable_setRequestLocale(locale)
   const t = await getTranslations({locale, namespace: 'Guest'})
   return (
     <div className="max-w-[400px] mx-auto space-y-4">

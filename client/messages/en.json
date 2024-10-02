@@ -45,6 +45,10 @@
       "cancel": "Cancel"
     },
     "table": {
+      "avatar": "Avatar",
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
       "actions": "Actions",
       "edit": "Edit",
       "delete": "Delete",
@@ -91,6 +95,12 @@
       "cancel": "Cancel"
     },
     "table": {
+      "image": "Image",
+      "name": "Name",
+      "description": "Description",
+      "category": "Category",
+      "price": "Price",
+      "status": "Status",
       "actions": "Actions",
       "edit": "Edit",
       "delete": "Delete",
@@ -102,7 +112,7 @@
     },
     "dialogAdd": {
       "title": "Add dish",
-      "desc": "Image, name, price, description fields are required",
+      "desc": "Image, name, price, description, category fields are required",
       "image": "Dish image",
       "name": "Name",
       "price": "Price",
@@ -136,6 +146,13 @@
     "add": "Add order",
     "edit": "Edit order",
     "table": {
+      "table": "Table",
+      "guest": "Guest",
+      "dish": "Dish",
+      "orderHandler": "Order handler",
+      "createdAt": "Created at",
+      "createdUpdated": "Created/Updated at",
+      "capacity":"Seats",
       "fromDate": "From",
       "toDate": "To",
       "actions": "Actions",
@@ -237,6 +254,9 @@
       "cancel": "Cancel"
     },
     "table": {
+      "number": "Table number",
+      "capacity": "Seats",
+      "status": "Status",
       "actions": "Actions",
       "edit": "Edit",
       "delete": "Delete",
@@ -276,6 +296,7 @@
       "cancel": "Cancel"
     },
     "table": {
+      "name": "Category name",
       "actions": "Actions",
       "edit": "Edit",
       "delete": "Delete",

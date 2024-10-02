@@ -53,6 +53,7 @@ import {TableListResType} from '@/schemaValidations/table.schema'
 import {useSearchParams} from 'next/navigation'
 import {createContext, useContext, useEffect, useState} from 'react'
 import {useTranslations} from 'next-intl'
+import React from 'react'
 
 type TableItem = TableListResType['data'][0]
 
@@ -68,10 +69,19 @@ const TableTableContext = createContext<{
   setTableDelete: (value: TableItem | null) => {}
 })
 
+const useTableTranslations = () => {
+  return useTranslations('ManageTables.table')
+}
+
+const TableHeaderCustomize = ({translationKey}: {translationKey: string}) => {
+  const t = useTableTranslations()
+  return <>{t(translationKey as any)}</>
+}
+
 export const columns: ColumnDef<TableItem>[] = [
   {
     accessorKey: 'number',
-    header: 'Số bàn',
+    header: () => <TableHeaderCustomize translationKey="number" />,
     cell: ({row}) => <div className="capitalize">{row.getValue('number')}</div>,
     filterFn: (rows, columnId, filterValue) => {
       if (!filterValue) return true
@@ -80,14 +90,14 @@ export const columns: ColumnDef<TableItem>[] = [
   },
   {
     accessorKey: 'capacity',
-    header: 'Số ghế',
+    header: () => <TableHeaderCustomize translationKey="capacity" />,
     cell: ({row}) => (
       <div className="capitalize">{row.getValue('capacity')}</div>
     )
   },
   {
     accessorKey: 'status',
-    header: 'Trạng thái',
+    header: () => <TableHeaderCustomize translationKey="status" />,
     cell: ({row}) => (
       <div>{getVietnameseTableStatus(row.getValue('status'))}</div>
     )

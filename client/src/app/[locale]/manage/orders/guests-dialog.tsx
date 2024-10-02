@@ -33,14 +33,24 @@ import {
 } from '@tanstack/react-table'
 import {endOfDay, format, startOfDay} from 'date-fns'
 import {useTranslations} from 'next-intl'
+import React from 'react'
 import {useEffect, useState} from 'react'
 
 type GuestItem = GetListGuestsResType['data'][0]
 
+const useTableTranslations = () => {
+  return useTranslations('ManageOrders.table')
+}
+
+const TableHeaderCustomize = ({translationKey}: {translationKey: string}) => {
+  const t = useTableTranslations()
+  return <>{t(translationKey as any)}</>
+}
+
 export const columns: ColumnDef<GuestItem>[] = [
   {
     accessorKey: 'name',
-    header: 'Tên',
+    header: () => <TableHeaderCustomize translationKey="guest" />,
     cell: ({row}) => (
       <div className="capitalize">
         {row.getValue('name')} (#{row.original.id})
@@ -56,7 +66,7 @@ export const columns: ColumnDef<GuestItem>[] = [
   },
   {
     accessorKey: 'tableNumber',
-    header: 'Số bàn',
+    header: () => <TableHeaderCustomize translationKey="table" />,
     cell: ({row}) => (
       <div className="capitalize">{row.getValue('tableNumber')}</div>
     ),
@@ -70,7 +80,7 @@ export const columns: ColumnDef<GuestItem>[] = [
   },
   {
     accessorKey: 'createdAt',
-    header: () => <div>Thời gian</div>,
+    header: () => <TableHeaderCustomize translationKey="createdAt" />,
     cell: ({row}) => (
       <div className="flex items-center space-x-4 text-sm">
         {formatDateTimeToLocaleString(row.getValue('createdAt'))}

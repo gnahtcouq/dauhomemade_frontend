@@ -36,7 +36,6 @@ import {
 import {Check, ChevronsUpDown} from 'lucide-react'
 import {useSearchParams} from 'next/navigation'
 import {createContext, useEffect, useState} from 'react'
-
 import TableSkeleton from '@/app/[locale]/manage/orders/table-skeleton'
 import {useAppStore} from '@/components/app-provider'
 import {Button} from '@/components/ui/button'

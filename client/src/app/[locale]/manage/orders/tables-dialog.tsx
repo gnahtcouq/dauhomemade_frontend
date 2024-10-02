@@ -34,13 +34,23 @@ import {TableListResType} from '@/schemaValidations/table.schema'
 import {TableStatus} from '@/constants/type'
 import {useGetTableList} from '@/queries/useTable'
 import {useTranslations} from 'next-intl'
+import React from 'react'
 
 type TableItem = TableListResType['data'][0]
+
+const useTableTranslations = () => {
+  return useTranslations('ManageOrders.table')
+}
+
+const TableHeaderCustomize = ({translationKey}: {translationKey: string}) => {
+  const t = useTableTranslations()
+  return <>{t(translationKey as any)}</>
+}
 
 export const columns: ColumnDef<TableItem>[] = [
   {
     accessorKey: 'number',
-    header: 'Số bàn',
+    header: () => <TableHeaderCustomize translationKey="table" />,
     cell: ({row}) => <div className="capitalize">{row.getValue('number')}</div>,
     filterFn: (row, columnId, filterValue: string) => {
       if (filterValue === undefined) return true
@@ -49,14 +59,14 @@ export const columns: ColumnDef<TableItem>[] = [
   },
   {
     accessorKey: 'capacity',
-    header: 'Số ghế',
+    header: () => <TableHeaderCustomize translationKey="capacity" />,
     cell: ({row}) => (
       <div className="capitalize">{row.getValue('capacity')}</div>
     )
   },
   {
     accessorKey: 'status',
-    header: 'Trạng thái',
+    header: () => <TableHeaderCustomize translationKey="status" />,
     cell: ({row}) => (
       <div>{getVietnameseTableStatus(row.getValue('status'))}</div>
     )

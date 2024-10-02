@@ -45,6 +45,10 @@
       "cancel": "Hủy"
     },
     "table": {
+      "avatar": "Ảnh đại diện",
+      "name": "Tên",
+      "email": "Email",
+      "role": "Vai trò",
       "actions": "Hành động",
       "edit": "Sửa",
       "delete": "Xóa",
@@ -91,6 +95,12 @@
       "cancel": "Hủy"
     },
     "table": {
+      "image": "Hình ảnh",
+      "name": "Tên",
+      "description": "Mô tả",
+      "category": "Danh mục",
+      "price": "Giá",
+      "status": "Trạng thái",
       "actions": "Hành động",
       "edit": "Sửa",
       "delete": "Xóa",
@@ -102,7 +112,7 @@
     },
     "dialogAdd": {
       "title": "Thêm món ăn",
-      "desc": "Các trường hình ảnh, tên, giá, mô tả là bắt buộc",
+      "desc": "Các trường hình ảnh, tên, giá, mô tả, danh mục là bắt buộc",
       "image": "Hình ảnh",
       "name": "Tên",
       "price": "Giá",
@@ -136,6 +146,13 @@
     "add": "Tạo đơn hàng",
     "edit": "Sửa đơn hàng",
     "table": {
+      "table": "Bàn",
+      "guest": "Khách hàng",
+      "dish": "Món ăn",
+      "orderHandler": "Người xử lý",
+      "createdAt": "Tạo lúc",
+      "createdUpdated": "Tạo/Cập nhật",
+      "capacity": "Số ghế",
       "fromDate": "Từ",
       "toDate": "Đến",
       "actions": "Hành động",
@@ -235,6 +252,9 @@
       "cancel": "Hủy"
     },
     "table": {
+      "number": "Số bàn",
+      "capacity": "Số ghế",
+      "status": "Trạng thái",
       "actions": "Hành động",
       "edit": "Sửa",
       "delete": "Xóa",
@@ -274,6 +294,7 @@
       "cancel": "Hủy"
     },
     "table": {
+      "name": "Tên danh mục",
       "actions": "Hành động",
       "edit": "Sửa",
       "delete": "Xóa",

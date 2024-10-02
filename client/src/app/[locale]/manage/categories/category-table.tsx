@@ -55,6 +55,7 @@ import {CategoryListResType} from '@/schemaValidations/category.schema'
 import {useTranslations} from 'next-intl'
 import {useSearchParams} from 'next/navigation'
 import {createContext, useContext, useEffect, useState} from 'react'
+import React from 'react'
 
 type CategoryItem = CategoryListResType['data'][0]
 
@@ -70,6 +71,15 @@ const CategoryTableContext = createContext<{
   setCategoryDelete: (value: CategoryItem | null) => {}
 })
 
+const useTableTranslations = () => {
+  return useTranslations('ManageCategories.table')
+}
+
+const TableHeaderCustomize = ({translationKey}: {translationKey: string}) => {
+  const t = useTableTranslations()
+  return <>{t(translationKey as any)}</>
+}
+
 export const columns: ColumnDef<CategoryItem>[] = [
   {
     accessorKey: 'id',
@@ -77,7 +87,7 @@ export const columns: ColumnDef<CategoryItem>[] = [
   },
   {
     accessorKey: 'name',
-    header: 'Tên danh mục',
+    header: () => <TableHeaderCustomize translationKey="name" />,
     cell: ({row}) => <div className="capitalize">{row.getValue('name')}</div>,
     filterFn: (row, columnId, filterValue: string) => {
       if (filterValue === undefined) return true

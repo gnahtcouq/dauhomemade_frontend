@@ -25,6 +25,7 @@ import {useEffect} from 'react'
 import {useForm} from 'react-hook-form'
 import {useTranslations} from 'next-intl'
 import {LoaderCircle} from 'lucide-react'
+import React from 'react'
 
 export default function GuestLoginForm() {
   const t = useTranslations('GuestLogin')
@@ -54,7 +55,7 @@ export default function GuestLoginForm() {
       form.setValue('token', token)
       const currentUrl = new URL(window.location.href)
       currentUrl.searchParams.set('token', token)
-      router.replace(currentUrl.toString())
+      router.push(currentUrl.toString())
     }
   }, [searchParams, router, form])
 

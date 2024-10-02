@@ -1,11 +1,17 @@
 import Layout from '@/app/[locale]/(public)/layout'
-import {defaultLocale} from '@/config'
+import { unstable_setRequestLocale } from 'next-intl/server'
 
 export default function GuestLayout({
-  children
-}: Readonly<{children: React.ReactNode}>) {
+  children,
+  params: {locale}
+}: Readonly<{children: React.ReactNode
+  params: {
+    locale: string
+  }
+}>) {
+  unstable_setRequestLocale(locale)
   return (
-    <Layout modal={null} params={{locale: defaultLocale}}>
+    <Layout modal={null} params={{locale: locale}}>
       {children}
     </Layout>
   )

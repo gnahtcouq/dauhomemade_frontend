@@ -57,6 +57,7 @@ import {
 import {useSearchParams} from 'next/navigation'
 import {createContext, useContext, useEffect, useState} from 'react'
 import {useTranslations} from 'next-intl'
+import React from 'react'
 
 type AccountItem = AccountListResType['data'][0]
 
@@ -72,6 +73,15 @@ const AccountTableContext = createContext<{
   setEmployeeDelete: (value: AccountItem | null) => {}
 })
 
+const useTableTranslations = () => {
+  return useTranslations('ManageAccounts.table')
+}
+
+const TableHeaderCustomize = ({translationKey}: {translationKey: string}) => {
+  const t = useTableTranslations()
+  return <>{t(translationKey as any)}</>
+}
+
 export const columns: ColumnDef<AccountType>[] = [
   {
     accessorKey: 'id',
@@ -79,7 +89,7 @@ export const columns: ColumnDef<AccountType>[] = [
   },
   {
     accessorKey: 'avatar',
-    header: 'Ảnh đại diện',
+    header: () => <TableHeaderCustomize translationKey="avatar" />,
     cell: ({row}) => (
       <div>
         <Avatar className="aspect-square w-[100px] h-[100px] rounded-md object-cover">
@@ -93,7 +103,7 @@ export const columns: ColumnDef<AccountType>[] = [
   },
   {
     accessorKey: 'name',
-    header: 'Tên',
+    header: () => <TableHeaderCustomize translationKey="name" />,
     cell: ({row}) => <div className="capitalize">{row.getValue('name')}</div>,
     filterFn: (row, columnId, filterValue: string) => {
       if (filterValue === undefined) return true
@@ -111,7 +121,7 @@ export const columns: ColumnDef<AccountType>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Email
+          <TableHeaderCustomize translationKey="email" />
           <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       )
@@ -119,7 +129,7 @@ export const columns: ColumnDef<AccountType>[] = [
   },
   {
     accessorKey: 'role',
-    header: 'Vai trò',
+    header: () => <TableHeaderCustomize translationKey="role" />,
     cell: ({row}) => <div>{row.getValue('role')}</div>
   },
   {

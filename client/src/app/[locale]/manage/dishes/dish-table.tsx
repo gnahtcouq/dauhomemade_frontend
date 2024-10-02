@@ -59,6 +59,7 @@ import {useSearchParams} from 'next/navigation'
 import {createContext, useContext, useEffect, useState} from 'react'
 import DOMPurify from 'dompurify'
 import {useTranslations} from 'next-intl'
+import React from 'react'
 
 type DishItem = DishListResType['data'][0]
 
@@ -74,6 +75,15 @@ const DishTableContext = createContext<{
   setDishDelete: (value: DishItem | null) => {}
 })
 
+const useTableTranslations = () => {
+  return useTranslations('ManageDishes.table')
+}
+
+const TableHeaderCustomize = ({translationKey}: {translationKey: string}) => {
+  const t = useTableTranslations()
+  return <>{t(translationKey as any)}</>
+}
+
 export const columns: ColumnDef<DishItem>[] = [
   {
     accessorKey: 'id',
@@ -81,7 +91,7 @@ export const columns: ColumnDef<DishItem>[] = [
   },
   {
     accessorKey: 'image',
-    header: 'Ảnh',
+    header: () => <TableHeaderCustomize translationKey="image" />,
     cell: ({row}) => (
       <div>
         <Avatar className="aspect-square w-[100px] h-[100px] rounded-md object-cover">
@@ -95,7 +105,7 @@ export const columns: ColumnDef<DishItem>[] = [
   },
   {
     accessorKey: 'name',
-    header: 'Tên',
+    header: () => <TableHeaderCustomize translationKey="name" />,
     cell: ({row}) => <div className="capitalize">{row.getValue('name')}</div>,
     filterFn: (row, columnId, filterValue: string) => {
       if (filterValue === undefined) return true
@@ -107,7 +117,7 @@ export const columns: ColumnDef<DishItem>[] = [
   },
   {
     accessorKey: 'description',
-    header: 'Mô tả',
+    header: () => <TableHeaderCustomize translationKey="description" />,
     cell: ({row}) => {
       const description = DOMPurify.sanitize(
         row.getValue('description')
@@ -121,7 +131,7 @@ export const columns: ColumnDef<DishItem>[] = [
   },
   {
     accessorKey: 'category.name',
-    header: 'Danh mục',
+    header: () => <TableHeaderCustomize translationKey="category" />,
     cell: ({row}) => (
       <div className="capitalize">{row.original.category.name}</div>
     )
@@ -134,8 +144,8 @@ export const columns: ColumnDef<DishItem>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Giá
-          <CaretSortIcon className="ml-2 h-4 w-4" />
+    <TableHeaderCustomize translationKey="price" />
+    <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       )
     },
@@ -145,7 +155,7 @@ export const columns: ColumnDef<DishItem>[] = [
   },
   {
     accessorKey: 'status',
-    header: 'Trạng thái',
+    header: () => <TableHeaderCustomize translationKey="status" />,
     cell: ({row}) => (
       <div>{getVietnameseDishStatus(row.getValue('status'))}</div>
     )
