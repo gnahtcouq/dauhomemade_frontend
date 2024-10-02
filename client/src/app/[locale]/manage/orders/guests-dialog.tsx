@@ -1,5 +1,7 @@
+import {useAppStore} from '@/components/app-provider'
 import AutoPagination from '@/components/auto-pagination'
 import {Button} from '@/components/ui/button'
+import {Calendar} from '@/components/ui/calendar'
 import {
   Dialog,
   DialogContent,
@@ -8,6 +10,7 @@ import {
   DialogTrigger
 } from '@/components/ui/dialog'
 import {Input} from '@/components/ui/input'
+import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover'
 import {
   Table,
   TableBody,
@@ -16,6 +19,7 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
+import {Role} from '@/constants/type'
 import {formatDateTimeToLocaleString, simpleMatchText} from '@/lib/utils'
 import {useGetGuestListQuery} from '@/queries/useAccount'
 import {GetListGuestsResType} from '@/schemaValidations/account.schema'
@@ -99,6 +103,7 @@ export default function GuestsDialog({
   onChoose: (guest: GuestItem) => void
 }) {
   const t = useTranslations('ManageOrders.chooseGuest')
+  const role = useAppStore((state) => state.role) ?? ''
   const [open, setOpen] = useState(false)
   const [fromDate, setFromDate] = useState(initFromDate)
   const [toDate, setToDate] = useState(initToDate)
@@ -169,24 +174,56 @@ export default function GuestsDialog({
             <div className="flex flex-wrap gap-2">
               <div className="flex items-center">
                 <span className="mr-2">{t('fromDate')}</span>
-                <Input
-                  type="datetime-local"
-                  placeholder={t('fromDate')}
-                  className="text-sm"
-                  value={format(fromDate, 'yyyy-MM-dd HH:mm').replace(' ', 'T')}
-                  onChange={(event) =>
-                    setFromDate(new Date(event.target.value))
-                  }
-                />
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant={'outline'} className="w-[240px] text-left">
+                      {format(fromDate, 'dd/MM/yyyy HH:mm')}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={fromDate}
+                      onSelect={(date) => {
+                        if (date) {
+                          setFromDate(startOfDay(date))
+                          setToDate(endOfDay(date))
+                        }
+                      }}
+                      disabled={(date) =>
+                        date > new Date() || role !== Role.Owner
+                      }
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
               </div>
               <div className="flex items-center">
                 <span className="mr-2">{t('toDate')}</span>
-                <Input
-                  type="datetime-local"
-                  placeholder={t('toDate')}
-                  value={format(toDate, 'yyyy-MM-dd HH:mm').replace(' ', 'T')}
-                  onChange={(event) => setToDate(new Date(event.target.value))}
-                />
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant={'outline'} className="w-[240px] text-left">
+                      {format(toDate, 'dd/MM/yyyy HH:mm')}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={toDate}
+                      onSelect={(date) => {
+                        if (date) {
+                          setToDate(endOfDay(date))
+                        }
+                      }}
+                      disabled={(date) =>
+                        date < fromDate ||
+                        date > new Date() ||
+                        role !== Role.Owner
+                      }
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
               </div>
               <Button
                 className=""

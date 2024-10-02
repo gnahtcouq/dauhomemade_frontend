@@ -5,8 +5,19 @@ import EditOrder from '@/app/[locale]/manage/orders/edit-order'
 import OrderStatics from '@/app/[locale]/manage/orders/order-statics'
 import orderTableColumns from '@/app/[locale]/manage/orders/order-table-columns'
 import {useOrderService} from '@/app/[locale]/manage/orders/order.service'
+import TableSkeleton from '@/app/[locale]/manage/orders/table-skeleton'
+import {useAppStore} from '@/components/app-provider'
 import AutoPagination from '@/components/auto-pagination'
+import {Button} from '@/components/ui/button'
+import {Calendar} from '@/components/ui/calendar'
+import {
+  Command,
+  CommandGroup,
+  CommandItem,
+  CommandList
+} from '@/components/ui/command'
 import {Input} from '@/components/ui/input'
+import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover'
 import {
   Table,
   TableBody,
@@ -16,7 +27,11 @@ import {
   TableRow
 } from '@/components/ui/table'
 import {OrderStatusValues, Role} from '@/constants/type'
-import {getVietnameseOrderStatus, handleErrorApi} from '@/lib/utils'
+import {toast} from '@/hooks/use-toast'
+import {cn, getVietnameseOrderStatus, handleErrorApi} from '@/lib/utils'
+import {useGetOrderListQuery, useUpdateOrderMutation} from '@/queries/useOrder'
+import {useGetTableList} from '@/queries/useTable'
+import {GuestCreateOrdersResType} from '@/schemaValidations/guest.schema'
 import {
   GetOrdersResType,
   PayGuestOrdersResType,
@@ -33,26 +48,11 @@ import {
   getSortedRowModel,
   useReactTable
 } from '@tanstack/react-table'
+import {endOfDay, format, startOfDay} from 'date-fns'
 import {Check, ChevronsUpDown} from 'lucide-react'
+import {useTranslations} from 'next-intl'
 import {useSearchParams} from 'next/navigation'
 import {createContext, useEffect, useState} from 'react'
-import TableSkeleton from '@/app/[locale]/manage/orders/table-skeleton'
-import {useAppStore} from '@/components/app-provider'
-import {Button} from '@/components/ui/button'
-import {
-  Command,
-  CommandGroup,
-  CommandItem,
-  CommandList
-} from '@/components/ui/command'
-import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover'
-import {toast} from '@/hooks/use-toast'
-import {cn} from '@/lib/utils'
-import {useGetOrderListQuery, useUpdateOrderMutation} from '@/queries/useOrder'
-import {useGetTableList} from '@/queries/useTable'
-import {GuestCreateOrdersResType} from '@/schemaValidations/guest.schema'
-import {endOfDay, format, startOfDay} from 'date-fns'
-import {useTranslations} from 'next-intl'
 
 export const OrderTableContext = createContext({
   setOrderIdEdit: (value: number | undefined) => {},
@@ -247,24 +247,56 @@ export default function OrderTable() {
           <div className="flex flex-wrap gap-2">
             <div className="flex items-center">
               <span className="mr-2">{t('fromDate')}</span>
-              <Input
-                type="datetime-local"
-                placeholder={t('fromDate')}
-                className="text-sm"
-                value={format(fromDate, 'yyyy-MM-dd HH:mm').replace(' ', 'T')}
-                onChange={(event) => setFromDate(new Date(event.target.value))}
-                disabled={role !== Role.Owner}
-              />
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant={'outline'} className="w-[240px] text-left">
+                    {format(fromDate, 'dd/MM/yyyy HH:mm')}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={fromDate}
+                    onSelect={(date) => {
+                      if (date) {
+                        setFromDate(startOfDay(date))
+                        setToDate(endOfDay(date))
+                      }
+                    }}
+                    disabled={(date) =>
+                      date > new Date() || role !== Role.Owner
+                    }
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
             <div className="flex items-center">
               <span className="mr-2">{t('toDate')}</span>
-              <Input
-                type="datetime-local"
-                placeholder={t('toDate')}
-                value={format(toDate, 'yyyy-MM-dd HH:mm').replace(' ', 'T')}
-                onChange={(event) => setToDate(new Date(event.target.value))}
-                disabled={role !== Role.Owner}
-              />
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant={'outline'} className="w-[240px] text-left">
+                    {format(toDate, 'dd/MM/yyyy HH:mm')}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={toDate}
+                    onSelect={(date) => {
+                      if (date) {
+                        setToDate(endOfDay(date))
+                      }
+                    }}
+                    disabled={(date) =>
+                      date < fromDate ||
+                      date > new Date() ||
+                      role !== Role.Owner
+                    }
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
             <Button className="" variant={'outline'} onClick={resetDateFilter}>
               Reset
