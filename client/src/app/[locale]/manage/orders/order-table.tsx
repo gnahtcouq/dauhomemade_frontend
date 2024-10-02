@@ -308,16 +308,6 @@ export default function OrderTable() {
         </div>
         <div className="flex flex-wrap items-center gap-4 py-4">
           <Input
-            placeholder={t('searchByGuestName')}
-            value={
-              (table.getColumn('guestName')?.getFilterValue() as string) ?? ''
-            }
-            onChange={(event) =>
-              table.getColumn('guestName')?.setFilterValue(event.target.value)
-            }
-            className="max-w-[120px]"
-          />
-          <Input
             placeholder={t('searchByTableNumber')}
             value={
               (table.getColumn('tableNumber')?.getFilterValue() as string) ?? ''
@@ -325,7 +315,18 @@ export default function OrderTable() {
             onChange={(event) =>
               table.getColumn('tableNumber')?.setFilterValue(event.target.value)
             }
-            className="max-w-[120px]"
+            className="max-w-[140px]"
+            type="number"
+          />
+          <Input
+            placeholder={t('searchByGuestName')}
+            value={
+              (table.getColumn('guestName')?.getFilterValue() as string) ?? ''
+            }
+            onChange={(event) =>
+              table.getColumn('guestName')?.setFilterValue(event.target.value)
+            }
+            className="max-w-[140px]"
           />
           <Popover open={openStatusFilter} onOpenChange={setOpenStatusFilter}>
             <PopoverTrigger asChild>

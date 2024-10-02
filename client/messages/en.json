@@ -104,7 +104,7 @@
       "actions": "Actions",
       "edit": "Edit",
       "delete": "Delete",
-      "searchByName": "Search by name",
+      "searchByName": "Search by dish name",
       "show": "Showing",
       "outOf": "out of",
       "results": "results",
@@ -152,7 +152,7 @@
       "orderHandler": "Order handler",
       "createdAt": "Created at",
       "createdUpdated": "Created/Updated at",
-      "capacity":"Seats",
+      "capacity": "Seats",
       "fromDate": "From",
       "toDate": "To",
       "actions": "Actions",
@@ -254,7 +254,7 @@
       "cancel": "Cancel"
     },
     "table": {
-      "number": "Table number",
+      "number": "Table",
       "capacity": "Seats",
       "status": "Status",
       "actions": "Actions",
@@ -296,7 +296,7 @@
       "cancel": "Cancel"
     },
     "table": {
-      "name": "Category name",
+      "name": "Category",
       "actions": "Actions",
       "edit": "Edit",
       "delete": "Delete",
@@ -400,9 +400,9 @@
       "title": "Total revenue",
       "description": "Actual revenue received"
     },
-    "totalCustomers": {
-      "title": "Total customers",
-      "description": "Customers have ordered dishes"
+    "totalGuests": {
+      "title": "Total guests",
+      "description": "Guests have ordered dishes"
     },
     "totalOrders": {
       "title": "Total orders",

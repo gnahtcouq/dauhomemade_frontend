@@ -104,7 +104,7 @@
       "actions": "Hành động",
       "edit": "Sửa",
       "delete": "Xóa",
-      "searchByName": "Tìm kiếm theo tên",
+      "searchByName": "Tìm kiếm theo tên món ăn",
       "show": "Hiển thị",
       "outOf": "trong",
       "results": "kết quả",
@@ -398,7 +398,7 @@
       "title": "Tổng doanh thu",
       "description": "Doanh thu thực nhận"
     },
-    "totalCustomers": {
+    "totalGuests": {
       "title": "Tổng khách hàng",
       "description": "Khách hàng đã gọi món"
     },

@@ -122,6 +122,8 @@ export default function MenuOrder() {
                     height={100}
                     width={100}
                     quality={75}
+                    loading="lazy"
+                    priority={true}
                     className={`object-cover w-[80px] h-[80px] rounded-md ${
                       dish.status === DishStatus.Unavailable
                         ? 'filter-blur opacity-50'

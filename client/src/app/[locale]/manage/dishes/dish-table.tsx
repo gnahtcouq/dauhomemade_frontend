@@ -95,7 +95,7 @@ export const columns: ColumnDef<DishItem>[] = [
     cell: ({row}) => (
       <div>
         <Avatar className="aspect-square w-[100px] h-[100px] rounded-md object-cover">
-          <AvatarImage src={row.getValue('image')} />
+          <AvatarImage src={row.getValue('image')} loading="lazy" />
           <AvatarFallback className="rounded-none">
             {row.original.name}
           </AvatarFallback>
@@ -144,8 +144,8 @@ export const columns: ColumnDef<DishItem>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-    <TableHeaderCustomize translationKey="price" />
-    <CaretSortIcon className="ml-2 h-4 w-4" />
+          <TableHeaderCustomize translationKey="price" />
+          <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       )
     },
