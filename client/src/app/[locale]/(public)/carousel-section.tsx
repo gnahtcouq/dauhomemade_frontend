@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import {Card} from '@/components/ui/card'
 import {
@@ -13,14 +13,16 @@ import {Link} from '@/navigation'
 import {DishListResType} from '@/schemaValidations/dish.schema'
 import Image from 'next/image'
 import Autoplay from 'embla-carousel-autoplay'
-import React, { useRef } from 'react'
+import React, {useRef} from 'react'
 
 interface CarouselSectionProps {
   displayedDishesCarousel: DishListResType['data']
 }
 
-const CarouselSection: React.FC<CarouselSectionProps> = ({ displayedDishesCarousel }) => {
-  const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }))
+const CarouselSection: React.FC<CarouselSectionProps> = ({
+  displayedDishesCarousel
+}) => {
+  const plugin = useRef(Autoplay({delay: 2000, stopOnInteraction: true}))
 
   return (
     <Carousel
@@ -31,6 +33,7 @@ const CarouselSection: React.FC<CarouselSectionProps> = ({ displayedDishesCarous
       onMouseEnter={plugin.current.stop}
       onMouseLeave={plugin.current.reset}
       className="w-full max-w-screen-lg mx-auto"
+      style={{ willChange: 'transform' }}
     >
       <CarouselContent>
         {displayedDishesCarousel.map((dish) => (
@@ -45,10 +48,11 @@ const CarouselSection: React.FC<CarouselSectionProps> = ({ displayedDishesCarous
                 <Card className="h-full flex flex-col relative overflow-hidden">
                   <Image
                     src={dish.image}
-                    width={400}
-                    height={400}
+                    width={300}
+                    height={300}
                     alt={dish.name}
-                    className="object-cover w-full h-[400px] rounded-md"
+                    loading="lazy"
+                    className="object-cover w-full h-[300px] rounded-md"
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-75 flex flex-col justify-center items-center opacity-0 hover:opacity-100 transition-opacity duration-300">
                     <h3 className="text-xl font-semibold text-white">
