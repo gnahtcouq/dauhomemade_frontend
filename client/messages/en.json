@@ -9,8 +9,8 @@
   "Login": {
     "title": "Login to Đậu",
     "description": "Login to manage your store",
-    "email": "Email",
-    "password": "Password",
+    "email": "Email (admin@dau.stu.id.vn)",
+    "password": "Password (123456)",
     "login": "Login",
     "forgotPassword": "Forgot password?"
   },

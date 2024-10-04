@@ -9,8 +9,8 @@
   "Login": {
     "title": "Đăng nhập vào Đậu",
     "description": "Đăng nhập để quản lý cửa hàng của bạn",
-    "email": "Email",
-    "password": "Mật khẩu",
+    "email": "Email (admin@dau.stu.id.vn)",
+    "password": "Mật khẩu (123456)",
     "login": "Đăng nhập",
     "forgotPassword": "Quên mật khẩu?"
   },
