@@ -95,6 +95,9 @@ export default function OrderStatics({
                       paid={() => {
                         setSelectedTableNumber(0)
                       }}
+                      paidZaloPay={() => {
+                        setSelectedTableNumber(0)
+                      }}
                     />
                     {index !== Object.keys(selectedServingGuest).length - 1 && (
                       <Separator className="my-5" />

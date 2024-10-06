@@ -25,7 +25,8 @@ import {
 } from '@/queries/useOrder'
 import {
   GetOrdersResType,
-  PayGuestOrdersResType
+  PayGuestOrdersResType,
+  ZaloPayGuestOrdersResType
 } from '@/schemaValidations/order.schema'
 import {LoaderCircle} from 'lucide-react'
 import {useTranslations} from 'next-intl'
@@ -38,11 +39,13 @@ type Orders = GetOrdersResType['data']
 export default function OrderGuestDetail({
   guest,
   orders,
-  paid
+  paid,
+  paidZaloPay
 }: {
   guest: Guest
   orders: Orders
   paid?: (data: PayGuestOrdersResType) => void
+  paidZaloPay?: (data: ZaloPayGuestOrdersResType) => void
 }) {
   const t = useTranslations('ManageOrders.detail')
   const role = useAppStore((state) => state.role)
@@ -79,10 +82,10 @@ export default function OrderGuestDetail({
         guestId: guest.id
       })
       const paymentUrl = result?.payload?.data?.paymentUrl
-
       if (paymentUrl) window.open(paymentUrl, '_blank')
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
       if (isMobile) window.location.href = paymentUrl
+      paidZaloPay && paidZaloPay(result.payload)
     } catch (error) {
       handleErrorApi({error})
     }
