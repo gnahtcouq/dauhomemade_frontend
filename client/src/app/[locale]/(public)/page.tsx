@@ -1,6 +1,6 @@
-import envConfig, {Locale} from '@/config'
-import {htmlToTextForDescription} from '@/lib/utils'
-import {getTranslations, unstable_setRequestLocale} from 'next-intl/server'
+import envConfig, { Locale } from '@/config'
+import { htmlToTextForDescription } from '@/lib/utils'
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 
 export async function generateMetadata({
   params: {locale}
@@ -33,10 +33,10 @@ export default async function Home({
     <div className="w-full space-y-4">
       <section className="relative z-10">
         <div className="z-20 relative py-10 md:py-20 px-4 sm:px-10 md:px-20">
-          <h1 className="text-center text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold text-black dark:text-white">
-            Đậu Homemade
+          <h1 className="text-center text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold text-white">
+            ĐẬU HOMEMADE
           </h1>
-          <p className="text-center text-sm sm:text-base mt-4 text-black dark:text-white">
+          <p className="text-center text-sm sm:text-base mt-4 text-white">
             {t('description')}
           </p>
         </div>

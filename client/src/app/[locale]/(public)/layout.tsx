@@ -5,23 +5,20 @@ import {Button} from '@/components/ui/button'
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetTitle,
   SheetTrigger
 } from '@/components/ui/sheet'
 import {Link} from '@/navigation'
-import {VisuallyHidden} from '@radix-ui/react-visually-hidden'
 import {Menu} from 'lucide-react'
 import {unstable_setRequestLocale} from 'next-intl/server'
 import Image from 'next/image'
+import {VisuallyHidden} from '@radix-ui/react-visually-hidden'
 
 export default function Layout({
   children,
-  modal,
   params: {locale}
 }: Readonly<{
   children: React.ReactNode
-  modal: React.ReactNode
   params: {
     locale: string
   }
@@ -61,9 +58,6 @@ export default function Layout({
             <SheetTitle>
               <VisuallyHidden>Menu</VisuallyHidden>
             </SheetTitle>
-            <SheetDescription>
-              <VisuallyHidden>Description</VisuallyHidden>
-            </SheetDescription>
             <nav className="grid gap-6 text-lg font-medium">
               <Link
                 href="#"
@@ -90,7 +84,6 @@ export default function Layout({
       </header>
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         {children}
-        {modal}
       </main>
       <footer className="flex items-center justify-center h-16 border-t bg-background">
         <p className="text-center text-sm text-muted-foreground">
