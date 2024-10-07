@@ -2,11 +2,13 @@ import http from '@/lib/http'
 import {
   CreateOrdersBodyType,
   CreateOrdersResType,
+  GetNotificationResType,
   GetOrderDetailResType,
   GetOrdersQueryParamsType,
   GetOrdersResType,
   PayGuestOrdersBodyType,
   PayGuestOrdersResType,
+  UpdateNotificationResType,
   UpdateOrderBodyType,
   UpdateOrderResType,
   ZaloPayGuestOrdersResType
@@ -25,6 +27,21 @@ const orderApiRequest = {
           toDate: queryParams.toDate?.toISOString()
         })
     ),
+
+  getNotificationList: () =>
+    http.get<GetNotificationResType>('/orders/notifications'),
+
+  updateNotification: (notificationId: number) =>
+    http.put<UpdateNotificationResType>(
+      `/orders/notifications/${notificationId}`,
+      {}
+    ),
+
+  updateMarkAllReadNotification: () =>
+    http.put<{message: string}>(`/orders/notifications/mark-all-read`, {}),
+
+  deleteNotification: () =>
+    http.delete<{message: string}>(`/orders/notifications`),
 
   updateOrder: (orderId: number, body: UpdateOrderBodyType) =>
     http.put<UpdateOrderResType>(`/orders/${orderId}`, body),

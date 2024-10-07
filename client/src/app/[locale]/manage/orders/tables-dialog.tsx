@@ -2,6 +2,7 @@ import {Button} from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger
@@ -35,6 +36,7 @@ import {TableStatus} from '@/constants/type'
 import {useGetTableList} from '@/queries/useTable'
 import {useTranslations} from 'next-intl'
 import React from 'react'
+import {VisuallyHidden} from '@radix-ui/react-visually-hidden'
 
 type TableItem = TableListResType['data'][0]
 
@@ -135,6 +137,9 @@ export function TablesDialog({
       <DialogContent className="sm:max-w-[600px] max-h-full overflow-auto">
         <DialogHeader>
           <DialogTitle>{t('title')}</DialogTitle>
+          <DialogDescription>
+            <VisuallyHidden>Description</VisuallyHidden>
+          </DialogDescription>
         </DialogHeader>
         <div>
           <div className="w-full">

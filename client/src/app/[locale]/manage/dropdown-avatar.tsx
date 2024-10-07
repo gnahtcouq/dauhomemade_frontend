@@ -6,6 +6,7 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
+  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -26,6 +27,7 @@ import {Link, useRouter} from '@/navigation'
 import {useAccountMe} from '@/queries/useAccount'
 import {useLogoutMutation} from '@/queries/useAuth'
 import {useTranslations} from 'next-intl'
+import {VisuallyHidden} from '@radix-ui/react-visually-hidden'
 
 export default function DropdownAvatar() {
   const t = useTranslations('DropdownAvatar')
@@ -54,7 +56,7 @@ export default function DropdownAvatar() {
         <Button
           variant="outline"
           size="icon"
-          className="overflow-hidden rounded-full"
+          className="overflow-hidden rounded-full transition-transform duration-200 hover:scale-110"
         >
           <Avatar>
             <AvatarImage
@@ -93,6 +95,9 @@ export default function DropdownAvatar() {
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>{t('logout.message')}</AlertDialogTitle>
+              <AlertDialogDescription>
+                <VisuallyHidden>Description</VisuallyHidden>
+              </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>{t('logout.cancel')}</AlertDialogCancel>

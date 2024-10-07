@@ -5,14 +5,15 @@ import {Button} from '@/components/ui/button'
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetTitle,
   SheetTrigger
 } from '@/components/ui/sheet'
 import {Link} from '@/navigation'
+import {VisuallyHidden} from '@radix-ui/react-visually-hidden'
 import {Menu} from 'lucide-react'
 import {unstable_setRequestLocale} from 'next-intl/server'
 import Image from 'next/image'
-import {VisuallyHidden} from '@radix-ui/react-visually-hidden'
 
 export default function Layout({
   children,
@@ -38,7 +39,7 @@ export default function Layout({
               src="/logo.png"
               width={50}
               height={50}
-              alt="Banner"
+              alt="Logo"
               className="h-12 w-12"
             />
             <span className="sr-only">ĐẬU HOMEMADE</span>
@@ -60,6 +61,9 @@ export default function Layout({
             <SheetTitle>
               <VisuallyHidden>Menu</VisuallyHidden>
             </SheetTitle>
+            <SheetDescription>
+              <VisuallyHidden>Description</VisuallyHidden>
+            </SheetDescription>
             <nav className="grid gap-6 text-lg font-medium">
               <Link
                 href="#"
@@ -69,7 +73,7 @@ export default function Layout({
                   src="/logo.png"
                   width={50}
                   height={50}
-                  alt="Banner"
+                  alt="Logo"
                   className="h-12 w-12"
                 />
                 <span className="sr-only">ĐẬU HOMEMADE</span>

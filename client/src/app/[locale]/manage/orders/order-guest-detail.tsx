@@ -108,9 +108,6 @@ export default function OrderGuestDetail({
             <span className="font-semibold">{t('name')}:</span>
             <span>{guest.name}</span>
             <span className="font-semibold">(#{guest.id})</span>
-            <span>|</span>
-            <span className="font-semibold">{t('table')}:</span>
-            <span>{guest.tableNumber}</span>
           </div>
           <div className="space-x-1">
             <span className="font-semibold">{t('time')}:</span>

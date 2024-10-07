@@ -4,6 +4,7 @@ import {Button} from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle
@@ -22,6 +23,7 @@ import {zodResolver} from '@hookform/resolvers/zod'
 import {useTranslations} from 'next-intl'
 import {useEffect} from 'react'
 import {useForm} from 'react-hook-form'
+import {VisuallyHidden} from '@radix-ui/react-visually-hidden'
 
 export default function EditCategory({
   id,
@@ -98,6 +100,9 @@ export default function EditCategory({
       >
         <DialogHeader>
           <DialogTitle>{t('title')}</DialogTitle>
+          <DialogDescription>
+            <VisuallyHidden>Description</VisuallyHidden>
+          </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form

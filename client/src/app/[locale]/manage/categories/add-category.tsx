@@ -4,6 +4,7 @@ import {Button} from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -24,6 +25,7 @@ import {PlusCircle} from 'lucide-react'
 import {useTranslations} from 'next-intl'
 import {useState} from 'react'
 import {useForm} from 'react-hook-form'
+import {VisuallyHidden} from '@radix-ui/react-visually-hidden'
 
 export default function AddCategory() {
   const t = useTranslations('ManageCategories.dialogAdd')
@@ -79,6 +81,9 @@ export default function AddCategory() {
       <DialogContent className="sm:max-w-[600px] max-h-screen overflow-auto">
         <DialogHeader>
           <DialogTitle>{t('title')}</DialogTitle>
+          <DialogDescription>
+            <VisuallyHidden>Description</VisuallyHidden>
+          </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form

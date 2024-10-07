@@ -1,24 +1,6 @@
-import dishApiRequest from '@/apiRequests/dish'
-import CarouselSection from '@/app/[locale]/(public)/carousel-section'
-import {Card} from '@/components/ui/card'
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious
-} from '@/components/ui/carousel'
 import envConfig, {Locale} from '@/config'
-import {
-  formatCurrency,
-  generateSlugUrl,
-  htmlToTextForDescription,
-  truncateDescription
-} from '@/lib/utils'
-import {Link} from '@/navigation'
-import {DishListResType} from '@/schemaValidations/dish.schema'
+import {htmlToTextForDescription} from '@/lib/utils'
 import {getTranslations, unstable_setRequestLocale} from 'next-intl/server'
-import Image from 'next/image'
 
 export async function generateMetadata({
   params: {locale}
@@ -46,82 +28,17 @@ export default async function Home({
 }) {
   unstable_setRequestLocale(locale)
   const t = await getTranslations('HomePage')
-  let dishList: DishListResType['data'] = []
-  try {
-    const result = await dishApiRequest.list()
-    const {
-      payload: {data}
-    } = result
-    dishList = data
-  } catch (error) {
-    return <div>Đã có lỗi xảy ra</div>
-  }
-
-  // Chỉ lấy ra 6 món ăn đầu tiên
-  const displayedDishes = dishList
-    .filter((dish) => dish.category.id === 1)
-    .slice(0, 4)
-
-  const displayedDishesCarousel = dishList.filter(
-    (dish) => dish.category.id === 3
-  )
 
   return (
     <div className="w-full space-y-4">
       <section className="relative z-10">
-        <span className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-10"></span>
-        <Image
-          src="/banner.jpg"
-          width={1200}
-          height={600}
-          loading="lazy"
-          alt="Banner"
-          className="absolute top-0 left-0 w-full h-full object-cover"
-        />
         <div className="z-20 relative py-10 md:py-20 px-4 sm:px-10 md:px-20">
-          <h1 className="text-center text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold text-white">
-            ĐẬU HOMEMADE
+          <h1 className="text-center text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold text-black dark:text-white">
+            Đậu Homemade
           </h1>
-          <p className="text-center text-sm sm:text-base mt-4 text-white">
+          <p className="text-center text-sm sm:text-base mt-4 text-black dark:text-white">
             {t('description')}
           </p>
-        </div>
-      </section>
-      <section className="space-y-10 py-16">
-        <h2 className="text-center text-2xl font-bold">Nhâm nhi khai vị</h2>
-        <CarouselSection displayedDishesCarousel={displayedDishesCarousel} />
-      </section>
-      <section className="space-y-10 py-16">
-        <h2 className="text-center text-2xl font-bold">{t('menu')}</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
-          {displayedDishes.map((dish) => (
-            <Link
-              href={`/dishes/${generateSlugUrl({
-                name: dish.name,
-                id: dish.id
-              })}`}
-              className="flex gap-4 w"
-              key={dish.id}
-            >
-              <div className="flex-shrink-0">
-                <Image
-                  src={dish.image}
-                  width={150}
-                  height={150}
-                  loading="lazy"
-                  alt={dish.name}
-                  className="object-cover w-[150px] h-[150px] rounded-md"
-                />
-              </div>
-              <div className="space-y-1">
-                <h3 className="text-xl font-semibold">{dish.name}</h3>
-                <p className="">{truncateDescription(dish.description, 150)}</p>
-                <p className="font-semibold text-red-600 dark:text-red-400">
-                  {formatCurrency(dish.price)}
-                </p>
-              </div>
-            </Link>
-          ))}
         </div>
       </section>
     </div>

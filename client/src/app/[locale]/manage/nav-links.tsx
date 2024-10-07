@@ -23,13 +23,13 @@ export default function NavLinks() {
         <nav className="flex flex-col items-center gap-4 px-2 py-2">
           <Link
             href="/"
-            className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-12 md:w-12 md:text-base"
+            className="group flex h-9 w-9 shrink-0 items-center justify-center md:h-12 md:w-12"
           >
             <Image
               src="/logo.png"
               width={50}
               height={50}
-              alt="Banner"
+              alt="Logo"
               className="h-auto w-12 transition-all group-hover:scale-110"
             />
             <span className="sr-only">Acme Inc</span>

@@ -10,7 +10,8 @@ export const CreateCategoryBody = z.object({
   name: z
     .string()
     .min(1, {message: 'required'})
-    .max(256, {message: 'maxLength'})
+    .max(256, {message: 'maxLength'}),
+  dishes: z.array(DishSchema).optional()
 })
 
 export type CreateCategoryBodyType = z.TypeOf<typeof CreateCategoryBody>

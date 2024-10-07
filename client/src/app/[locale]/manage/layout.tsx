@@ -1,9 +1,10 @@
-import DarkModeToggle from '@/components/dark-mode-toggle'
 import DropdownAvatar from '@/app/[locale]/manage/dropdown-avatar'
-import NavLinks from '@/app/[locale]/manage/nav-links'
 import MobileNavLinks from '@/app/[locale]/manage/mobile-nav-links'
-import {Link} from '@/navigation'
+import NavLinks from '@/app/[locale]/manage/nav-links'
+import Notification from '@/app/[locale]/manage/notification'
+import DarkModeToggle from '@/components/dark-mode-toggle'
 import SwitchLanguage from '@/components/switch-language'
+import {Link} from '@/navigation'
 
 export default function Layout({
   children
@@ -19,6 +20,7 @@ export default function Layout({
           <div className="relative ml-auto flex-1 md:grow-0">
             <div className="ml-auto flex items-center gap-4">
               <SwitchLanguage />
+              <Notification />
               <DarkModeToggle />
             </div>
           </div>

@@ -1,5 +1,6 @@
 import {DishStatusValues, Role} from '@/constants/type'
 import {AccountSchema} from '@/schemaValidations/account.schema'
+import {OrderSchema} from '@/schemaValidations/order.schema'
 import z from 'zod'
 
 export const GuestLoginBody = z
@@ -33,17 +34,6 @@ export const GuestLoginRes = z.object({
 
 export type GuestLoginResType = z.TypeOf<typeof GuestLoginRes>
 
-// export const GuestCreateOrdersBody = z
-//   .object({
-//     orders: z.array(
-//       z.object({
-//         dishId: z.number(),
-//         quantity: z.number()
-//       })
-//     )
-//   })
-//   .strict()
-
 export const GuestCreateOrdersBody = z.array(
   z.object({
     dishId: z.number(),
@@ -52,39 +42,10 @@ export const GuestCreateOrdersBody = z.array(
 )
 
 export type GuestCreateOrdersBodyType = z.TypeOf<typeof GuestCreateOrdersBody>
-const DishSnapshotSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-  price: z.number(),
-  image: z.string(),
-  description: z.string(),
-  status: z.enum(DishStatusValues),
-  dishId: z.number().nullable(),
-  createdAt: z.date(),
-  updatedAt: z.date()
-})
 
 export const GuestCreateOrdersRes = z.object({
   message: z.string(),
-  data: z.array(
-    z.object({
-      id: z.number(),
-      guestId: z.number().nullable(),
-      guest: z
-        .object({
-          id: z.number(),
-          name: z.string()
-        })
-        .nullable(),
-      tableNumber: z.number().nullable(),
-      dishSnapshotId: z.number(),
-      dishSnapshot: DishSnapshotSchema,
-      quantity: z.number(),
-      orderHandlerId: z.number().nullable(),
-      orderHandler: AccountSchema.nullable(),
-      status: z.enum(['Pending', 'Processing', 'Rejected', 'Delivered', 'Paid'])
-    })
-  )
+  data: z.array(OrderSchema)
 })
 
 export type GuestCreateOrdersResType = z.TypeOf<typeof GuestCreateOrdersRes>

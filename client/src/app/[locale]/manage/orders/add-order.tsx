@@ -6,6 +6,7 @@ import {Button} from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -34,6 +35,7 @@ import Image from 'next/image'
 import React from 'react'
 import {useMemo, useState} from 'react'
 import {useForm} from 'react-hook-form'
+import {VisuallyHidden} from '@radix-ui/react-visually-hidden'
 
 export default function AddOrder() {
   const t = useTranslations('ManageOrders.dialogAdd')
@@ -153,6 +155,9 @@ export default function AddOrder() {
       <DialogContent className="sm:max-w-[600px] max-h-screen overflow-auto">
         <DialogHeader>
           <DialogTitle>{t('title')}</DialogTitle>
+          <DialogDescription>
+            <VisuallyHidden>Description</VisuallyHidden>
+          </DialogDescription>
         </DialogHeader>
         <div className="grid grid-cols-4 items-center justify-items-start gap-4">
           <Label htmlFor="isNewGuest">{t('newGuest')}</Label>

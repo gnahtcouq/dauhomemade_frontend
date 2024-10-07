@@ -3,6 +3,7 @@ import {Button} from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger
@@ -38,6 +39,7 @@ import {
 import {useTranslations} from 'next-intl'
 import Image from 'next/image'
 import {useEffect, useState} from 'react'
+import {VisuallyHidden} from '@radix-ui/react-visually-hidden'
 
 type DishItem = DishListResType['data'][0]
 
@@ -135,6 +137,9 @@ export function DishesDialog({onChoose}: {onChoose: (dish: DishItem) => void}) {
       <DialogContent className="sm:max-w-[600px] max-h-full overflow-auto">
         <DialogHeader>
           <DialogTitle>{t('title')}</DialogTitle>
+          <DialogDescription>
+            <VisuallyHidden>Description</VisuallyHidden>
+          </DialogDescription>
         </DialogHeader>
         <div>
           <div className="w-full">

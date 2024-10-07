@@ -3,6 +3,7 @@ import {Button} from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger
@@ -32,8 +33,19 @@ import {
 } from '@tanstack/react-table'
 import {useTranslations} from 'next-intl'
 import {useEffect, useState} from 'react'
+import {VisuallyHidden} from '@radix-ui/react-visually-hidden'
+import {simpleMatchText} from '@/lib/utils'
 
 type CategoryItem = CategoryListResType['data'][0]
+
+const useTableTranslations = () => {
+  return useTranslations('ManageCategories.table')
+}
+
+const TableHeaderCustomize = ({translationKey}: {translationKey: string}) => {
+  const t = useTableTranslations()
+  return <>{t(translationKey as any)}</>
+}
 
 export const columns: ColumnDef<CategoryItem>[] = [
   {
@@ -42,8 +54,15 @@ export const columns: ColumnDef<CategoryItem>[] = [
   },
   {
     accessorKey: 'name',
-    header: 'Tên danh mục',
-    cell: ({row}) => <div className="capitalize">{row.getValue('name')}</div>
+    header: () => <TableHeaderCustomize translationKey="name" />,
+    cell: ({row}) => <div className="capitalize">{row.getValue('name')}</div>,
+    filterFn: (row, columnId, filterValue: string) => {
+      if (filterValue === undefined) return true
+      return simpleMatchText(
+        String(row.getValue(columnId)),
+        String(filterValue)
+      )
+    }
   }
 ]
 
@@ -109,6 +128,9 @@ export function CategoriesDialog({
       <DialogContent className="sm:max-w-[600px] max-h-full overflow-auto">
         <DialogHeader>
           <DialogTitle>{t('title')}</DialogTitle>
+          <DialogDescription>
+            <VisuallyHidden>Description</VisuallyHidden>
+          </DialogDescription>
         </DialogHeader>
         <div>
           <div className="w-full">
@@ -121,7 +143,7 @@ export function CategoriesDialog({
                 onChange={(event) =>
                   category.getColumn('name')?.setFilterValue(event.target.value)
                 }
-                className="w-[170px]"
+                className="w-full"
               />
             </div>
             <div className="rounded-md border">

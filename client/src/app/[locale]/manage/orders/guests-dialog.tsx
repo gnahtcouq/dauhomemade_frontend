@@ -5,6 +5,7 @@ import {Calendar} from '@/components/ui/calendar'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger
@@ -39,6 +40,7 @@ import {endOfDay, format, startOfDay} from 'date-fns'
 import {useTranslations} from 'next-intl'
 import React from 'react'
 import {useEffect, useState} from 'react'
+import {VisuallyHidden} from '@radix-ui/react-visually-hidden'
 
 type GuestItem = GetListGuestsResType['data'][0]
 
@@ -168,6 +170,9 @@ export default function GuestsDialog({
       <DialogContent className="sm:max-w-[700px] max-h-full overflow-auto">
         <DialogHeader>
           <DialogTitle>{t('title')}</DialogTitle>
+          <DialogDescription>
+            <VisuallyHidden>Description</VisuallyHidden>
+          </DialogDescription>
         </DialogHeader>
         <div>
           <div className="w-full">
@@ -256,7 +261,7 @@ export default function GuestsDialog({
                     .getColumn('tableNumber')
                     ?.setFilterValue(event.target.value)
                 }
-                className="w-[170px]"
+                className="w-[120px]"
               />
             </div>
             <div className="rounded-md border">

@@ -99,6 +99,18 @@ export const columns: ColumnDef<CategoryItem>[] = [
     }
   },
   {
+    accessorKey: 'dish',
+    header: () => <TableHeaderCustomize translationKey="dish" />,
+    cell: ({row}) => <div className="">{row.original.dishes.length}</div>,
+    filterFn: (row, columnId, filterValue: string) => {
+      if (filterValue === undefined) return true
+      return simpleMatchText(
+        String(row.original.dishes.length) ?? '0',
+        String(filterValue)
+      )
+    }
+  },
+  {
     id: 'actions',
     enableHiding: false,
     cell: function Actions({row}) {
@@ -259,7 +271,7 @@ export default function CategoryTable() {
         />
         <div className="flex items-center py-4">
           <Input
-            placeholder={t('searchByName')}
+            placeholder={t('searchByCategoryName')}
             value={
               (category.getColumn('name')?.getFilterValue() as string) ?? ''
             }

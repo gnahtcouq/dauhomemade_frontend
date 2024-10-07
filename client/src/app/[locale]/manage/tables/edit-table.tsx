@@ -5,6 +5,7 @@ import {Button} from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle
@@ -43,6 +44,7 @@ import {Link} from '@/navigation'
 import {useEffect} from 'react'
 import {useForm} from 'react-hook-form'
 import {useTranslations} from 'next-intl'
+import {VisuallyHidden} from '@radix-ui/react-visually-hidden'
 
 export default function EditTable({
   id,
@@ -123,6 +125,9 @@ export default function EditTable({
       >
         <DialogHeader>
           <DialogTitle>{t('title')}</DialogTitle>
+          <DialogDescription>
+            <VisuallyHidden>Description</VisuallyHidden>
+          </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form

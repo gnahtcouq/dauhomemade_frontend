@@ -8,15 +8,15 @@ import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card'
 import {Form, FormField, FormItem, FormMessage} from '@/components/ui/form'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
+import {Role} from '@/constants/type'
 import {toast} from '@/hooks/use-toast'
 import {generateSocketInstance, handleErrorApi} from '@/lib/utils'
-import {Link, useRouter} from '@/navigation'
+import {useRouter} from '@/navigation'
 import {useLoginMutation} from '@/queries/useAuth'
 import {LoginBody, LoginBodyType} from '@/schemaValidations/auth.schema'
 import {zodResolver} from '@hookform/resolvers/zod'
 import {LoaderCircle} from 'lucide-react'
 import {useTranslations} from 'next-intl'
-import React from 'react'
 import {useEffect} from 'react'
 import {useForm} from 'react-hook-form'
 
@@ -56,7 +56,7 @@ export default function LoginForm() {
       })
       setRole(result.payload.data.account.role)
       setSocket(generateSocketInstance(result.payload.data.accessToken))
-      if (result.payload.data.account.role === 'Owner')
+      if (result.payload.data.account.role === Role.Owner)
         router.push('/manage/dashboard')
       else router.push('/manage/orders')
     } catch (error: any) {
@@ -141,11 +141,6 @@ export default function LoginForm() {
             </div>
           </form>
         </Form>
-        <div className="text-center mt-4">
-          <Link href="#" className="text-blue-600">
-            {t('forgotPassword')}
-          </Link>
-        </div>
       </CardContent>
     </Card>
   )

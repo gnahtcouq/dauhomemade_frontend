@@ -19,11 +19,13 @@ import {
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle
 } from '@/components/ui/dialog'
 import OrderGuestDetail from '@/app/[locale]/manage/orders/order-guest-detail'
 import {useTranslations} from 'next-intl'
+import {VisuallyHidden} from '@radix-ui/react-visually-hidden'
 
 // Ví dụ:
 // const statics: Statics = {
@@ -81,6 +83,9 @@ export default function OrderStatics({
               <DialogTitle>
                 {t('guestsAreSittingaAtTable')} {selectedTableNumber}
               </DialogTitle>
+              <DialogDescription>
+                <VisuallyHidden>Description</VisuallyHidden>
+              </DialogDescription>
             </DialogHeader>
           )}
           <div>

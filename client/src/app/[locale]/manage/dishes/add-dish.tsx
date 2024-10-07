@@ -181,7 +181,6 @@ export default function AddDish() {
                   </FormItem>
                 )}
               />
-
               <FormField
                 control={form.control}
                 name="name"
@@ -288,7 +287,7 @@ export default function AddDish() {
                 render={({field}) => (
                   <FormItem>
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                      <Label htmlFor="categoryId">Danh mục</Label>
+                      <Label htmlFor="categoryId">{t('category')}</Label>
                       <div className="col-span-3 w-full space-y-2">
                         <div className="flex items-center gap-4">
                           <Input

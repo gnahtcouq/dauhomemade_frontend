@@ -131,11 +131,18 @@ export const columns: ColumnDef<DishItem>[] = [
     }
   },
   {
-    accessorKey: 'category.name',
+    accessorKey: 'category',
     header: () => <TableHeaderCustomize translationKey="category" />,
     cell: ({row}) => (
       <div className="capitalize">{row.original.category.name}</div>
-    )
+    ),
+    filterFn: (row, columnId, filterValue: string) => {
+      if (filterValue === undefined) return true
+      return simpleMatchText(
+        row.original.category?.name ?? '',
+        String(filterValue)
+      )
+    }
   },
   {
     accessorKey: 'price',
@@ -311,12 +318,22 @@ export default function DishTable() {
           dishDelete={dishDelete}
           setDishDelete={setDishDelete}
         />
-        <div className="flex items-center py-4">
+        <div className="flex items-center gap-4 py-4">
           <Input
             placeholder={t('searchByName')}
             value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
             onChange={(event) =>
               table.getColumn('name')?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+          <Input
+            placeholder={t('searchByCategoryName')}
+            value={
+              (table.getColumn('category')?.getFilterValue() as string) ?? ''
+            }
+            onChange={(event) =>
+              table.getColumn('category')?.setFilterValue(event.target.value)
             }
             className="max-w-sm"
           />

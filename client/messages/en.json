@@ -24,6 +24,16 @@
     "title": "Payment successful",
     "description": "Thank you for using our service"
   },
+  "Notification": {
+    "title": "Notifications",
+    "more": "See previous notifications",
+    "noResults": "No notifications found",
+    "markAllRead": "Mark all as read",
+    "confirmDeleteTitle": "Delete all notifications",
+    "confirmDeleteDescription": "Are you sure you want to delete all notifications? This action cannot be undone",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
+  },
   "SwitchLanguage": {
     "title": "Switch language",
     "vi": "Vietnamese",
@@ -84,7 +94,7 @@
   },
   "ManageDishes": {
     "title": "Dishes",
-    "description": "Manage dishes in the menu",
+    "description": "Manage dishes in the store",
     "add": "Add dish",
     "edit": "Edit dish",
     "delete": "Delete dish",
@@ -105,6 +115,7 @@
       "edit": "Edit",
       "delete": "Delete",
       "searchByName": "Search by dish name",
+      "searchByCategoryName": "Search by category name",
       "show": "Showing",
       "outOf": "out of",
       "results": "results",
@@ -118,6 +129,7 @@
       "price": "Price",
       "description": "Description",
       "status": "Status",
+      "category": "Category",
       "add": "Add"
     },
     "dialogEdit": {
@@ -297,10 +309,11 @@
     },
     "table": {
       "name": "Category",
+      "dish": "Dish",
       "actions": "Actions",
       "edit": "Edit",
       "delete": "Delete",
-      "searchByName": "Search by category name",
+      "searchByCategoryName": "Search by category name",
       "show": "Showing",
       "outOf": "out of",
       "results": "results",

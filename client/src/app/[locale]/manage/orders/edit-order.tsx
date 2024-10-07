@@ -6,6 +6,7 @@ import {Button} from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle
@@ -43,6 +44,7 @@ import {zodResolver} from '@hookform/resolvers/zod'
 import {useTranslations} from 'next-intl'
 import {useEffect, useState} from 'react'
 import {useForm} from 'react-hook-form'
+import {VisuallyHidden} from '@radix-ui/react-visually-hidden'
 
 export default function EditOrder({
   id,
@@ -119,6 +121,9 @@ export default function EditOrder({
       <DialogContent className="sm:max-w-[600px] max-h-screen overflow-auto">
         <DialogHeader>
           <DialogTitle>{t('title')}</DialogTitle>
+          <DialogDescription>
+            <VisuallyHidden>Description</VisuallyHidden>
+          </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form

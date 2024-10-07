@@ -2,6 +2,7 @@
 
 import {useAppStore} from '@/components/app-provider'
 import {Badge} from '@/components/ui/badge'
+import {Button} from '@/components/ui/button'
 import {OrderStatus} from '@/constants/type'
 import {toast} from '@/hooks/use-toast'
 import {
@@ -18,7 +19,7 @@ import {
 import {LoaderCircle} from 'lucide-react'
 import {useTranslations} from 'next-intl'
 import Image from 'next/image'
-import React from 'react'
+import React, {useState} from 'react'
 import {useEffect, useMemo} from 'react'
 
 export default function OrderCart() {
@@ -27,6 +28,32 @@ export default function OrderCart() {
   const orders = useMemo(() => data?.payload.data ?? [], [data])
   const socket = useAppStore((state) => state.socket)
   const zaloPayForGuestMutation = useZaloPayForGuestMutation()
+  const [isZaloPayDisabled, setIsZaloPayDisabled] = useState(false) // State quản lý nút ZaloPay
+  const [remainingTime, setRemainingTime] = useState(0) // State quản lý thời gian còn lại
+
+  useEffect(() => {
+    const savedTime = localStorage.getItem('zaloPayDisabledTime')
+    if (savedTime) {
+      const elapsedTime = Math.floor(
+        (Date.now() - parseInt(savedTime, 10)) / 1000
+      )
+      if (elapsedTime < 300) {
+        setRemainingTime(300 - elapsedTime)
+        setIsZaloPayDisabled(true)
+        const interval = setInterval(() => {
+          setRemainingTime((prevTime) => {
+            if (prevTime <= 1) {
+              clearInterval(interval)
+              setIsZaloPayDisabled(false)
+              localStorage.removeItem('zaloPayDisabledTime')
+              return 0
+            }
+            return prevTime - 1
+          })
+        }, 1000)
+      }
+    }
+  }, [])
 
   const {notYetPaid, paid} = useMemo(() => {
     return orders.reduce(
@@ -128,6 +155,20 @@ export default function OrderCart() {
       if (paymentUrl) window.open(paymentUrl, '_blank')
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
       if (isMobile) window.location.href = paymentUrl
+      setIsZaloPayDisabled(true) // Disable the button
+      setRemainingTime(300) // Set the countdown timer to 5 minutes (300 seconds)
+      localStorage.setItem('zaloPayDisabledTime', Date.now().toString())
+      const interval = setInterval(() => {
+        setRemainingTime((prevTime) => {
+          if (prevTime <= 1) {
+            clearInterval(interval)
+            setIsZaloPayDisabled(false) // Re-enable the button
+            localStorage.removeItem('zaloPayDisabledTime')
+            return 0
+          }
+          return prevTime - 1
+        })
+      }, 1000) // Update the timer every second
     } catch (error) {
       handleErrorApi({error})
     }
@@ -149,8 +190,6 @@ export default function OrderCart() {
                 alt={order.dishSnapshot.name}
                 height={100}
                 width={100}
-                quality={75}
-                loading="lazy"
                 priority={true}
                 className="object-cover w-[80px] h-[80px] rounded-md"
               />
@@ -193,17 +232,21 @@ export default function OrderCart() {
                 {formatCurrency(notYetPaid.price)}
               </span>
             </div>
-            <button
-              className="w-full bg-blue-600 text-white py-2 mt-4 rounded-md"
+            <Button
+              className="w-full text-white dark:text-black bg-blue-500 py-2 mt-4 rounded-md"
               onClick={zaloPay}
-              disabled={zaloPayForGuestMutation.isPending}
+              disabled={zaloPayForGuestMutation.isPending || isZaloPayDisabled}
             >
               {zaloPayForGuestMutation.isPending ? (
                 <LoaderCircle className="w-5 h-5 mx-auto animate-spin" />
+              ) : isZaloPayDisabled ? (
+                <>{`${t('paymentWithZaloPay')} (${Math.floor(
+                  remainingTime / 60
+                )}:${String(remainingTime % 60).padStart(2, '0')})`}</>
               ) : (
                 <>{t('paymentWithZaloPay')}</>
               )}
-            </button>
+            </Button>
           </>
         )}
       </div>

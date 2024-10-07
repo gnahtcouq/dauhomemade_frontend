@@ -5,6 +5,7 @@ import {Button} from '@/components/ui/button'
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetTitle,
   SheetTrigger
 } from '@/components/ui/sheet'
@@ -31,6 +32,9 @@ export default function MobileNavLinks() {
         <SheetTitle>
           <VisuallyHidden>Menu</VisuallyHidden>
         </SheetTitle>
+        <SheetDescription>
+          <VisuallyHidden>Description</VisuallyHidden>
+        </SheetDescription>
         <nav className="grid gap-6 text-lg font-medium">
           <Link
             href="/"

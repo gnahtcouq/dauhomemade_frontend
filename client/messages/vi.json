@@ -24,6 +24,16 @@
     "title": "Thanh toán thành công",
     "description": "Cảm ơn bạn đã sử dụng dịch vụ của Đậu Homemade"
   },
+  "Notification": {
+    "title": "Thông báo",
+    "more": "Xem thông báo trước đó",
+    "noResults": "Không có thông báo nào",
+    "markAllRead": "Đánh dấu tất cả đã đọc",
+    "confirmDeleteTitle": "Xóa tất cả thông báo",
+    "confirmDeleteDescription": "Bạn có chắc chắn muốn xóa tất cả thông báo không? Hành động này không thể hoàn tác",
+    "confirm": "Xác nhận",
+    "cancel": "Hủy"
+  },
   "SwitchLanguage": {
     "title": "Chuyển ngôn ngữ",
     "vi": "Tiếng Việt",
@@ -84,7 +94,7 @@
   },
   "ManageDishes": {
     "title": "Món ăn",
-    "description": "Quản lý món ăn trong menu",
+    "description": "Quản lý món ăn trong cửa hàng",
     "add": "Thêm món ăn",
     "edit": "Sửa món ăn",
     "delete": "Xóa món ăn",
@@ -105,6 +115,7 @@
       "edit": "Sửa",
       "delete": "Xóa",
       "searchByName": "Tìm kiếm theo tên món ăn",
+      "searchByCategoryName": "Tìm kiếm theo tên danh mục",
       "show": "Hiển thị",
       "outOf": "trong",
       "results": "kết quả",
@@ -118,6 +129,7 @@
       "price": "Giá",
       "description": "Mô tả",
       "status": "Trạng thái",
+      "category": "Danh mục",
       "add": "Thêm"
     },
     "dialogEdit": {
@@ -252,7 +264,7 @@
       "cancel": "Hủy"
     },
     "table": {
-      "number": "Số bàn",
+      "number": "Bàn",
       "capacity": "Số ghế",
       "status": "Trạng thái",
       "actions": "Hành động",
@@ -295,10 +307,11 @@
     },
     "table": {
       "name": "Tên danh mục",
+      "dish": "Món ăn",
       "actions": "Hành động",
       "edit": "Sửa",
       "delete": "Xóa",
-      "searchByName": "Tìm kiếm theo tên",
+      "searchByCategoryName": "Tìm kiếm theo tên danh mục",
       "show": "Hiển thị",
       "outOf": "trong",
       "results": "kết quả",
