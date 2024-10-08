@@ -82,12 +82,21 @@ export default function Notification() {
       }
     }
 
+    function onPayment() {
+      notificationListQuery.refetch()
+      if (audioRef.current) {
+        audioRef.current.play()
+      }
+    }
+
     socket?.on('new-order', onNewOrder)
+    socket?.on('payment', onPayment)
     socket?.on('connect', onConnect)
     socket?.on('disconnect', onDisconnect)
 
     return () => {
       socket?.off('new-order', onNewOrder)
+      socket?.off('payment', onPayment)
       socket?.off('connect', onConnect)
       socket?.off('disconnect', onDisconnect)
     }
