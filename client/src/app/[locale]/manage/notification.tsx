@@ -127,7 +127,7 @@ export default function Notification() {
                 unreadCount === 0
               }
             >
-              <CheckCircle className="h-5 w-5 text-green-500 dark:text-green-400" />
+              <CheckCircle className="h-5 w-5 text-blue-500 dark:text-blue-400" />
             </Button>
             <Button
               variant="ghost"
@@ -160,12 +160,17 @@ export default function Notification() {
                     }
                     className={`w-full p-2 cursor-pointer transition-colors duration-200 ${
                       notification.isRead ? 'text-gray-500' : 'font-bold'
-                    } hover:bg-gray-100 dark:hover:bg-gray-700`}
+                    } hover:bg-gray-100 dark:hover:bg-black flex items-start`}
                   >
-                    <div>{notification.message}</div>
-                    <span className="text-xs text-gray-500">
-                      {formatDateTimeToLocaleString(notification.createdAt)}
-                    </span>
+                    {!notification.isRead && (
+                      <span className="inline-block w-2 h-2 bg-blue-500 rounded-full mr-2 mt-2"></span>
+                    )}
+                    <div className="flex-1">
+                      <div>{notification.message}</div>
+                      <span className="text-xs text-gray-500">
+                        {formatDateTimeToLocaleString(notification.createdAt)}
+                      </span>
+                    </div>
                   </li>
                 ))}
               </ul>
