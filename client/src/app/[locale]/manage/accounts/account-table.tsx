@@ -94,7 +94,11 @@ export const columns: ColumnDef<AccountType>[] = [
     cell: ({row}) => (
       <div>
         <Avatar className="aspect-square w-[100px] h-[100px] rounded-md object-cover">
-          <AvatarImage src={row.getValue('avatar')} loading="lazy" />
+          <AvatarImage
+            src={row.getValue('avatar')}
+            alt={row.original.name}
+            loading="lazy"
+          />
           <AvatarFallback className="rounded-none">
             {row.original.name}
           </AvatarFallback>
