@@ -23,7 +23,7 @@ import {
 } from '@/queries/useOrder'
 import {Bell, CheckCircle, Trash2} from 'lucide-react'
 import {useTranslations} from 'next-intl'
-import {useEffect, useRef, useState} from 'react'
+import {useEffect, useState} from 'react'
 
 export default function Notification() {
   const t = useTranslations('Notification')
@@ -35,7 +35,6 @@ export default function Notification() {
   const data = notificationListQuery.data?.payload.data ?? []
   const unreadCount = data.filter((notification) => !notification.isRead).length
   const socket = useAppStore((state) => state.socket)
-  const audioRef = useRef<HTMLAudioElement>(null)
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
   const [visibleCount, setVisibleCount] = useState(10)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -77,16 +76,10 @@ export default function Notification() {
 
     function onNewOrder() {
       notificationListQuery.refetch()
-      if (audioRef.current) {
-        audioRef.current.play()
-      }
     }
 
     function onPayment() {
       notificationListQuery.refetch()
-      if (audioRef.current) {
-        audioRef.current.play()
-      }
     }
 
     socket?.on('new-order', onNewOrder)
@@ -116,8 +109,8 @@ export default function Notification() {
         >
           <Bell className="h-[1.2rem] w-[1.2rem]" />
           {unreadCount > 0 && (
-            <span className="absolute top-[-6px] right-0 inline-flex items-center justify-center h-4 w-4 rounded-full bg-red-500 text-white text-xs">
-              {unreadCount}
+            <span className="absolute top-[-6px] right-0 inline-flex items-center justify-center h-6 w-6 rounded-full bg-red-500 text-white text-xs">
+              {unreadCount > 99 ? '99+' : unreadCount}
             </span>
           )}
         </Button>
@@ -196,7 +189,6 @@ export default function Notification() {
           </ScrollArea>
         </div>
       </PopoverContent>
-      <audio ref={audioRef} src="/notification.mp3" />
 
       <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <AlertDialogContent>
