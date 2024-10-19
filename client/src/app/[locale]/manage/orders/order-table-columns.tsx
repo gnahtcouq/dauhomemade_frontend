@@ -112,7 +112,7 @@ const orderTableColumns: ColumnDef<OrderItem>[] = [
               width={0}
               height={0}
               sizes="100vw"
-              priority={true}
+              loading="lazy"
               className="rounded-md object-cover w-[50px] h-[50px] cursor-pointer"
             />
           </PopoverTrigger>
@@ -123,7 +123,7 @@ const orderTableColumns: ColumnDef<OrderItem>[] = [
                 alt={row.original.dishSnapshot.name}
                 width={100}
                 height={100}
-                priority={true}
+                loading="lazy"
                 className="rounded-md object-cover w-[100px] h-[100px]"
               />
               <div className="space-y-1 text-sm">

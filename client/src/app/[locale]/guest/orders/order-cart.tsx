@@ -190,7 +190,7 @@ export default function OrderCart() {
                 alt={order.dishSnapshot.name}
                 height={100}
                 width={100}
-                priority={true}
+                loading="lazy"
                 className="object-cover w-[80px] h-[80px] rounded-md"
               />
             </div>

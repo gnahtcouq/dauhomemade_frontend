@@ -115,7 +115,7 @@ export default function Notification() {
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-72 max-h-96 mt-2">
+      <PopoverContent className="w-72 max-h-96">
         <div className="flex justify-between items-center">
           <h3 className="text-lg font-semibold">{t('title')}</h3>
           <div className="flex space-x-2">
@@ -164,10 +164,12 @@ export default function Notification() {
                       notification.isRead ? 'text-gray-500' : 'font-bold'
                     } hover:bg-gray-100 dark:hover:bg-black flex items-start`}
                   >
-                    {!notification.isRead && (
-                      <span className="inline-block w-2 h-2 bg-blue-500 rounded-full mr-2 mt-2"></span>
-                    )}
-                    <div className="flex-1">
+                    <span
+                      className={`inline-block w-2 h-2 rounded-full mr-2 mt-2 ${
+                        notification.isRead ? 'invisible' : 'bg-blue-500'
+                      }`}
+                    ></span>
+                    <div className="flex-1 ml-1">
                       <div>{notification.message}</div>
                       <span className="text-xs text-gray-500">
                         {formatDateTimeToLocaleString(notification.createdAt)}

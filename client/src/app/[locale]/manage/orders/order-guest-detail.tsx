@@ -145,6 +145,7 @@ export default function OrderGuestDetail({
                 title={order.dishSnapshot.name}
                 width={30}
                 height={30}
+                loading="lazy"
                 className="h-[30px] w-[30px] rounded object-cover"
               />
               <span

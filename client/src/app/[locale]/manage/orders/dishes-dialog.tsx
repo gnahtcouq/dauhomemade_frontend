@@ -54,6 +54,7 @@ export const columns: ColumnDef<DishItem>[] = [
           alt={row.original.name}
           width={50}
           height={50}
+          loading="lazy"
           className="rounded-md object-cover w-[50px] h-[50px]"
         />
         <span>{row.original.name}</span>

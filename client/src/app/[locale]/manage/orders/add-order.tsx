@@ -286,7 +286,6 @@ export default function AddOrder() {
                       alt={dish.name}
                       height={100}
                       width={100}
-                      quality={75}
                       loading="lazy"
                       className={`object-cover w-[80px] h-[80px] rounded-md ${
                         dish.status === DishStatus.Unavailable
