@@ -134,7 +134,7 @@
     },
     "dialogEdit": {
       "title": "Edit dish",
-      "desc": "Image, name, price, description fields are required",
+      "desc": "Image, name, price, description, category fields are required",
       "image": "Dish image",
       "name": "Name",
       "price": "Price",
@@ -421,7 +421,10 @@
       "title": "Total orders",
       "description": "Paid/Unpaid"
     },
-    "totalTables": "Total tables",
+    "totalTables": {
+      "title": "Tables serving",
+      "description": "Tables are serving"
+    },
     "revenueChart": {
       "title": "Revenue chart",
       "description": "Statistics of revenue by day include unpaid orders"

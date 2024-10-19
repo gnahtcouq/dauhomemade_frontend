@@ -134,7 +134,7 @@
     },
     "dialogEdit": {
       "title": "Sửa món ăn",
-      "desc": "Các trường hình ảnh, tên, giá, mô tả là bắt buộc",
+      "desc": "Các trường hình ảnh, tên, giá, mô tả, danh mục là bắt buộc",
       "image": "Hình ảnh",
       "name": "Tên",
       "price": "Giá",
@@ -419,7 +419,10 @@
       "title": "Tổng đơn hàng",
       "description": "Đã thanh toán/Chưa thanh toán"
     },
-    "totalTables": "Bàn phục vụ",
+    "totalTables": {
+      "title": "Bàn phục vụ",
+      "description": "Số lượng bàn phục vụ"
+    },
     "revenueChart": {
       "title": "Biểu đồ doanh thu",
       "description": "Thống kê doanh thu theo ngày bao gồm đơn chưa thanh toán"
